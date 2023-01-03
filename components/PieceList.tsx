@@ -14,9 +14,9 @@ export default function PieceList({ list, filterApproved = false, adminControls 
         list.map((piece) =>
           piece && 
           piece.node && 
-          (!filterApproved ? !piece.node.approved : piece.node.approved) &&
-          !piece.node.inGarbage && (
-            <PieceItem key={piece.node.id} piece={piece.node} adminControls={adminControls} />
+          !piece.node.inGarbage &&
+          (!filterApproved ? !piece.node.approved : piece.node.approved) && (
+            <PieceItem key={piece.node.id} piece={piece.node} adminControls={adminControls} editButton={!filterApproved} />
           ))
       }
     </div>

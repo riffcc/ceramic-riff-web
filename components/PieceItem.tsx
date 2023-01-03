@@ -6,16 +6,18 @@ import ItemAdminControls from "./ItemAdminControls";
 interface Props {
   piece: Omit<Piece, 'website' | 'websiteID'>
   adminControls: boolean
+  editButton: boolean
 }
-export default function PieceItem({ piece, adminControls }: Props) {
+export default function PieceItem({ piece, adminControls, editButton }: Props) {
   const [name, setName] = useState(piece.name);
+  console.log(piece)
   return (
     <div className="flex flex-col w-40">
-      <a href={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${piece.cid}`} target='_blank'>
+      <a href={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${piece.cid}`} target='_blank'>
         <div className="rounded-xl p-4 h-36 w-36 relative mx-auto bg-gradient-to-b from-slate-700 to-slate-600">
           <Image
             alt=""
-            src={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${piece.cid}`}
+            src={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${piece.cid}`}
             fill
             priority
           />
@@ -30,7 +32,7 @@ export default function PieceItem({ piece, adminControls }: Props) {
       />
       {
         adminControls && (
-          <ItemAdminControls itemID={piece.id} newName={name} />
+          <ItemAdminControls itemID={piece.id} newName={name} editButton={editButton} />
         )
       }
     </div>

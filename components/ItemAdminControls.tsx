@@ -5,9 +5,10 @@ import { UPDATE_PIECE } from "../utils/contants"
 interface Props {
   itemID: string;
   newName: string;
+  editButton: boolean;
 }
 
-export default function ItemAdminControls({ itemID, newName }: Props) {
+export default function ItemAdminControls({ itemID, newName, editButton }: Props) {
   const [updatePiece, { loading: loadingMutation }] = useMutation(UPDATE_PIECE)
 
 
@@ -34,8 +35,7 @@ export default function ItemAdminControls({ itemID, newName }: Props) {
           }
         }
       }
-    })
-    window.location.reload()
+    }).then(() => window.location.reload())
   }
   const handleApproveItem = () => {
     updatePiece({
@@ -47,13 +47,12 @@ export default function ItemAdminControls({ itemID, newName }: Props) {
           }
         }
       }
-    })
-    window.location.reload()
+    }).then(() => window.location.reload())
   }
 
   return (
     <div className="flex gap-2 items-center justify-center w-full mt-1">
-      <HiOutlineCheckCircle className="h-4 w-4 text-green-400 hover:cursor-pointer" onClick={handleApproveItem} />
+      {editButton  && <HiOutlineCheckCircle className="h-4 w-4 text-green-400 hover:cursor-pointer" onClick={handleApproveItem} /> }
       <HiOutlinePencilAlt className="h-4 w-4 text-slate-50 hover:cursor-pointer" onClick={handleEditItem} />
       <HiOutlineTrash className="h-4 w-4 text-red-400 hover:cursor-pointer" onClick={handleDeleteItem} />
     </div>
