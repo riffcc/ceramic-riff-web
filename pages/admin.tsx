@@ -35,7 +35,6 @@ export async function getServerSideProps() {
   const apolloClient = await initializeApollo(did)
 
   if (!process.env.WEBSITE_ID) throw new Error("ENVIROMENT VARIABLE WEBSITE_ID UNDEFINED");
-  if (!process.env.NEXT_PUBLIC_DUMP_DOCUMENT_ID) throw new Error("ENVIROMENT VARIABLE NEXT_PUBLIC_DUMP_DOCUMENT_ID UNDEFINED");
 
 
   const websiteID = process.env.WEBSITE_ID
