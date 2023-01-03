@@ -23,10 +23,12 @@ const PinnerPage: NextPage<Props> = ({ websiteID }) => {
     createPiece({
       variables: {
         input: {
-          id: websiteID,
-          name: name,
-          cid: cid,
-          approved: false
+          content: {
+            websiteID: websiteID,
+            name: name!,
+            cid: cid!,
+            approved: false
+          }
         }
       }
     })

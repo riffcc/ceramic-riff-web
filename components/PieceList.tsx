@@ -11,7 +11,10 @@ export default function PieceList({ list, filterApproved = false, adminControls 
     <div className="flex-1 flex flex-wrap justify-center py-4 gap-2 content-evenly">
       {
         list.map((piece) =>
-          piece && piece.node && (!filterApproved ? !piece.node.approved : piece.node.approved)  && (
+          piece && 
+          piece.node && 
+          (!filterApproved ? !piece.node.approved : piece.node.approved) &&
+          !piece.inGarbage && (
             <PieceItem key={piece.node.id} piece={piece.node} adminControls={adminControls} />
           ))
       }

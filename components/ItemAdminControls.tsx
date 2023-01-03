@@ -30,7 +30,7 @@ export default function ItemAdminControls({ itemID, newName }: Props) {
           id: itemID,
           content: {
             approved: false,
-            websiteID: process.env.NEXT_PUBLIC_DUMP_DOCUMENT_ID
+            inGarbage: true
           }
         }
       }
