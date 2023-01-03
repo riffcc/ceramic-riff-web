@@ -11,11 +11,11 @@ export default function PieceItem({ piece, adminControls }: Props) {
   const [name, setName] = useState(piece.name);
   return (
     <div className="flex flex-col w-40">
-      <a href={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/${piece.cid}`} target='_blank'>
+      <a href={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${piece.cid}`} target='_blank'>
         <div className="rounded-xl p-4 h-36 w-36 relative mx-auto bg-gradient-to-b from-slate-700 to-slate-600">
           <Image
             alt=""
-            src={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/${piece.cid}`}
+            src={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${piece.cid}`}
             fill
             priority
           />

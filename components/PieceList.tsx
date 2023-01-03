@@ -1,4 +1,5 @@
-import { PieceList as PropPieceList } from "../pages";
+
+import { PropPieceList } from "../pages/admin";
 import PieceItem from "./PieceItem";
 
 type Props = {
@@ -14,7 +15,7 @@ export default function PieceList({ list, filterApproved = false, adminControls 
           piece && 
           piece.node && 
           (!filterApproved ? !piece.node.approved : piece.node.approved) &&
-          !piece.inGarbage && (
+          !piece.node.inGarbage && (
             <PieceItem key={piece.node.id} piece={piece.node} adminControls={adminControls} />
           ))
       }
