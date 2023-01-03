@@ -52,6 +52,7 @@ export const GET_PIECE = gql(`
         cid
         name
         approved
+        inGarbage
       }
     }
   }
@@ -66,6 +67,7 @@ export const CREATE_PIECE = gql(`
         name
         cid
         approved
+        inGarbage
       }
     }
   }
@@ -80,6 +82,7 @@ export const UPDATE_PIECE = gql(`
         name
         cid
         approved
+        inGarbage
       }
     }
   }
