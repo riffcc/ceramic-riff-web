@@ -5,10 +5,10 @@ import getDID from '../lib/utils/getDID'
 import { WEBSITE_INFO } from '../utils/contants'
 import { Maybe, Piece, PieceEdge } from '../utils/__generated__/graphql';
 
-export type PieceList = Array<{ __typename?: "PieceEdge", node?: Maybe<Omit<Piece, 'websiteID' | 'website'>> } | null>;
+export type PropPieceList = Array<{ __typename?: "PieceEdge", node?: Maybe<Omit<Piece, 'websiteID' | 'website'>> } | null>;
 
 interface Props {
-  list: PieceList;
+  list: PropPieceList;
 }
 
 const AdminPage: NextPage<Props> = ({ list }) => {
@@ -60,11 +60,11 @@ export async function getServerSideProps() {
   }
 
   // // Merge all contents
-  const websitePieceEdgesFlat: PieceList = Array.prototype.concat.apply([], websitePieceEdges ? websitePieceEdges : [])
+  const list: PropPieceList = Array.prototype.concat.apply([], websitePieceEdges ? websitePieceEdges : [])
 
   return {
     props: {
-      list: websitePieceEdgesFlat
+      list
     }
   }
 }
