@@ -4,7 +4,7 @@ import { Piece } from "../utils/__generated__/graphql";
 import ItemAdminControls from "./ItemAdminControls";
 
 interface Props {
-  piece: Omit<Piece, 'website' | 'websiteID'>
+  piece: Piece
   adminControls: boolean
 }
 export default function PieceItem({ piece, adminControls }: Props) {

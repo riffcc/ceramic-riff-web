@@ -2,12 +2,10 @@ import type { NextPage } from 'next'
 import PieceList from '../../components/PieceList';
 import { initializeApollo } from '../../lib/apolloClient'
 import { WEBSITE_INFO } from '../../utils/contants'
-import { Maybe, Piece, PieceEdge } from '../../utils/__generated__/graphql';
-
-export type PropPieceList = Array<{ __typename?: "PieceEdge", node?: Maybe<Omit<Piece, 'websiteID' | 'website'>> } | null>;
+import { PieceEdge } from '../../utils/__generated__/graphql';
 
 interface Props {
-  list: PropPieceList;
+  list: Array<PieceEdge | null>;
 }
 
 const AdminContentPage: NextPage<Props> = ({ list }) => {
@@ -60,7 +58,7 @@ export async function getServerSideProps() {
   }
 
   // // Merge all contents
-  const list: PropPieceList = Array.prototype.concat.apply([], websitePieceEdges ? websitePieceEdges : [])
+  const list: Array<PieceEdge | null> = Array.prototype.concat.apply([], websitePieceEdges ? websitePieceEdges : [])
 
   return {
     props: {

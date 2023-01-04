@@ -1,8 +1,8 @@
-import { PropPieceList } from "../pages/admin/content";
+import { PieceEdge } from "../utils/__generated__/graphql";
 import PieceItem from "./PieceItem";
 
 type Props = {
-  list: PropPieceList;
+  list: Array<PieceEdge | null>;
   filter?: 'rejected' | 'approved' | 'pending';
   adminControls?: boolean
 }

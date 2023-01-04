@@ -2,12 +2,10 @@ import type { NextPage } from 'next'
 import PieceList from '../components/PieceList';
 import { initializeApollo } from '../lib/apolloClient'
 import { WEBSITE_INFO } from '../utils/contants'
-import { Maybe, Piece, PieceEdge } from '../utils/__generated__/graphql';
-
-export type PieceList = Array<{ __typename?: "PieceEdge", node?: Maybe<Omit<Piece, 'websiteID' | 'website'>> } | null>;
+import { PieceEdge } from '../utils/__generated__/graphql';
 
 interface Props {
-  list: PieceList
+  list: Array<PieceEdge | null>
 }
 
 const IndexPage: NextPage<Props> = ({ list }) => {
@@ -18,7 +16,6 @@ const IndexPage: NextPage<Props> = ({ list }) => {
         <div className='flex flex-col w-full'>
           <h1 className='font-bold text-xl border-b border-slate-500 flex-none pb-2'>Content</h1>
           { list.length > 0 ? <PieceList list={list} filter='approved' /> : <p className='m-auto'>Not content found.</p> }
-
         </div>
       </div>
     </div>
@@ -71,8 +68,8 @@ export async function getServerSideProps() {
 
   // // Merge all contents
 
-const subscriptionsPieceEdgesFlat: PieceList = Array.prototype.concat.apply([], subscriptionsPieceEdges ? subscriptionsPieceEdges : [])
-const websitePieceEdgesFlat: PieceList = websitePieceEdges ? websitePieceEdges.concat.apply(websitePieceEdges, subscriptionsPieceEdgesFlat) : subscriptionsPieceEdgesFlat
+const subscriptionsPieceEdgesFlat: Array<PieceEdge | null> = Array.prototype.concat.apply([], subscriptionsPieceEdges ? subscriptionsPieceEdges : [])
+const websitePieceEdgesFlat: Array<PieceEdge | null> = websitePieceEdges ? websitePieceEdges.concat.apply(websitePieceEdges, subscriptionsPieceEdgesFlat) : subscriptionsPieceEdgesFlat
 
 
   return {
