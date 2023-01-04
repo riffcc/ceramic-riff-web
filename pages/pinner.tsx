@@ -25,7 +25,8 @@ const PinnerPage: NextPage<Props> = ({ websiteID }) => {
             websiteID: websiteID,
             name: name!,
             cid: cid!,
-            approved: false
+            approved: false,
+            rejected: false
           }
         }
       }
