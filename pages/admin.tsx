@@ -17,9 +17,11 @@ const AdminPage: NextPage<Props> = ({ list }) => {
       <div className='bg-gradient-to-b from-slate-800 to-slate-700 rounded-xl mx-auto w-5/6 p-6 min-h-screen flex'>
         <div className='flex flex-col w-full'>
           <h1 className='font-bold text-xl border-b border-slate-500 flex-none pb-2'>Approved Content</h1>
-          {list.length > 0 ? <PieceList filterApproved list={list} adminControls /> : <p className='m-auto'>Not content found.</p>}
-          <h1 className='font-bold text-xl border-b border-slate-500 flex-none pb-2'>Pending Approved Content</h1>
-          {list.length > 0 ? <PieceList list={list} adminControls /> : <p className='m-auto'>Not content found.</p>}
+          {list.length > 0 ? <PieceList list={list} adminControls filter='approved' /> : <p className='m-auto'>Not content found.</p>}
+          <h1 className='font-bold text-xl border-b border-slate-500 flex-none pb-2'>Pending Approval Content</h1>
+          {list.length > 0 ? <PieceList list={list} adminControls filter='pending' /> : <p className='m-auto'>Not content found.</p>}
+          <h1 className='font-bold text-xl border-b border-slate-500 flex-none pb-2'>Rejected Content</h1>
+          {list.length > 0 ? <PieceList list={list} adminControls filter='rejected' /> : <p className='m-auto'>Not content found.</p>}
         </div>
 
       </div>

@@ -1,23 +1,29 @@
-
 import { PropPieceList } from "../pages/admin";
 import PieceItem from "./PieceItem";
 
 type Props = {
   list: PropPieceList;
-  filterApproved?: boolean;
+  filter?: 'rejected' | 'approved' | 'pending';
   adminControls?: boolean
 }
-export default function PieceList({ list, filterApproved = false, adminControls = false }: Props) {
+export default function PieceList({ list, filter, adminControls = false }: Props) {
   return (
-    <div className="flex-1 flex flex-wrap justify-center py-4 gap-2 content-evenly">
+    <div className="flex-1 flex flex-wrap justify-center py-8 gap-2 content-evenly">
       {
-        list.map((piece) =>
-          piece && 
-          piece.node && 
-          !piece.node.inGarbage &&
-          (!filterApproved ? !piece.node.approved : piece.node.approved) && (
-            <PieceItem key={piece.node.id} piece={piece.node} adminControls={adminControls} editButton={!filterApproved} />
-          ))
+        list.map((piece) => (
+          piece &&
+          piece.node &&
+          piece.node.name &&
+          piece.node.cid &&
+          (filter === 'rejected' ? piece.node.rejected : true) &&
+          (filter === 'pending' ? !piece.node.approved : true) &&
+          (filter === 'approved' ? piece.node.approved : true) &&
+            <PieceItem
+              key={piece.node.id}
+              piece={piece.node}
+              adminControls={adminControls}
+            />
+        ))
       }
     </div>
   )
