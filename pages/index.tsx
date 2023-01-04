@@ -30,9 +30,9 @@ export async function getServerSideProps() {
 
   const apolloClient = await initializeApollo()
 
-  if (!process.env.WEBSITE_ID) throw new Error("ENVIROMENT VARIABLE WEBSITE_ID UNDEFINED");
+  if (!process.env.NEXT_PUBLIC_WEBSITE_ID) throw new Error("ENVIROMENT VARIABLE NEXT_PUBLIC_WEBSITE_ID UNDEFINED");
 
-  const websiteID = process.env.WEBSITE_ID
+  const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
 
   const { data: { node: websiteNode } } = await apolloClient.query({
     query: WEBSITE_INFO,
