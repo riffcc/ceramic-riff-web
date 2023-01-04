@@ -2,8 +2,6 @@ import { useLazyQuery, useMutation, useQuery } from "@apollo/client"
 import { NextPage } from "next/types"
 import { ChangeEvent, useCallback } from "react"
 import Spinner from "../components/Layout/Spinner"
-import { initializeApollo } from "../lib/apolloClient"
-import getDID from "../lib/utils/getDID"
 import { CREATE_PIECE } from "../utils/contants"
 
 type Props = { websiteID: string }

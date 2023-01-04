@@ -4,11 +4,9 @@ import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '../lib/apolloClient'
 import Layout from '../components/Layout/Layout'
 import Spinner from '../components/Layout/Spinner'
-import getDID from '../lib/utils/getDID'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const did = getDID()
-  const apolloClient = useApollo(did, pageProps)
+  const apolloClient = useApollo(pageProps)
 
   return (
     <div>

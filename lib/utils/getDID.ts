@@ -6,7 +6,7 @@ import { fromString } from "uint8arrays"
 export default function getDID() {
   //<<
   const privateKey = fromString(
-    '5c20379e3058b18fa7282ac3c2409ca6d376fc409e80824a1e4aaadcd90c95da',
+    '5d9065d6806d29b0b62e8e2311ff1c56073ff0cd5b325be67a373f6271a30532',
     'base16'
   )
   return new DID({

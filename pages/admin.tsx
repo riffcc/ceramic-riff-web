@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
 import PieceList from '../components/PieceList';
 import { initializeApollo } from '../lib/apolloClient'
-import getDID from '../lib/utils/getDID'
 import { WEBSITE_INFO } from '../utils/contants'
 import { Maybe, Piece, PieceEdge } from '../utils/__generated__/graphql';
 
@@ -31,8 +30,7 @@ const AdminPage: NextPage<Props> = ({ list }) => {
 
 export async function getServerSideProps() {
 
-  const did = getDID()
-  const apolloClient = await initializeApollo(did)
+  const apolloClient = await initializeApollo()
 
   if (!process.env.WEBSITE_ID) throw new Error("ENVIROMENT VARIABLE WEBSITE_ID UNDEFINED");
 

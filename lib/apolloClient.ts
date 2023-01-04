@@ -14,6 +14,7 @@ import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
 import { createComposeClient } from './composeClient'
 import { DID } from 'dids'
+import getDID from './utils/getDID';
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
@@ -44,7 +45,8 @@ async function createApolloLinkWithCompose(composeClient: ComposeClient) {
   })
 }
 
-async function createApolloClient(did: DID) {
+async function createApolloClient() {
+  const did = getDID()
   await did.authenticate()
   const composeClient = createComposeClient(did)
   const apolloLinkWithCompose = await createApolloLinkWithCompose(composeClient)
@@ -54,8 +56,8 @@ async function createApolloClient(did: DID) {
   })
 }
 
-export async function initializeApollo(did: DID, initialState = null) {
-  const _apolloClient = apolloClient ?? (await createApolloClient(did))
+export async function initializeApollo(initialState = null) {
+  const _apolloClient = apolloClient ?? (await createApolloClient())
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
   // gets hydrated here
@@ -95,11 +97,11 @@ export async function initializeApollo(did: DID, initialState = null) {
 //   return pageProps
 // }
 
-export function useApollo(did: DID, pageProps: { [x: string]: any }) {
+export function useApollo(pageProps: { [x: string]: any }) {
   const [store, setStore] = useState<ApolloClient<NormalizedCacheObject>>()
   //const state = pageProps[APOLLO_STATE_PROP_NAME]
   useEffect(() => {
-    initializeApollo(did).then((_store) => setStore(_store))
+    initializeApollo().then((_store) => setStore(_store))
   }, [])
   return store
 }
