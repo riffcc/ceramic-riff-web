@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
-import PieceList from '../components/PieceList';
-import { initializeApollo } from '../lib/apolloClient'
-import { WEBSITE_INFO } from '../utils/contants'
-import { Maybe, Piece, PieceEdge } from '../utils/__generated__/graphql';
+import PieceList from '../../components/PieceList';
+import { initializeApollo } from '../../lib/apolloClient'
+import { WEBSITE_INFO } from '../../utils/contants'
+import { Maybe, Piece, PieceEdge } from '../../utils/__generated__/graphql';
 
 export type PropPieceList = Array<{ __typename?: "PieceEdge", node?: Maybe<Omit<Piece, 'websiteID' | 'website'>> } | null>;
 
@@ -10,7 +10,7 @@ interface Props {
   list: PropPieceList;
 }
 
-const AdminPage: NextPage<Props> = ({ list }) => {
+const AdminContentPage: NextPage<Props> = ({ list }) => {
   console.log(list)
   return (
     <div className='flex flex-col px-4 py-10 gap-3'>
@@ -68,4 +68,4 @@ export async function getServerSideProps() {
     }
   }
 }
-export default AdminPage
+export default AdminContentPage
