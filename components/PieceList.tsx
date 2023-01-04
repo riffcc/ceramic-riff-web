@@ -1,4 +1,4 @@
-import { PropPieceList } from "../pages/admin";
+import { PropPieceList } from "../pages/admin/content";
 import PieceItem from "./PieceItem";
 
 type Props = {
