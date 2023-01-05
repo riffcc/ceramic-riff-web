@@ -4,9 +4,11 @@ import { getResolver } from "key-did-resolver"
 import { fromString } from "uint8arrays"
 
 export default function getDID() {
-  //<<
+  if (!process.env.NEXT_PUBLIC_PRIVATE_KEY)
+    throw new Error('ENVIROMENT VARIABLE NEXT_PUBLIC_PRIVATE_KEY UNDEFINED')
+  
   const privateKey = fromString(
-    '5d9065d6806d29b0b62e8e2311ff1c56073ff0cd5b325be67a373f6271a30532',
+    process.env.NEXT_PUBLIC_PRIVATE_KEY,
     'base16'
   )
   return new DID({
