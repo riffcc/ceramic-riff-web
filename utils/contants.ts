@@ -1,16 +1,58 @@
-import { gql } from "./__generated__/gql"
+import { gql } from './__generated__/gql'
 
-export const WEBSITE_INFO = gql(`
-  query Website($id: ID!, $piecesPageSize: Int!, $subscriptionsPageSize: Int!) {
+export const GET_WEBSITE_USERS = gql(`
+  query WebsiteUsers($id: ID!, $usersPageSize: Int!) {
     node(id: $id) {
       ... on Website {
-        id
-        ownerID
-        websiteName
-        owner {
-          address
-          ensName
-        }
+        users(first: $usersPageSize) {
+              edges {
+                node {
+                  id
+                  address
+                  ensName
+                  metadata {
+                    createdAt
+                    updatedAt
+                  }
+                }
+              }
+            }
+        usersCount
+      }
+    }
+  }
+`)
+
+export const GET_WEBSITE_ADMINS = gql(`
+  query WebsiteAdmins($id: ID!, $adminsPageSize: Int!) {
+    node(id: $id) {
+      ... on Website {
+        admins(first: $adminsPageSize) {
+              edges {
+                node {
+                  id
+                  adminID
+                  admin {
+                    address
+                    ensName
+                  }
+                  metadata {
+                    createdAt
+                    updatedAt
+                  }
+                }
+              }
+            }
+        adminsCount
+      }
+    }
+  }
+`)
+
+export const GET_WEBSITE_CONTENT = gql(`
+  query WebsiteContent($id: ID!, $piecesPageSize: Int!, $subscriptionsPageSize: Int!) {
+    node(id: $id) {
+      ... on Website {
         pieces(first: $piecesPageSize) {
           edges {
             node {
@@ -19,6 +61,7 @@ export const WEBSITE_INFO = gql(`
               name
               ownerID
               owner {
+                id
                 address
                 ensName
               }
@@ -35,10 +78,7 @@ export const WEBSITE_INFO = gql(`
         subscriptions(first: $subscriptionsPageSize) {
           edges {
             node {
-              id
-              subscribedID
               subcribedWebsite {
-                websiteName
                 pieces(first: $piecesPageSize) {
                   edges {
                     node {
@@ -47,6 +87,7 @@ export const WEBSITE_INFO = gql(`
                       name
                       ownerID
                       owner {
+                        id
                         address
                         ensName
                       }
@@ -69,23 +110,6 @@ export const WEBSITE_INFO = gql(`
           }
         }
         subscriptionsCount
-        admins(first: 20) {
-          edges {
-            node {
-              id
-              adminID
-              admin {
-                address
-                ensName
-              }
-              metadata {
-                createdAt
-                updatedAt
-              }
-            }
-          }
-        }
-        adminsCount
       }
     }
   }
@@ -96,6 +120,7 @@ export const GET_ETH_ACCOUNT = gql(`
     node(id: $id) {
       ... on EthAccount {
         id
+        websiteID
         address
         ensName
         pieces(first: $piecesPageSize) {
@@ -106,6 +131,7 @@ export const GET_ETH_ACCOUNT = gql(`
               name
               ownerID
               owner {
+                id
                 address
                 ensName
               }
@@ -149,6 +175,7 @@ export const CREATE_ETH_ACCOUNT = gql(`
     createEthAccount(input: $input) {
       document {
         id
+        websiteID
         address
         ensName
       }
@@ -165,6 +192,7 @@ export const GET_PIECE = gql(`
         name
         ownerID
         owner {
+          id
           address
           ensName
         }
@@ -192,6 +220,7 @@ export const CREATE_PIECE = gql(`
         name
         ownerID
         owner {
+          id
           address
           ensName
         }
@@ -219,6 +248,7 @@ export const UPDATE_PIECE = gql(`
         name
         ownerID
         owner {
+          id
           address
           ensName
         }
