@@ -52,7 +52,13 @@ async function createApolloClient() {
   const apolloLinkWithCompose = await createApolloLinkWithCompose(composeClient)
   return new ApolloClient({
     link: from([errorLink, apolloLinkWithCompose]),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        EthAccount: {
+          keyFields: ['address']
+        }
+      }
+    }),
   })
 }
 
