@@ -3,15 +3,18 @@ import type { NextPage } from 'next'
 import { useMemo } from 'react';
 import Spinner from '../components/Layout/Spinner';
 import PieceList from '../components/PieceList';
-import { GET_WEBSITE_CONTENT } from '../utils/contants';
+import { adminsPageSize, GET_WEBSITE_DATA, piecesPageSize, subscriptionsPageSize, userPiecesPageSize, usersPageSize } from '../utils/contants';
 
 const IndexPage: NextPage = () => {
   const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
-  const { loading: loadingWebsiteData, error, data: websiteData } = useQuery(GET_WEBSITE_CONTENT, {
+  const { loading: loadingWebsiteData, error, data: websiteData } = useQuery(GET_WEBSITE_DATA, {
     variables: {
       id: websiteID!,
-      piecesPageSize: 50,
-      subscriptionsPageSize: 50
+      adminsPageSize,
+      piecesPageSize,
+      subscriptionsPageSize,
+      usersPageSize,
+      userPiecesPageSize
     }
   });
 
