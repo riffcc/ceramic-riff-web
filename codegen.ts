@@ -2,7 +2,7 @@ import { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
   schema: './lib/Composite.graphql',
-  documents: './utils/contants.ts',
+  documents: './utils/constants.ts',
   generates: {
     './utils/__generated__/': {
       preset: 'client',

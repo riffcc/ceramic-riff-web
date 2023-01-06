@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import { useMemo } from 'react';
 import Spinner from '../components/Layout/Spinner';
 import PieceList from '../components/PieceList';
-import { adminsPageSize, GET_WEBSITE_DATA, piecesPageSize, subscriptionsPageSize, userPiecesPageSize, usersPageSize } from '../utils/contants';
+import { adminsPageSize, GET_WEBSITE_DATA, piecesPageSize, subscriptionsPageSize, userPiecesPageSize, usersPageSize } from '../utils/constants';
 
 const IndexPage: NextPage = () => {
   const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID

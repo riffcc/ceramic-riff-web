@@ -1,7 +1,7 @@
 import { gql, useApolloClient, useQuery } from "@apollo/client"
 import { useConnect } from "wagmi"
 import { MetaMaskConnector } from "wagmi/connectors/metaMask"
-import { CREATE_ETH_ACCOUNT, userPiecesPageSize } from "../../utils/contants"
+import { CREATE_ETH_ACCOUNT, userPiecesPageSize } from "../../utils/constants"
 import { getDate } from "../../utils/getDate"
 import Spinner from "./Spinner"
 

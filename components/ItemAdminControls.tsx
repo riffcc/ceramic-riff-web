@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { HiOutlineTrash, HiOutlinePencilAlt, HiOutlineCheckCircle, HiOutlineXCircle } from "react-icons/hi";
-import { UPDATE_PIECE } from "../utils/contants"
+import { UPDATE_PIECE } from "../utils/constants"
 import { Piece } from "../utils/__generated__/graphql";
 
 interface Props {
