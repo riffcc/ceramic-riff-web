@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { useAccount, useDisconnect, useEnsName } from 'wagmi'
 import Account from './Account'
 import Connect from './Connect'
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { gql, useApolloClient } from '@apollo/client'
 
 export default function Header() {
   const { pathname } = useRouter()
@@ -11,12 +12,38 @@ export default function Header() {
   const { data: ensName } = useEnsName({ address });
   const { disconnect } = useDisconnect()
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const apolloClient = useApolloClient()
 
+  const isAdminUser = useMemo(() => !!(apolloClient.readFragment({
+    id: apolloClient.cache.identify({ 
+      __typename: "Admin", 
+      admin: { 
+        address: address ? address.toLowerCase() : null 
+      } 
+    }),
+    fragment: gql`
+        fragment AdminUserId on Admin {
+          id
+        }
+      `
+  })), [address])
+
+  const isUser = useMemo(() => !!(apolloClient.readFragment({
+    id: apolloClient.cache.identify({
+      __typename: "EthAccount",
+      address: address ? address : null
+    }),
+    fragment: gql`
+        fragment AdminUserId on Admin {
+          id
+        }
+      `
+  })), [address])
 
   const handleShowUserMenu = () => setShowUserMenu((prev) => !prev)
   const handleOnDisconnect = () => {
     setShowUserMenu(false)
-    disconnect()    
+    disconnect()
   }
 
   return (
@@ -25,14 +52,24 @@ export default function Header() {
       <div className='flex justify-center gap-6'>
         <div>
           <Link href="/" legacyBehavior>
-          <a className={pathname === '/' ? 'text-cyan-200' : ''}>Home</a>
+            <a className={pathname === '/' ? 'text-cyan-200' : ''}>Home</a>
           </Link>
-        </div> 
+        </div>
         <div>
           <Link href="/pinner" legacyBehavior>
-          <a className={pathname === '/pinner' ? 'text-cyan-200' : ''}>Pinner</a>
+            <a className={pathname === '/pinner' ? 'text-cyan-200' : ''}>Pinner</a>
           </Link>
-        </div> 
+        </div>
+        {isUser && <div>
+          <Link href="/profile" legacyBehavior>
+            <a className={pathname === '/profile' ? 'text-cyan-200' : ''}>My Pins</a>
+          </Link>
+        </div>}
+        { isAdminUser && <div>
+          <Link href="/admin" legacyBehavior>
+            <a className={pathname === '/admin' ? 'text-cyan-200' : ''}>Admin Website</a>
+          </Link>
+        </div>}
       </div>
       <div className='w-1/6 grow-0 shrink-0 flex justify-end'>
         {isConnected && address ?
@@ -42,7 +79,7 @@ export default function Header() {
             handleShowUserMenu={handleShowUserMenu}
             userIcon
           /> :
-          <Connect />}
+          <Connect className='h-9 min-w-[8rem] px-4 rounded-lg bg-cyan-600 hover:bg-cyan-500 hover:cursor-pointer disabled:cursor-default hover:disabled:bg-cyan-600' />}
       </div>
       {showUserMenu &&
         <div className='w-40 p-4 bg-slate-800 border shadow-lg border-slate-400 rounded-xl absolute -bottom-36 right-3 z-30'>
