@@ -6,6 +6,14 @@ export const subscriptionsPageSize = 50
 export const usersPageSize = 1000
 export const userPiecesPageSize = 1000
 
+export const websiteDataQueryParams = {
+  adminsPageSize,
+  piecesPageSize,
+  subscriptionsPageSize,
+  usersPageSize,
+  userPiecesPageSize,
+}
+
 export const ADMIN_FRAGMENT = gql(`
   fragment AdminUser on Admin {
     id

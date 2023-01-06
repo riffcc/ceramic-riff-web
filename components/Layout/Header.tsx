@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useAccount, useDisconnect, useEnsName } from 'wagmi'
 import Account from './Account'
 import Connect from './Connect'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { gql, useApolloClient } from '@apollo/client'
 
 export default function Header() {
@@ -18,7 +18,7 @@ export default function Header() {
     id: apolloClient.cache.identify({ 
       __typename: "Admin", 
       admin: { 
-        address: address ? address.toLowerCase() : null 
+        address: address ? address : null 
       } 
     }),
     fragment: gql`
@@ -26,7 +26,7 @@ export default function Header() {
           id
         }
       `
-  })), [address])
+  })), [address, pathname])
 
   const isUser = useMemo(() => !!(apolloClient.readFragment({
     id: apolloClient.cache.identify({
@@ -38,7 +38,7 @@ export default function Header() {
           id
         }
       `
-  })), [address])
+  })), [address, pathname])
 
   const handleShowUserMenu = () => setShowUserMenu((prev) => !prev)
   const handleOnDisconnect = () => {
