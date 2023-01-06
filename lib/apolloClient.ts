@@ -1,4 +1,4 @@
-import { ComposeClient } from '@composedb/client';
+import { ComposeClient } from '@composedb/client'
 import { useEffect, useMemo, useState } from 'react'
 import {
   ApolloClient,
@@ -8,13 +8,14 @@ import {
   NormalizedCacheObject,
   ApolloLink,
   Observable,
+  defaultDataIdFromObject,
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
 import { createComposeClient } from './composeClient'
 import { DID } from 'dids'
-import getDID from './utils/getDID';
+import getDID from './utils/getDID'
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
@@ -55,10 +56,23 @@ async function createApolloClient() {
     cache: new InMemoryCache({
       typePolicies: {
         EthAccount: {
-          keyFields: ['address']
+          keyFields: ['address'],
+        },
+        Admin: {
+          keyFields: ['admin', ['address']],
+        },
+        Query: {
+          queryType: true,
+          fields: {
+            node: {
+              merge: true
+            }
+          }
         }
-      }
+
+      },
     }),
+    connectToDevTools: true,
   })
 }
 
