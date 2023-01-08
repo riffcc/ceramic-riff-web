@@ -65,11 +65,23 @@ async function createApolloClient() {
           queryType: true,
           fields: {
             node: {
-              merge: true
-            }
-          }
-        }
-
+              merge: true,
+            },
+          },
+        },
+        Subscription: {
+          keyFields: ['subscribedWebsite', ['id']],
+        },
+        // Website: {
+        //   fields: {
+        //     subscriptions: {
+        //       merge: (existing, incoming) => {
+        //         console.log(existing, incoming)
+        //         return incoming
+        //       },
+        //     },
+        //   },
+        // },
       },
     }),
     connectToDevTools: true,

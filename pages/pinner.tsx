@@ -4,17 +4,134 @@ import { ChangeEvent, useCallback, useState } from "react"
 import { useAccount } from "wagmi"
 import Connect from "../components/Layout/Connect"
 import Spinner from "../components/Layout/Spinner"
-import { CREATE_PIECE } from "../utils/constants"
+import { CREATE_PIECE, websiteDataQueryParams } from "../utils/constants"
 import { getDate } from "../utils/getDate"
 
+export const WebsiteData = gql`
+  fragment WebsiteData on Website {
+    id
+    admins(first: $adminsPageSize) {
+          edges {
+            node {
+              id
+              adminID
+              admin {
+                address
+                ensName
+              }
+              metadata {
+                createdAt
+                updatedAt
+              }
+            }
+          }
+        }
+    adminsCount
+    pieces(first: $piecesPageSize) {
+      edges {
+        node {
+          id
+          cid
+          name
+          approved
+          rejected
+          ownerID
+          owner {
+            address
+            ensName
+          }
+          metadata {
+            createdAt
+            updatedAt
+          }
+        }
+      }
+    }
+    piecesCount
+    subscriptions(first: $subscriptionsPageSize) {
+      edges {
+        node {
+          id
+          subscribedWebsite {
+            id
+            pieces(first: $piecesPageSize) {
+              edges {
+                node {
+                  id
+                  cid
+                  name
+                  approved
+                  rejected
+                  metadata {
+                    createdAt
+                    updatedAt
+                  }
+                }
+              }
+            }
+            piecesCount
+          }
+          metadata {
+          createdAt
+          updatedAt
+          }
+        }
+      }
+    }
+    subscriptionsCount
+    users(first: $usersPageSize) {
+      edges {
+        node {
+          id
+          address
+          ensName
+          metadata {
+            createdAt
+            updatedAt
+          }
+        }
+      }
+    }
+    usersCount
+  }
+`
+
 const PinnerPage: NextPage = () => {
+  const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
   const { address, isConnected } = useAccount()
   const apolloClient = useApolloClient()
 
   const [name, setName] = useState("");
   const [cid, setCid] = useState("");
 
-  const [createPiece, { loading: loadingMutation }] = useMutation(CREATE_PIECE)
+  const [createPiece, { loading: loadingMutation }] = useMutation(CREATE_PIECE, { 
+    update: (cache, result) => {
+      cache.updateFragment({
+        id: `Website:${websiteID}`,
+        fragment: WebsiteData,
+        fragmentName: 'WebsiteData',
+        variables: {
+          ...websiteDataQueryParams
+        }
+      }, (data) => {
+        if (data?.pieces.edges && data?.subscriptions.edges) {
+          return {
+            ...data,
+            pieces: {
+              ...data.pieces,
+              edges: [
+                ...data.pieces.edges,
+                { __typename: 'PieceEgde', node: result.data?.createPiece?.document }
+              ]
+            },
+            piecesCount: data.piecesCount + 1
+          }
+        } else {
+        }
+        return data
+      })
+    }
+  })
 
   const handleOnChangeName = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
@@ -46,7 +163,7 @@ const PinnerPage: NextPage = () => {
       variables: {
         input: {
           content: {
-            websiteID: process.env.NEXT_PUBLIC_WEBSITE_ID,
+            websiteID,
             ownerID: userEthAccount.id,
             name: name,
             cid: cid,
@@ -58,18 +175,7 @@ const PinnerPage: NextPage = () => {
             }
           }
         }
-      },
-      // refetchQueries: [
-      //   {
-      //     query: GET_WEBSITE_CONTENT, 
-      //     variables: {
-      //       id: process.env.NEXT_PUBLIC_WEBSITE_ID,
-      //       piecesPageSize: 50,
-      //       subscriptionsPageSize: 50
-      //     }
-      //   },
-      //   'WebsiteContent'
-      // ]
+      }
     })
   }
 

@@ -3,10 +3,9 @@ import PieceItem from "./PieceItem";
 
 type Props = {
   list: any;
-  filter?: 'rejected' | 'approved' | 'pending';
   adminControls?: boolean
 }
-export default function PieceList({ list, filter, adminControls = false }: Props) {
+export default function PieceList({ list, adminControls = false }: Props) {
   return (
     <div className="flex-1 flex flex-wrap justify-center py-8 gap-2 content-evenly">
       {
@@ -15,9 +14,6 @@ export default function PieceList({ list, filter, adminControls = false }: Props
           piece.node &&
           piece.node.name &&
           piece.node.cid &&
-          (filter === 'rejected' ? piece.node.rejected : true) &&
-          (filter === 'pending' ? !piece.node.approved : true) &&
-          (filter === 'approved' ? piece.node.approved : true) &&
             <PieceItem
               key={piece.node.id}
               piece={piece.node}

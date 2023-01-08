@@ -3,8 +3,35 @@ import Link from 'next/link'
 import { useAccount, useDisconnect, useEnsName } from 'wagmi'
 import Account from './Account'
 import Connect from './Connect'
-import { useMemo, useState } from 'react'
-import { gql, useApolloClient } from '@apollo/client'
+import { useState } from 'react'
+import { gql, useFragment_experimental } from '@apollo/client'
+
+export const AdminFragment = gql`
+  fragment WebsiteAdmin on Admin {
+    id
+    adminID
+    admin {
+      address
+      ensName
+    }
+    metadata {
+      createdAt
+      updatedAt
+    }
+  }
+`
+
+export const UserFragment = gql`
+  fragment WebsiteUser on EthAccount {
+    id
+    address
+    ensName
+    metadata {
+      createdAt
+      updatedAt
+    }
+  }
+`
 
 export default function Header() {
   const { pathname } = useRouter()
@@ -12,33 +39,24 @@ export default function Header() {
   const { data: ensName } = useEnsName({ address });
   const { disconnect } = useDisconnect()
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const apolloClient = useApolloClient()
 
-  const isAdminUser = useMemo(() => !!(apolloClient.readFragment({
-    id: apolloClient.cache.identify({ 
-      __typename: "Admin", 
-      admin: { 
-        address: address ? address : null 
-      } 
-    }),
-    fragment: gql`
-        fragment AdminUserId on Admin {
-          id
-        }
-      `
-  })), [address, pathname])
+  const { complete: isAdminUser } = useFragment_experimental({
+    from: {
+      __typename: "Admin",
+      admin: {
+        address: address ? address : null
+      }
+    },
+    fragment: AdminFragment
+  })
 
-  const isUser = useMemo(() => !!(apolloClient.readFragment({
-    id: apolloClient.cache.identify({
+  const { complete: isUser } = useFragment_experimental({
+    from: {
       __typename: "EthAccount",
       address: address ? address : null
-    }),
-    fragment: gql`
-        fragment AdminUserId on Admin {
-          id
-        }
-      `
-  })), [address, pathname])
+    },
+    fragment: UserFragment
+  })
 
   const handleShowUserMenu = () => setShowUserMenu((prev) => !prev)
   const handleOnDisconnect = () => {
@@ -87,11 +105,6 @@ export default function Header() {
             <div className='hover:text-cyan-200'>
               <Link href={'/profile'} onClick={handleShowUserMenu}>
                 <p>Profile</p>
-              </Link>
-            </div>
-            <div className='hover:text-cyan-200'>
-              <Link href={'/profile'} onClick={handleShowUserMenu}>
-                <p>Config</p>
               </Link>
             </div>
             <div className='hover:text-cyan-200 hover:cursor-pointer'>

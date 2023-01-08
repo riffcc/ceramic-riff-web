@@ -7,7 +7,7 @@ const { chains, provider, webSocketProvider } = configureChains(
 )
 
 export const client = createClient({
-  autoConnect: false,
+  autoConnect: true,
   provider,
   webSocketProvider,
 })

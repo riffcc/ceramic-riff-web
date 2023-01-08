@@ -4,88 +4,13 @@ export const adminsPageSize = 50
 export const piecesPageSize = 50
 export const subscriptionsPageSize = 50
 export const usersPageSize = 1000
-export const userPiecesPageSize = 1000
 
 export const websiteDataQueryParams = {
   adminsPageSize,
   piecesPageSize,
   subscriptionsPageSize,
-  usersPageSize,
-  userPiecesPageSize,
+  usersPageSize
 }
-
-export const ADMIN_FRAGMENT = gql(`
-  fragment AdminUser on Admin {
-    id
-    adminID
-    admin {
-      address
-      ensName
-    }
-    metadata {
-      createdAt
-      updatedAt
-    }
-  }
-`)
-
-export const USER_FRAGMENT = gql(`
-  fragment User on EthAccount {
-    id
-    address
-    ensName
-    pieces(first: $userPiecesPageSize) {
-      edges {
-        node {
-          id
-          cid
-          name
-          ownerID
-          owner {
-            id
-            address
-            ensName
-          }
-          approved
-          rejected
-          websiteID
-          website {
-            websiteName
-          }
-          metadata {
-            createdAt
-            updatedAt
-          }
-        }
-      }
-    }
-    piecesCount
-    metadata {
-      createdAt
-      updatedAt
-    }
-  }
-`)
-
-export const PIECE_FRAGMENT = gql(`
-  fragment PieceFragment on Piece {
-    id
-    cid
-    name
-    ownerID
-    owner {
-      id
-      address
-      ensName
-    }
-    approved
-    rejected
-    metadata {
-      createdAt
-      updatedAt
-    }
-  }
-`)
 
 export const GET_WEBSITE_DATA = gql(`
   query WebsiteData(
@@ -93,15 +18,24 @@ export const GET_WEBSITE_DATA = gql(`
       $adminsPageSize: Int!,
       $piecesPageSize: Int!, 
       $subscriptionsPageSize: Int!, 
-      $usersPageSize: Int!, 
-      $userPiecesPageSize: Int!
+      $usersPageSize: Int!
     ) {
     node(id: $id) {
       ... on Website {
+        id
         admins(first: $adminsPageSize) {
               edges {
                 node {
-                  ...AdminUser
+                  id
+                  adminID
+                  admin {
+                    address
+                    ensName
+                  }
+                  metadata {
+                    createdAt
+                    updatedAt
+                  }
                 }
               }
             }
@@ -109,23 +43,15 @@ export const GET_WEBSITE_DATA = gql(`
         pieces(first: $piecesPageSize) {
           edges {
             node {
-              ...PieceFragment
-            }
-          }
-        }
-        piecesCount
-        subscriptions(first: $subscriptionsPageSize) {
-          edges {
-            node {
-              subcribedWebsite {
-                pieces(first: $piecesPageSize) {
-                  edges {
-                    node {
-                      ...PieceFragment
-                    }
-                  }
-                }
-                piecesCount
+              id
+              cid
+              name
+              approved
+              rejected
+              ownerID
+              owner {
+                address
+                ensName
               }
               metadata {
                 createdAt
@@ -134,11 +60,48 @@ export const GET_WEBSITE_DATA = gql(`
             }
           }
         }
+        piecesCount
+        subscriptions(first: $subscriptionsPageSize) {
+          edges {
+            node {
+              id
+              subscribedWebsite {
+                id
+                pieces(first: $piecesPageSize) {
+                  edges {
+                    node {
+                      id
+                      cid
+                      name
+                      approved
+                      rejected
+                      metadata {
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                  }
+                }
+                piecesCount
+              }
+              metadata {
+              createdAt
+              updatedAt
+              }
+            }
+          }
+        }
         subscriptionsCount
         users(first: $usersPageSize) {
           edges {
             node {
-              ...User
+              id
+              address
+              ensName
+              metadata {
+                createdAt
+                updatedAt
+              }
             }
           }
         }
@@ -148,21 +111,94 @@ export const GET_WEBSITE_DATA = gql(`
   }
 `)
 
+export const GET_WEBSITE_USERS = gql(`
+  query WebsiteUsers(
+    $id: ID!,
+    $usersPageSize: Int!, 
+  ) {
+      node(id: $id) {
+        ... on Website {
+          id
+          users(first: $usersPageSize) {
+            edges {
+              node {
+                id
+                address
+                ensName
+                metadata {
+                  createdAt
+                  updatedAt
+                }
+              }
+            }
+          }
+          usersCount
+        }
+      }
+    }
+`)
+
+export const GET_WEBSITE_PIECES = gql(`
+  query WebsitePieces(
+    $id: ID!
+    $piecesPageSize: Int!,
+  ) {
+      node(id: $id) {
+        ... on Website {
+          id
+          pieces(first: $piecesPageSize) {
+            edges {
+              node {
+                id
+                cid
+                name
+                approved
+                rejected
+                ownerID
+                owner {
+                  address
+                  ensName
+                }
+                metadata {
+                  createdAt
+                  updatedAt
+                }
+              }
+            }
+          }
+          piecesCount
+        }
+      }
+    }
+`)
+
 export const GET_ETH_ACCOUNT = gql(`
-  query EthAccount($id: ID!, $userPiecesPageSize: Int!) {
+  query EthAccount($id: ID!) {
     node(id: $id) {
       ... on EthAccount {
-        ...User
+        id
+        address
+        ensName
+        metadata {
+          createdAt
+          updatedAt
+        }
       }
     }
   }
 `)
 
 export const CREATE_ETH_ACCOUNT = gql(`
-  mutation CreateEthAccount($input: CreateEthAccountInput!, $userPiecesPageSize: Int!) {
+  mutation CreateEthAccount($input: CreateEthAccountInput!) {
     createEthAccount(input: $input) {
       document {
-        ...User
+        id
+        address
+        ensName
+        metadata {
+          createdAt
+          updatedAt
+        }
       }
     }
   }
@@ -175,17 +211,12 @@ export const GET_PIECE = gql(`
         id
         cid
         name
-        ownerID
-        owner {
-          id
-          address
-          ensName
-        }
         approved
         rejected
-        websiteID
-        website {
-          websiteName
+        ownerID
+        owner {
+          address
+          ensName
         }
         metadata {
           createdAt
@@ -203,17 +234,12 @@ export const CREATE_PIECE = gql(`
         id
         cid
         name
-        ownerID
-        owner {
-          id
-          address
-          ensName
-        }
         approved
         rejected
-        websiteID
-        website {
-          websiteName
+        ownerID
+        owner {
+          address
+          ensName
         }
         metadata {
           createdAt
@@ -231,17 +257,12 @@ export const UPDATE_PIECE = gql(`
         id
         cid
         name
-        ownerID
-        owner {
-          id
-          address
-          ensName
-        }
         approved
         rejected
-        websiteID
-        website {
-          websiteName
+        ownerID
+        owner {
+          address
+          ensName
         }
         metadata {
           createdAt
@@ -253,18 +274,16 @@ export const UPDATE_PIECE = gql(`
 `)
 
 export const GET_SUBSCRIPTION = gql(`
-  query Subscription($id: ID!) {
+  query Subscription($id: ID!, $piecesPageSize: Int!) {
     node(id: $id) {
       ... on Subscription {
         id
-        subcribedWebsite {
+        subscribedWebsite {
+          id
           websiteName
+          description
+          image
         }
-        subscribedID
-        website {
-          websiteName
-        }
-        websiteID
         metadata {
           createdAt
           updatedAt
@@ -275,18 +294,29 @@ export const GET_SUBSCRIPTION = gql(`
 `)
 
 export const CREATE_SUBSCRIPTION = gql(`
-  mutation CreateSubscription($input: CreateSubscriptionInput!) {
+  mutation CreateSubscription($input: CreateSubscriptionInput!, $piecesPageSize: Int!) {
     createSubscription(input: $input) {
       document {
         id
-        subcribedWebsite {
-          websiteName
+        subscribedWebsite {
+          id
+          pieces(first: $piecesPageSize) {
+            edges {
+              node {
+                id
+                cid
+                name
+                approved
+                rejected
+                metadata {
+                  createdAt
+                  updatedAt
+                }
+              }
+            }
+          }
+          piecesCount
         }
-        subscribedID
-        website {
-          websiteName
-        }
-        websiteID
         metadata {
           createdAt
           updatedAt
@@ -301,14 +331,12 @@ export const UPDATE_SUBSCRIPTION = gql(`
     updateSubscription(input: $input) {
       document {
         id
-        subcribedWebsite {
+        subscribedWebsite {
+          id
           websiteName
+          description
+          image
         }
-        subscribedID
-        website {
-          websiteName
-        }
-        websiteID
         metadata {
           createdAt
           updatedAt
@@ -323,13 +351,8 @@ export const GET_ADMIN = gql(`
     node(id: $id) {
       ... on Admin {
         id
-        websiteID
-        website {
-          websiteName
-        }
         adminID
         admin {
-          id
           address
           ensName
         }
@@ -347,19 +370,29 @@ export const CREATE_ADMIN = gql(`
     createAdmin(input: $input) {
       document {
         id
-        websiteID
-        website {
-          websiteName
-        }
         adminID
         admin {
-          id
           address
           ensName
         }
         metadata {
           createdAt
           updatedAt
+        }
+      }
+    }
+  }
+`)
+
+export const GET_WEBSITE_INDEX = gql(`
+  query WebsiteIndex($pageSize: Int!) {
+    websiteIndex(first: $pageSize) {
+      edges {
+        node {
+          id
+          websiteName
+          description
+          image
         }
       }
     }

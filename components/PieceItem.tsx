@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Piece } from "../utils/__generated__/graphql";
-import ItemAdminControls from "./ItemAdminControls";
+import PieceAdminControls from "./PieceAdminControls";
 
 interface Props {
   piece: Piece
@@ -30,7 +30,7 @@ export default function PieceItem({ piece, adminControls }: Props) {
       />
       {
         adminControls && (
-          <ItemAdminControls piece={piece} newName={name} />
+          <PieceAdminControls piece={piece} newName={name} />
         )
       }
     </div>

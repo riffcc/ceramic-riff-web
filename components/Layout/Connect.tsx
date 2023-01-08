@@ -1,14 +1,17 @@
-import { gql, useApolloClient, useQuery } from "@apollo/client"
+import { gql, useApolloClient, useFragment_experimental, useMutation, useQuery } from "@apollo/client"
 import { useConnect } from "wagmi"
 import { MetaMaskConnector } from "wagmi/connectors/metaMask"
-import { CREATE_ETH_ACCOUNT, userPiecesPageSize } from "../../utils/constants"
+import { WebsiteData } from "../../pages/pinner"
+import { CREATE_ETH_ACCOUNT, GET_WEBSITE_USERS, usersPageSize, websiteDataQueryParams } from "../../utils/constants"
 import { getDate } from "../../utils/getDate"
+import { UserFragment } from "./Header"
 import Spinner from "./Spinner"
 
 type Props = {
   className: string;
 }
 export default function Connect({ className }: Props) {
+  const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
   const { connectAsync, isLoading } = useConnect({
     connector: new MetaMaskConnector(),
   })
@@ -20,11 +23,7 @@ export default function Connect({ className }: Props) {
 
       const userEthAccount = apolloClient.cache.readFragment({
         id: apolloClient.cache.identify({ __typename: "EthAccount", address: account }),
-        fragment: gql`
-          fragment UserEthAccountId on EthAccount {
-            id
-          }
-        `
+        fragment: UserFragment
       })
 
       if (!userEthAccount) {
@@ -34,14 +33,39 @@ export default function Connect({ className }: Props) {
             input: {
               content: {
                 address: account as string,
-                websiteID: process.env.NEXT_PUBLIC_WEBSITE_ID,
+                websiteID,
                 metadata: {
                   createdAt: getDate(),
                   updatedAt: getDate()
                 }
               }
             },
-            userPiecesPageSize
+          },
+          update: (cache, result) => {
+            cache.updateFragment({
+              id: `Website:${websiteID}`,
+              fragment: WebsiteData,
+              fragmentName: 'WebsiteData',
+              variables: {
+                ...websiteDataQueryParams
+              }
+            }, (data) => {
+              if (data?.users.edges) {
+                return {
+                  ...data,
+                  users: {
+                    ...data.users,
+                    edges: [
+                      ...data.users.edges,
+                      { __typename: 'EthAccountEdge', node: result.data?.createEthAccount?.document }
+                    ]
+                  },
+                  usersCount: data.usersCount + 1
+                }
+              } else {
+                return data
+              }
+            })
           }
         })
       }

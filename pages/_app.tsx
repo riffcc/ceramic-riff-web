@@ -3,7 +3,6 @@ import type { AppProps } from 'next/app'
 import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '../lib/apolloClient'
 import Layout from '../components/Layout/Layout'
-import Spinner from '../components/Layout/Spinner'
 import { WagmiConfig } from 'wagmi'
 import { client } from '../utils/wagmi'
 
@@ -23,8 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             </ApolloProvider>
           </WagmiConfig>
         ) : (
-          <div className='bg-slate-800 h-screen flex items-center justify-center'>
-            <Spinner className='h-10 w-10 text-slate-100 animate-spin' />
+          <div className="min-h-screen flex flex-col bg-gradient-to-b from-slate-900 to-black text-slate-50">
           </div>
         )
       }
