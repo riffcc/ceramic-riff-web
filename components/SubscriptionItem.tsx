@@ -83,7 +83,7 @@ export default function SubscriptionItem({ subscription }: Props) {
 
   return (
     <div className="grid grid-rows-3 grid-flow-col ">
-      <div className="row-span-3 rounded-xl p-4 h-24 w-24 m-auto bg-gradient-to-b from-slate-700 to-slate-600">
+      <div className="row-span-3 rounded-xl relative p-4 h-24 w-24 m-auto bg-gradient-to-b from-slate-700 to-slate-600">
         {
           subscription.image ? <Image
             alt=""
