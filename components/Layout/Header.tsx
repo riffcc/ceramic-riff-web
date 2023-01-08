@@ -100,7 +100,7 @@ export default function Header() {
           <Connect className='h-9 min-w-[8rem] px-4 rounded-lg bg-cyan-600 hover:bg-cyan-500 hover:cursor-pointer disabled:cursor-default hover:disabled:bg-cyan-600' />}
       </div>
       {showUserMenu &&
-        <div className='w-40 p-4 bg-slate-800 border shadow-lg border-slate-400 rounded-xl absolute -bottom-36 right-3 z-30'>
+        <div className='w-40 p-4 bg-slate-800 border shadow-lg border-slate-400 rounded-xl absolute -bottom-[6.3rem] right-3 z-30'>
           <div className='h-full space-y-4'>
             <div className='hover:text-cyan-200'>
               <Link href={'/profile'} onClick={handleShowUserMenu}>
