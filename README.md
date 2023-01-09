@@ -36,6 +36,4 @@ yarn dev
 Made available under the MIT License.
 
 ## Credits
-Copyright (c) 2023 Riff.CC
-
 Authored by @en0c-026, @Zorlin
