@@ -66,7 +66,7 @@ export default function Header() {
 
   return (
     <header className="bg-slate-800 h-14 flex items-center px-6 justify-between text-slate-50 relative">
-      <p className='w-1/6 text-2xl font-bold text-white'>Rif.CC</p>
+      <p className='w-1/6 text-2xl font-bold text-white'>Riff.CC</p>
       <div className='flex justify-center gap-6'>
         <div>
           <Link href="/" legacyBehavior>
