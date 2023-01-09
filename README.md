@@ -1,4 +1,4 @@
-[![Contributors](https://img.shields.io/opencollective/all/riffcc?label=Sponsor%20us%20on%20OpenCollective&style=flat-square)](https://opencollective.com/riffcc)
+[![Contributors](https://img.shields.io/opencollective/all/riffcc?style=flat-square)](https://opencollective.com/riffcc)
 
 # Riff.CC on Ceramic (ComposeDB)
 
