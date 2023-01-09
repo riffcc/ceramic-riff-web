@@ -6,16 +6,20 @@ A proof-of-concept version of Riff.CC, implemented using Ceramic and ComposeDB. 
 
 ## Usage
 
-* Setup and configure https://github
+* Setup and configure [https://github.com/riffcc/ceramic-node](ceramic-node)
 
-Install packages
+* Install packages
 ```bash
 yarn install
 ```
 
-Paste required files lib/Composite.graphql and lib/definitions.ts generated ceramic-node repository.
+* Copy lib/Composite.graphql and lib/definitions.ts from the ceramic-node repository.
+```bash
+cp ../ceramic-node/composites/Composite.graphql lib/
+cp ../ceramic-node/composites/definitions.ts lib/
+```
 
-Rename .env.local.example to env.local and fill variables
+* Rename .env.local.example to env.local and fill variables
 ```bash
 NEXT_PUBLIC_PRIVATE_KEY<NODE_PRIVATE_KEY> # Generated in ceramic-node repository via yarn run generate:private-key
 NEXT_PUBLIC_WEBSITE_ID=<TEST_WEBSITE_ID> # Generated in ceramic-node repository via yarn run graphql:example-queries
@@ -36,4 +40,4 @@ yarn dev
 Made available under the MIT License.
 
 ## Credits
-Authored by @en0c-026, @Zorlin
+Authored by [https://github.com/en0c-026](@en0c-026), [https://github.com/Zorlin](@Zorlin)
