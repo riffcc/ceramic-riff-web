@@ -6,7 +6,7 @@ A proof-of-concept version of Riff.CC, implemented using Ceramic and ComposeDB. 
 
 ## Usage
 
-* Setup and configure [https://github.com/riffcc/ceramic-node](ceramic-node)
+* Setup and configure [ceramic-node](https://github.com/riffcc/ceramic-node)
 
 * Install packages
 ```bash
@@ -40,4 +40,4 @@ yarn dev
 Made available under the MIT License.
 
 ## Credits
-Authored by [https://github.com/en0c-026](@en0c-026), [https://github.com/Zorlin](@Zorlin)
+Authored by [@en0c-026](https://github.com/en0c-026), [@Zorlin](https://github.com/Zorlin)
