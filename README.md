@@ -1,4 +1,4 @@
-[![Contributors](https://opencollective.com/riffcc/total/backers.svg?avatarHeight=24&width=600)](https://opencollective.com/riffcc)
+[[![Contributors](https://opencollective.com/riffcc/total/backers.svg?avatarHeight=24&width=600)]](https://opencollective.com/riffcc)
 
 # Riff.CC on Ceramic (ComposeDB)
 
