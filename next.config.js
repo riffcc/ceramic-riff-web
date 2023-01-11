@@ -4,8 +4,4 @@ module.exports = {
   images: {
     domains: [process.env.NEXT_PUBLIC_IPFS_GATEWAY]
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-    // ...
-  ],
 }
