@@ -162,7 +162,7 @@ export default function PieceActions({ piece }: Props) {
           content: {
             approved: false,
             rejected: false,
-            rejectionReason: null,
+            rejectionReason: '',
             metadata: {
               createdAt: piece?.metadata.createdAt!,
               updatedAt: getDate()
