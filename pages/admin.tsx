@@ -77,15 +77,15 @@ const AdminPage: NextPage = () => {
                 <h1 className='font-bold text-xl border-b border-slate-500 pb-2'>Content</h1>
                 <p className='font-semibold mx-auto flex-none'>Approved</p>
                 <div className='border rounded-xl border-slate-500 min-h-[20rem] flex'>
-                  {pieces.approvedPieces && pieces.approvedPieces.length > 0 ? <PieceList list={pieces.approvedPieces} adminControls /> : <p className='m-auto'>Not content found.</p>}
+                  {pieces.approvedPieces && pieces.approvedPieces.length > 0 ? <PieceList list={pieces.approvedPieces} table/> : <p className='m-auto'>Not content found.</p>}
                 </div>
                 <p className='font-semibold mx-auto flex-none'>Pending</p>
                 <div className='border rounded-xl border-slate-500 min-h-[20rem] flex'>
-                  {pieces.pendingPieces && pieces.pendingPieces.length > 0 ? <PieceList list={pieces.pendingPieces} adminControls /> : <p className='m-auto'>Not content found.</p>}
+                  {pieces.pendingPieces && pieces.pendingPieces.length > 0 ? <PieceList list={pieces.pendingPieces} table/> : <p className='m-auto'>Not content found.</p>}
                 </div>
                 <p className='font-semibold mx-auto flex-none'>Rejected</p>
                 <div className='border rounded-xl border-slate-500 min-h-[20rem] flex'>
-                  {pieces.rejectedPieces && pieces.rejectedPieces.length > 0 ? <PieceList list={pieces.rejectedPieces} adminControls /> : <p className='m-auto'>Not content found.</p>}
+                  {pieces.rejectedPieces && pieces.rejectedPieces.length > 0 ? <PieceList list={pieces.rejectedPieces} table/> : <p className='m-auto'>Not content found.</p>}
                 </div>
               </div>
               <div className='flex flex-col w-full mt-10 border-t-2 border-slate-500 py-2'>

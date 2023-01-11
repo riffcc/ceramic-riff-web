@@ -33,8 +33,10 @@ export const WebsiteData = gql`
           id
           cid
           name
+          category
           approved
           rejected
+          rejectionReason
           ownerID
           owner {
             address
@@ -60,8 +62,10 @@ export const WebsiteData = gql`
                   id
                   cid
                   name
+                  category
                   approved
                   rejected
+                  rejectionReason
                   metadata {
                     createdAt
                     updatedAt

@@ -46,8 +46,10 @@ export const GET_WEBSITE_DATA = gql(`
               id
               cid
               name
+              category
               approved
               rejected
+              rejectionReason
               ownerID
               owner {
                 address
@@ -73,8 +75,10 @@ export const GET_WEBSITE_DATA = gql(`
                       id
                       cid
                       name
+                      category
                       approved
                       rejected
+                      rejectionReason
                       metadata {
                         createdAt
                         updatedAt
@@ -152,8 +156,10 @@ export const GET_WEBSITE_PIECES = gql(`
                 id
                 cid
                 name
+                category
                 approved
                 rejected
+                rejectionReason
                 ownerID
                 owner {
                   address
@@ -211,8 +217,10 @@ export const GET_PIECE = gql(`
         id
         cid
         name
+        category
         approved
         rejected
+        rejectionReason
         ownerID
         owner {
           address
@@ -234,8 +242,10 @@ export const CREATE_PIECE = gql(`
         id
         cid
         name
+        category
         approved
         rejected
+        rejectionReason
         ownerID
         owner {
           address
@@ -257,8 +267,10 @@ export const UPDATE_PIECE = gql(`
         id
         cid
         name
+        category
         approved
         rejected
+        rejectionReason
         ownerID
         owner {
           address
