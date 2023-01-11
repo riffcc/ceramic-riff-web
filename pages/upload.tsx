@@ -121,7 +121,7 @@ const UploadPage: NextPage = () => {
           />
           <p className="text-sm mb-1 ml-1">Category:</p>
           <select
-            className='text-black rounded-lg mb-4'
+            className='form-select text-black rounded-lg mb-4'
             value={category}
             onChange={handleOnChangeCategory}
           >
