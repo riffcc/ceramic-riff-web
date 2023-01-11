@@ -100,7 +100,7 @@ const UploadPage: NextPage = () => {
     <div className='px-4 py-10 min-h-screen'>
       <div className="w-96 border px-6 pt-8 pb-12 m-auto rounded-xl">
         <p className="text-lg font-semibold mb-4 text-center">Pin a new item</p>
-        <div className='flex flex-col'>
+        <div className='grid'>
           <p className="text-sm mb-1 ml-1">Name:</p>
           <input
             placeholder="Nyan Cat Meme"

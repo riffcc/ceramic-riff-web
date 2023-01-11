@@ -29,7 +29,7 @@ export default function PieceActions({ piece }: Props) {
   const [openRejectModal, setOpenRejectModal] = useState(false)
 
   const [name, setName] = useState(piece?.name!)
-  const [category, setCategory] = useState(piece?.category!)
+  const [category, setCategory] = useState(piece?.category! ?? 'default')
   const [cid, setCid] = useState(piece?.cid!)
   const [rejectionReason, setRejectionReason] = useState('')
 
@@ -221,35 +221,36 @@ export default function PieceActions({ piece }: Props) {
       {
         openEditModal && (
           <div className="h-96 w-96 bg-slate-900 rounded-xl shadow-lg border border-slate-500 fixed inset-0 m-auto z-30 p-4">
-            <div className="grid justify-Pieces-stretch">
+            <div className="grid">
               <HiOutlineX className="h-5 w-5 text-slate-200 justify-self-end" onClick={hideEditModal} />
               <h1 className="text-lg font-semibold text-center">Edit Piece</h1>
-              <div className="py-4 px-6 space-y-2">
-                <div>
-                  <p>Name:</p>
+              <div className="w-full p-4 space-y-2">
+               <div>
+                  <p className="text-sm mb-1 ml-1"> Name:</p>
                   <input
                     type="text"
-                    className="text-black py-1 px-2 mt-1 rounded w-full"
+                    className="form-input text-black rounded-lg w-full"
                     value={name}
                     onChange={handleOnChangeName}
                   />
-                </div>
+               </div>
                 <div>
-                  <p>CID:</p>
+                  <p className="text-sm mb-1 ml-1">CID:</p>
                   <input
                     type="text"
-                    className="text-black py-1 px-2 mt-1 rounded w-full"
+                    className="form-input text-black rounded-lg w-full"
                     value={cid}
                     onChange={handleOnChangeCid}
                   />
                 </div>
                 <div>
-                  <p>Category:</p>
+                  <p className="text-sm mb-1 ml-1">Category:</p>
                   <select
-                    className='text-black py-1 px-2 mt-1 rounded w-full'
+                    className='form-select text-black rounded-lg w-full'
                     value={category}
                     onChange={handleOnChangeCategory}
                   >
+                    <option disabled hidden value='default'>Select a category</option>
                     {
                       pieceCategories.map((category) => (
                         <option value={category}>{category}</option>
@@ -259,9 +260,9 @@ export default function PieceActions({ piece }: Props) {
                 </div>
               </div>
               <button
-                className="h-10 w-20 py-1 px-2 mt-1 bg-cyan-600 hover:cursor-pointer disabled:bg-cyan-700 disabled:cursor-default hover:disabled:coursor-default mx-auto rounded"
+                className="h-10 w-20 py-1 px-2 mt-1 bg-cyan-600 disabled:hover:bg-cyan-900 disabled:bg-cyan-900 disabled:text-slate-400 hover:cursor-pointer disabled:cursor-default hover:disabled:coursor-default mx-auto rounded"
                 onClick={handleEditPiece}
-                disabled={loadingUpdatePiece || name === '' || cid === ''}
+                disabled={loadingUpdatePiece || name === '' || cid === '' || category === 'default'}
               >
                 {
                   loadingUpdatePiece ?
@@ -276,23 +277,20 @@ export default function PieceActions({ piece }: Props) {
       {
         openRejectModal && (
           <div className="h-60 w-96 bg-slate-900 rounded-xl shadow-lg border border-slate-500 fixed inset-0 m-auto z-30 p-4">
-            <div className="grid justify-Pieces-stretch">
+            <div className="grid justify-items-stretch">
               <HiOutlineX className="h-5 w-5 text-slate-200 justify-self-end" onClick={hideRejectModal} />
               <h1 className="text-lg font-semibold text-center">Reject Piece</h1>
-              <div className="py-4 px-6 space-y-2">
-                <div>
-                  <p>Reason:</p>
-                  <input
-                    type='text'
-                    className="text-black py-1 px-2 mt-1 rounded w-full"
-                    value={rejectionReason}
-                    onChange={handleOnChangeRejectionReason}
-                  />
-                </div>
-
+              <div className="p-4 w-full">
+                <p className="text-sm mb-1 ml-1">Reason:</p>
+                <input
+                  type='text'
+                  className="form-input text-black rounded-lg w-full"
+                  value={rejectionReason}
+                  onChange={handleOnChangeRejectionReason}
+                />
               </div>
               <button
-                className="h-10 w-20 py-1 px-2 mt-1 bg-cyan-600 hover:cursor-pointer disabled:bg-cyan-700 disabled:cursor-default hover:disabled:coursor-default mx-auto rounded"
+                className="h-10 w-20 py-1 px-2 mt-1 bg-cyan-600 hover:cursor-pointer disabled:hover:bg-cyan-900 disabled:bg-cyan-900 disabled:text-slate-400 disabled:cursor-default hover:disabled:coursor-default mx-auto rounded"
                 onClick={handleRejectPiece}
                 disabled={rejectionReason === ''}
               >
