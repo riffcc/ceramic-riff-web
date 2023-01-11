@@ -1,12 +1,9 @@
 import { gql, useFragment_experimental, useMutation } from "@apollo/client";
 import Image from "next/image";
-import { useMemo } from "react";
 import { HiOutlineCreditCard } from "react-icons/hi";
 import { CREATE_SUBSCRIPTION, WebsiteData, websiteDataQueryParams } from "../utils/constants";
 import { getDate } from "../utils/getDate";
-import { useFragment } from "../utils/__generated__";
 import { Website } from "../utils/__generated__/graphql";
-import Spinner from "./Layout/Spinner";
 
 interface Props {
   subscription: Website

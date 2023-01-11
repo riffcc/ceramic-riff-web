@@ -1,6 +1,6 @@
-import { gql, useApolloClient, useLazyQuery, useMutation, useQuery } from "@apollo/client"
+import { gql, useApolloClient, useMutation } from "@apollo/client"
 import { NextPage } from "next/types"
-import { ChangeEvent, useCallback, useState } from "react"
+import { ChangeEvent, useState } from "react"
 import { useAccount } from "wagmi"
 import Connect from "../components/Layout/Connect"
 import Spinner from "../components/Layout/Spinner"

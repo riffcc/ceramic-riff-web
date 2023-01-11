@@ -1,20 +1,17 @@
 import { ComposeClient } from '@composedb/client'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   ApolloClient,
-  HttpLink,
   InMemoryCache,
   from,
   NormalizedCacheObject,
   ApolloLink,
   Observable,
-  defaultDataIdFromObject,
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import merge from 'deepmerge'
 import isEqual from 'lodash/isEqual'
 import { createComposeClient } from './composeClient'
-import { DID } from 'dids'
 import getDID from './utils/getDID'
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
