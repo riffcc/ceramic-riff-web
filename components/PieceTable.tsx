@@ -13,26 +13,22 @@ const columnHelper = createColumnHelper<PieceEdge>()
 const columns = [
   columnHelper.accessor('node', {
     id: 'thumbnail',
-    header: () => 'Thumbnail',
     cell: props => <div className='h-16 w-16 mx-auto relative my-1'>
       <Image src={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${props.getValue()?.cid}`} fill alt='' />
     </div>
   }),
   columnHelper.accessor('node', {
     id: 'name',
-    header: () => 'Name',
     cell: props => <p className='text-center'>{props.getValue()?.name}</p>
   }),
   columnHelper.accessor('node', {
     id: 'category',
-    header: () => 'Category',
     cell: props => {
       return <p className='text-center'>{props.getValue()?.category}</p>
     }
   }),
   columnHelper.accessor('node', {
     id: 'cid',
-    header: () => 'CID',
     cell: props =>
       <a href={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${props.getValue()?.cid}`} target='_blank'>
         <p className='text-center hover:text-cyan-200'>
@@ -42,7 +38,6 @@ const columns = [
   }),
   columnHelper.accessor('node', {
     id: 'actions',
-    header: 'Actions',
     cell: props => <PieceActions piece={props.getValue()} />
   })
 ]
@@ -60,28 +55,12 @@ export default function PieceTable({ pieces }: Props) {
   })
 
   return (
-    <table className='table-auto border-collapse border border-slate-400 w-5/6 mx-auto'>
-      <thead>
-        {table.getHeaderGroups().map(headerGroup => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map(header => (
-              <th key={header.id} className='border border-slate-300 p-4'>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
+    <table className='table-auto w-full mx-auto'>
       <tbody>
         {table.getRowModel().rows.map(row => (
           <tr key={row.id}>
             {row.getVisibleCells().map(cell => (
-              <td key={cell.id} className='border border-slate-300 px-8'>
+              <td key={cell.id} className='px-8'>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
             ))}
