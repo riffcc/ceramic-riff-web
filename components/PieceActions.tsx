@@ -3,7 +3,7 @@ import { Maybe } from "graphql/jsutils/Maybe";
 import { ChangeEvent, useState } from "react";
 import { HiOutlineTrash, HiOutlinePencilAlt, HiOutlineCheckCircle, HiOutlineXCircle, HiOutlineX, HiOutlineExternalLink, HiOutlineEye } from "react-icons/hi";
 import { useAccount } from "wagmi";
-import { AdminFragment, UPDATE_PIECE, UserFragment } from "../utils/constants"
+import { AdminFragment, pieceCategories, UPDATE_PIECE, UserFragment } from "../utils/constants"
 import { getDate } from "../utils/getDate";
 import { Piece } from "../utils/__generated__/graphql";
 import Spinner from "./Layout/Spinner";
@@ -12,17 +12,6 @@ import Tooltip from "./Layout/Tooltip";
 interface Props {
   piece: Maybe<Piece>;
 }
-
-export const pieceCategories = [
-  'TV Shows',
-  'Movies',
-  'Audiobooks',
-  'Games',
-  'Books',
-  'Music',
-  'Videos',
-  'Other',
-]
 
 export default function PieceActions({ piece }: Props) {
   const { address } = useAccount()

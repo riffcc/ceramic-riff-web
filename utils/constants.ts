@@ -530,3 +530,14 @@ export const GET_WEBSITE_INDEX = graphql(`
     }
   }
 `)
+
+export const pieceCategories = [
+  'TV Shows',
+  'Movies',
+  'Audiobooks',
+  'Games',
+  'Books',
+  'Music',
+  'Videos',
+  'Other',
+]
