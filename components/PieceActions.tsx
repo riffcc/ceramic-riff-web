@@ -1,7 +1,7 @@
 import { useApolloClient, useFragment_experimental, useMutation } from "@apollo/client";
 import { Maybe } from "graphql/jsutils/Maybe";
 import { ChangeEvent, useState } from "react";
-import { HiOutlineTrash, HiOutlinePencilAlt, HiOutlineCheckCircle, HiOutlineXCircle, HiOutlineX, HiOutlineExternalLink, HiOutlineEye } from "react-icons/hi";
+import { HiOutlineTrash, HiOutlinePencilAlt, HiOutlineCheckCircle, HiOutlineXCircle, HiOutlineX, HiOutlineExternalLink, HiOutlineEye, HiOutlineClock } from "react-icons/hi";
 import { useAccount } from "wagmi";
 import { AdminFragment, pieceCategories, UPDATE_PIECE, UserFragment } from "../utils/constants"
 import { getDate } from "../utils/getDate";
@@ -150,11 +150,39 @@ export default function PieceActions({ piece }: Props) {
         }
       }
     })
+    setRejectionReason('')
     hideRejectModal()
+  }
+
+  const handleUnrejectPiece = async () => {
+    await updatePiece({
+      variables: {
+        input: {
+          id: piece?.id!,
+          content: {
+            approved: false,
+            rejected: false,
+            rejectionReason: null,
+            metadata: {
+              createdAt: piece?.metadata.createdAt!,
+              updatedAt: getDate()
+            }
+          }
+        }
+      }
+    })
   }
 
   return (
     <div className="flex gap-2 items-center justify-center w-full">
+      {
+        piece?.rejected &&
+        <Tooltip
+          containerClassname="w-30 bg-slate-800 rounded-md"
+          container={<HiOutlineEye className="h-4 w-4 text-slate-50 hover:cursor-pointer" />}
+          content={`Rejection reason: ${piece?.rejectionReason}`}
+        />
+      }
       {
         isAdminUser && !piece?.approved &&
         <Tooltip
@@ -183,6 +211,7 @@ export default function PieceActions({ piece }: Props) {
           content="Edit"
         />
       }
+      
       {
         (!isAdminUser && piece?.approved) &&
         <Tooltip
@@ -193,11 +222,12 @@ export default function PieceActions({ piece }: Props) {
         />
       }
       {
-        (!isAdminUser && piece?.rejected) &&
+        (isAdminUser && piece?.rejected) &&
         <Tooltip
           containerClassname="w-30 bg-slate-800 rounded-md"
-          container={<HiOutlineEye className="h-4 w-4 text-slate-50 hover:cursor-pointer" />}
-          content={`Rejection reason: ${piece?.rejectionReason}`}
+          container={<HiOutlineClock className="h-4 w-4 text-blue-400 hover:cursor-pointer" />}
+          onClickContainer={handleUnrejectPiece}
+          content={'Unreject'}
         />
       }
       {
