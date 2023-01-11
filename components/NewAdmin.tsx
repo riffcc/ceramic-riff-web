@@ -1,9 +1,7 @@
 import { useFragment_experimental, useMutation } from "@apollo/client"
 import { ChangeEvent, useMemo, useState } from "react"
-import { WebsiteData } from "../pages/pinner";
-import { CREATE_ADMIN, CREATE_ETH_ACCOUNT, websiteDataQueryParams } from "../utils/constants"
+import { AdminFragment, CREATE_ADMIN, CREATE_ETH_ACCOUNT, UserFragment, WebsiteData, websiteDataQueryParams } from "../utils/constants"
 import { getDate } from "../utils/getDate";
-import { AdminFragment, UserFragment } from "./Layout/Header";
 import Spinner from "./Layout/Spinner";
 
 export default function NewAdmin() {

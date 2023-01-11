@@ -2,8 +2,7 @@ import { useFragment_experimental } from '@apollo/client';
 import type { NextPage } from 'next'
 import { useMemo } from 'react';
 import PieceList from '../components/PieceList';
-import { websiteDataQueryParams } from '../utils/constants';
-import { WebsiteData } from './pinner';
+import { WebsiteData, websiteDataQueryParams } from '../utils/constants';
 
 
 const IndexPage: NextPage = () => {

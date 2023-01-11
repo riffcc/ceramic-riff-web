@@ -1,4 +1,5 @@
-import { gql } from './__generated__/gql'
+import { gql } from '@apollo/client'
+import { graphql } from './__generated__/gql'
 
 export const adminsPageSize = 50
 export const piecesPageSize = 50
@@ -12,7 +13,126 @@ export const websiteDataQueryParams = {
   usersPageSize
 }
 
-export const GET_WEBSITE_DATA = gql(`
+export const WebsiteData = gql`
+  fragment WebsiteData on Website {
+    id
+    admins(first: $adminsPageSize) {
+          edges {
+            node {
+              id
+              adminID
+              admin {
+                address
+                ensName
+              }
+              metadata {
+                createdAt
+                updatedAt
+              }
+            }
+          }
+        }
+    adminsCount
+    pieces(first: $piecesPageSize) {
+      edges {
+        node {
+          id
+          cid
+          name
+          category
+          approved
+          rejected
+          rejectionReason
+          ownerID
+          owner {
+            address
+            ensName
+          }
+          metadata {
+            createdAt
+            updatedAt
+          }
+        }
+      }
+    }
+    piecesCount
+    subscriptions(first: $subscriptionsPageSize) {
+      edges {
+        node {
+          id
+          subscribedWebsite {
+            id
+            pieces(first: $piecesPageSize) {
+              edges {
+                node {
+                  id
+                  cid
+                  name
+                  category
+                  approved
+                  rejected
+                  rejectionReason
+                  metadata {
+                    createdAt
+                    updatedAt
+                  }
+                }
+              }
+            }
+            piecesCount
+          }
+          metadata {
+          createdAt
+          updatedAt
+          }
+        }
+      }
+    }
+    subscriptionsCount
+    users(first: $usersPageSize) {
+      edges {
+        node {
+          id
+          address
+          ensName
+          metadata {
+            createdAt
+            updatedAt
+          }
+        }
+      }
+    }
+    usersCount
+  }
+`
+export const AdminFragment = gql`
+  fragment WebsiteAdmin on Admin {
+    id
+    adminID
+    admin {
+      address
+      ensName
+    }
+    metadata {
+      createdAt
+      updatedAt
+    }
+  }
+`
+
+export const UserFragment = gql`
+  fragment WebsiteUser on EthAccount {
+    id
+    address
+    ensName
+    metadata {
+      createdAt
+      updatedAt
+    }
+  }
+`
+
+export const GET_WEBSITE_DATA = graphql(`
   query WebsiteData(
       $id: ID!, 
       $adminsPageSize: Int!,
@@ -115,7 +235,7 @@ export const GET_WEBSITE_DATA = gql(`
   }
 `)
 
-export const GET_WEBSITE_USERS = gql(`
+export const GET_WEBSITE_USERS = graphql(`
   query WebsiteUsers(
     $id: ID!,
     $usersPageSize: Int!, 
@@ -142,7 +262,7 @@ export const GET_WEBSITE_USERS = gql(`
     }
 `)
 
-export const GET_WEBSITE_PIECES = gql(`
+export const GET_WEBSITE_PIECES = graphql(`
   query WebsitePieces(
     $id: ID!
     $piecesPageSize: Int!,
@@ -178,7 +298,7 @@ export const GET_WEBSITE_PIECES = gql(`
     }
 `)
 
-export const GET_ETH_ACCOUNT = gql(`
+export const GET_ETH_ACCOUNT = graphql(`
   query EthAccount($id: ID!) {
     node(id: $id) {
       ... on EthAccount {
@@ -194,7 +314,7 @@ export const GET_ETH_ACCOUNT = gql(`
   }
 `)
 
-export const CREATE_ETH_ACCOUNT = gql(`
+export const CREATE_ETH_ACCOUNT = graphql(`
   mutation CreateEthAccount($input: CreateEthAccountInput!) {
     createEthAccount(input: $input) {
       document {
@@ -210,7 +330,7 @@ export const CREATE_ETH_ACCOUNT = gql(`
   }
 `)
 
-export const GET_PIECE = gql(`
+export const GET_PIECE = graphql(`
   query Piece($id: ID!) {
     node(id: $id) {
       ... on Piece {
@@ -235,7 +355,7 @@ export const GET_PIECE = gql(`
   }
 `)
 
-export const CREATE_PIECE = gql(`
+export const CREATE_PIECE = graphql(`
   mutation CreatePiece($input: CreatePieceInput!) {
     createPiece(input: $input) {
       document {
@@ -260,7 +380,7 @@ export const CREATE_PIECE = gql(`
   }
 `)
 
-export const UPDATE_PIECE = gql(`
+export const UPDATE_PIECE = graphql(`
   mutation UpdatePiece($input: UpdatePieceInput!) {
     updatePiece(input: $input) {
       document {
@@ -285,7 +405,7 @@ export const UPDATE_PIECE = gql(`
   }
 `)
 
-export const GET_SUBSCRIPTION = gql(`
+export const GET_SUBSCRIPTION = graphql(`
   query Subscription($id: ID!, $piecesPageSize: Int!) {
     node(id: $id) {
       ... on Subscription {
@@ -305,7 +425,7 @@ export const GET_SUBSCRIPTION = gql(`
   }
 `)
 
-export const CREATE_SUBSCRIPTION = gql(`
+export const CREATE_SUBSCRIPTION = graphql(`
   mutation CreateSubscription($input: CreateSubscriptionInput!, $piecesPageSize: Int!) {
     createSubscription(input: $input) {
       document {
@@ -338,7 +458,7 @@ export const CREATE_SUBSCRIPTION = gql(`
   }
 `)
 
-export const UPDATE_SUBSCRIPTION = gql(`
+export const UPDATE_SUBSCRIPTION = graphql(`
   mutation UpdateSubscription($input: UpdateSubscriptionInput!) {
     updateSubscription(input: $input) {
       document {
@@ -358,7 +478,7 @@ export const UPDATE_SUBSCRIPTION = gql(`
   }
 `)
 
-export const GET_ADMIN = gql(`
+export const GET_ADMIN = graphql(`
   query Admin($id: ID!) {
     node(id: $id) {
       ... on Admin {
@@ -377,7 +497,7 @@ export const GET_ADMIN = gql(`
   }
 `)
 
-export const CREATE_ADMIN = gql(`
+export const CREATE_ADMIN = graphql(`
   mutation CreateAdmin($input: CreateAdminInput!) {
     createAdmin(input: $input) {
       document {
@@ -396,7 +516,7 @@ export const CREATE_ADMIN = gql(`
   }
 `)
 
-export const GET_WEBSITE_INDEX = gql(`
+export const GET_WEBSITE_INDEX = graphql(`
   query WebsiteIndex($pageSize: Int!) {
     websiteIndex(first: $pageSize) {
       edges {

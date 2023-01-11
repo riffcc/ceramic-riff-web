@@ -4,34 +4,8 @@ import { useAccount, useDisconnect, useEnsName } from 'wagmi'
 import Account from './Account'
 import Connect from './Connect'
 import { useState } from 'react'
-import { gql, useFragment_experimental } from '@apollo/client'
-
-export const AdminFragment = gql`
-  fragment WebsiteAdmin on Admin {
-    id
-    adminID
-    admin {
-      address
-      ensName
-    }
-    metadata {
-      createdAt
-      updatedAt
-    }
-  }
-`
-
-export const UserFragment = gql`
-  fragment WebsiteUser on EthAccount {
-    id
-    address
-    ensName
-    metadata {
-      createdAt
-      updatedAt
-    }
-  }
-`
+import { useFragment_experimental } from '@apollo/client'
+import { AdminFragment, UserFragment } from '../../utils/constants'
 
 export default function Header() {
   const { pathname } = useRouter()

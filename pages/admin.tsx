@@ -5,13 +5,11 @@ import { useMemo } from 'react';
 import { useAccount } from 'wagmi';
 import AdminList from '../components/AdminList';
 import Connect from '../components/Layout/Connect';
-import { AdminFragment } from '../components/Layout/Header';
 import Spinner from '../components/Layout/Spinner';
 import NewAdmin from '../components/NewAdmin';
 import PieceList from '../components/PieceList';
 import SubscriptionList from '../components/SubscriptionList';
-import { GET_WEBSITE_INDEX, websiteDataQueryParams } from '../utils/constants';
-import { WebsiteData } from './pinner';
+import { AdminFragment, GET_WEBSITE_INDEX, WebsiteData, websiteDataQueryParams } from '../utils/constants';
 
 const AdminPage: NextPage = () => {
   const { address, isConnected } = useAccount()

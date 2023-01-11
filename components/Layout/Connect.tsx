@@ -1,10 +1,8 @@
 import { gql, useApolloClient, useFragment_experimental, useMutation, useQuery } from "@apollo/client"
 import { useConnect } from "wagmi"
 import { MetaMaskConnector } from "wagmi/connectors/metaMask"
-import { WebsiteData } from "../../pages/pinner"
-import { CREATE_ETH_ACCOUNT, GET_WEBSITE_USERS, usersPageSize, websiteDataQueryParams } from "../../utils/constants"
+import { CREATE_ETH_ACCOUNT, GET_WEBSITE_USERS, UserFragment, usersPageSize, WebsiteData, websiteDataQueryParams } from "../../utils/constants"
 import { getDate } from "../../utils/getDate"
-import { UserFragment } from "./Header"
 import Spinner from "./Spinner"
 
 type Props = {

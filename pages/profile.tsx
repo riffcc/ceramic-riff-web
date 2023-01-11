@@ -2,12 +2,10 @@ import { useFragment_experimental } from '@apollo/client';
 import type { NextPage } from 'next'
 import { useMemo } from 'react';
 import { useAccount } from 'wagmi';
-import { websiteDataQueryParams,  } from '../utils/constants'
+import { UserFragment, WebsiteData, websiteDataQueryParams,  } from '../utils/constants'
 import Connect from '../components/Layout/Connect'
 import React from 'react';
 import PieceList from '../components/PieceList';
-import { WebsiteData } from './pinner';
-import { UserFragment } from '../components/Layout/Header';
 
 const ProfilePage: NextPage = () => {
   const { address, isConnected } = useAccount()

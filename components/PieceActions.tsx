@@ -3,10 +3,9 @@ import { Maybe } from "graphql/jsutils/Maybe";
 import { ChangeEvent, useState } from "react";
 import { HiOutlineTrash, HiOutlinePencilAlt, HiOutlineCheckCircle, HiOutlineXCircle, HiOutlineX, HiOutlineExternalLink, HiOutlineEye } from "react-icons/hi";
 import { useAccount } from "wagmi";
-import { UPDATE_PIECE } from "../utils/constants"
+import { AdminFragment, UPDATE_PIECE, UserFragment } from "../utils/constants"
 import { getDate } from "../utils/getDate";
 import { Piece } from "../utils/__generated__/graphql";
-import { AdminFragment, UserFragment } from "./Layout/Header";
 import Spinner from "./Layout/Spinner";
 import Tooltip from "./Layout/Tooltip";
 
