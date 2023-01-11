@@ -74,8 +74,8 @@ export default function Header() {
           </Link>
         </div>
         <div>
-          <Link href="/pinner" legacyBehavior>
-            <a className={pathname === '/pinner' ? 'text-cyan-200' : ''}>Pinner</a>
+          <Link href="/upload" legacyBehavior>
+            <a className={pathname === '/pinner' ? 'text-cyan-200' : ''}>Upload</a>
           </Link>
         </div>
         {isUser && <div>

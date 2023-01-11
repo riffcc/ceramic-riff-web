@@ -4,103 +4,10 @@ import { ChangeEvent, useCallback, useState } from "react"
 import { useAccount } from "wagmi"
 import Connect from "../components/Layout/Connect"
 import Spinner from "../components/Layout/Spinner"
-import { CREATE_PIECE, websiteDataQueryParams } from "../utils/constants"
+import { CREATE_PIECE, WebsiteData, websiteDataQueryParams } from "../utils/constants"
 import { getDate } from "../utils/getDate"
 
-export const WebsiteData = gql`
-  fragment WebsiteData on Website {
-    id
-    admins(first: $adminsPageSize) {
-          edges {
-            node {
-              id
-              adminID
-              admin {
-                address
-                ensName
-              }
-              metadata {
-                createdAt
-                updatedAt
-              }
-            }
-          }
-        }
-    adminsCount
-    pieces(first: $piecesPageSize) {
-      edges {
-        node {
-          id
-          cid
-          name
-          category
-          approved
-          rejected
-          rejectionReason
-          ownerID
-          owner {
-            address
-            ensName
-          }
-          metadata {
-            createdAt
-            updatedAt
-          }
-        }
-      }
-    }
-    piecesCount
-    subscriptions(first: $subscriptionsPageSize) {
-      edges {
-        node {
-          id
-          subscribedWebsite {
-            id
-            pieces(first: $piecesPageSize) {
-              edges {
-                node {
-                  id
-                  cid
-                  name
-                  category
-                  approved
-                  rejected
-                  rejectionReason
-                  metadata {
-                    createdAt
-                    updatedAt
-                  }
-                }
-              }
-            }
-            piecesCount
-          }
-          metadata {
-          createdAt
-          updatedAt
-          }
-        }
-      }
-    }
-    subscriptionsCount
-    users(first: $usersPageSize) {
-      edges {
-        node {
-          id
-          address
-          ensName
-          metadata {
-            createdAt
-            updatedAt
-          }
-        }
-      }
-    }
-    usersCount
-  }
-`
-
-const PinnerPage: NextPage = () => {
+const UploadPage: NextPage = () => {
   const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
   const { address, isConnected } = useAccount()
   const apolloClient = useApolloClient()
@@ -226,4 +133,4 @@ const PinnerPage: NextPage = () => {
   )
 }
 
-export default PinnerPage
+export default UploadPage
