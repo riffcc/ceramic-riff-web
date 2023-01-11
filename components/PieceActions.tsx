@@ -33,8 +33,6 @@ export default function PieceActions({ piece }: Props) {
   const [cid, setCid] = useState(piece?.cid!)
   const [rejectionReason, setRejectionReason] = useState('')
 
-
-
   const showEditModal = () => setOpenEditModal(true)
   const hideEditModal = () => setOpenEditModal(false)
   const showRejectModal = () => setOpenRejectModal(true)
@@ -154,7 +152,7 @@ export default function PieceActions({ piece }: Props) {
     })
     hideRejectModal()
   }
-  console.log(piece)
+
   return (
     <div className="flex gap-2 items-center justify-center w-full">
       {
@@ -279,7 +277,7 @@ export default function PieceActions({ piece }: Props) {
         openRejectModal && (
           <div className="h-60 w-96 bg-slate-900 rounded-xl shadow-lg border border-slate-500 fixed inset-0 m-auto z-30 p-4">
             <div className="grid justify-Pieces-stretch">
-              <HiOutlineX className="h-5 w-5 text-slate-200 justify-self-end" onClick={hideEditModal} />
+              <HiOutlineX className="h-5 w-5 text-slate-200 justify-self-end" onClick={hideRejectModal} />
               <h1 className="text-lg font-semibold text-center">Reject Piece</h1>
               <div className="py-4 px-6 space-y-2">
                 <div>
