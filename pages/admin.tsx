@@ -31,7 +31,7 @@ const AdminPage: NextPage = () => {
     }
   })
 
-  const { complete: isAdminUser } = useFragment_experimental({
+  const { complete: isAdminUser, data: adminData } = useFragment_experimental({
     from: {
       __typename: "Admin",
       admin: {
@@ -62,28 +62,30 @@ const AdminPage: NextPage = () => {
   }, [websiteIndexData])
 
   const adminList = useMemo(() => {
-    return websiteData?.admins.edges
-  }, [websiteData])
+    const list = websiteData?.admins.edges
+    const activeAdminsList = list.filter((edge) => !edge?.node?.inactive)
+    return activeAdminsList ? activeAdminsList.filter((edge) => edge?.node?.id !== adminData.id) : []
+  }, [websiteData, adminData])
   return (
     <div className='flex flex-col px-4 py-10 gap-3'>
       {
         !isConnected ?
           <Connect className='h-10 w-40 m-auto px-4 rounded-lg bg-cyan-600 hover:bg-cyan-500 hover:cursor-pointer disabled:cursor-default hover:disabled:bg-cyan-600' />
-          : isAdminUser ?
+          : isAdminUser && !adminData.inactive ?
             <div className=' rounded-xl mx-auto w-5/6 p-6 min-h-screen flex flex-col'>
               <div className='flex flex-col w-full gap-3'>
                 <h1 className='font-bold text-xl border-b border-slate-500 pb-2'>Content</h1>
                 <p className='font-semibold mx-auto flex-none'>Approved</p>
                 <div className='border rounded-xl border-slate-500 min-h-[20rem] flex'>
-                  {pieces.approvedPieces && pieces.approvedPieces.length > 0 ? <PieceList list={pieces.approvedPieces} table/> : <p className='m-auto'>Not content found.</p>}
+                  {pieces.approvedPieces && pieces.approvedPieces.length > 0 ? <PieceList list={pieces.approvedPieces} table /> : <p className='m-auto'>Not content found.</p>}
                 </div>
                 <p className='font-semibold mx-auto flex-none'>Pending</p>
                 <div className='border rounded-xl border-slate-500 min-h-[20rem] flex'>
-                  {pieces.pendingPieces && pieces.pendingPieces.length > 0 ? <PieceList list={pieces.pendingPieces} table/> : <p className='m-auto'>Not content found.</p>}
+                  {pieces.pendingPieces && pieces.pendingPieces.length > 0 ? <PieceList list={pieces.pendingPieces} table /> : <p className='m-auto'>Not content found.</p>}
                 </div>
                 <p className='font-semibold mx-auto flex-none'>Rejected</p>
                 <div className='border rounded-xl border-slate-500 min-h-[20rem] flex'>
-                  {pieces.rejectedPieces && pieces.rejectedPieces.length > 0 ? <PieceList list={pieces.rejectedPieces} table/> : <p className='m-auto'>Not content found.</p>}
+                  {pieces.rejectedPieces && pieces.rejectedPieces.length > 0 ? <PieceList list={pieces.rejectedPieces} table /> : <p className='m-auto'>Not content found.</p>}
                 </div>
               </div>
               <div className='flex flex-col w-full mt-10 border-t-2 border-slate-500 py-2'>
@@ -93,24 +95,27 @@ const AdminPage: NextPage = () => {
                     <div>
                       <h1 className='font-bold text-xl flex-none mb-2'>Subscriptions</h1>
                       <div className='border-t border-slate-500 py-10'>
-                       
-                      {subscriptionList && subscriptionList.length > 0 ? <SubscriptionList list={subscriptionList} /> : <p className='m-auto'>Not subscriptions found.</p>}
+
+                        {subscriptionList && subscriptionList.length > 0 ? <SubscriptionList list={subscriptionList} /> : <p className='m-auto'>Not subscriptions found.</p>}
                       </div>
                     </div>
                 }
               </div>
-              <div className='flex flex-col w-full mt-10 border-t-2 border-slate-500 py-2'>
-                <div>
-                  <h1 className='font-bold text-xl flex-none mb-2'>Admins</h1>
-                  <div className="flex flex-col justify-evenly items-center py-10 border-t border-slate-500  min-h-[20rem] gap-2">
-                    <NewAdmin />
-                    <div>
-                      <p className='mb-2 text-sm'>Current Admins:</p>
-                      {adminList && adminList.length > 0 ? <AdminList list={adminList} /> : <p className='m-auto'>Not admins found.</p>}
+              {
+                adminData.super &&
+                <div className='grid w-full mt-10 border-t-2 border-slate-500 py-2'>
+                    <h1 className='font-bold text-xl mb-2'>Admins</h1>
+                    <div className="flex justify-center py-10 border-t border-slate-500  min-h-[20rem] gap-10">
+                      <NewAdmin />
+                      <div className='w-[25rem]'>
+                        {adminList && adminList.length > 0 ?
+                          <AdminList list={adminList} />
+                          : <p className='m-auto text-sm text-center'>Not extra admins found.</p>
+                        }
+                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>
+              }
             </div> : <p className='text-xl font-bold text-red-400 m-auto'>Unauthorized access!</p>
       }
     </div>

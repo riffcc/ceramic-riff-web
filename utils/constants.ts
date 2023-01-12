@@ -25,6 +25,8 @@ export const WebsiteData = gql`
                 address
                 ensName
               }
+              super
+              inactive
               metadata {
                 createdAt
                 updatedAt
@@ -113,6 +115,8 @@ export const AdminFragment = gql`
       address
       ensName
     }
+    super
+    inactive
     metadata {
       createdAt
       updatedAt
@@ -152,6 +156,8 @@ export const GET_WEBSITE_DATA = graphql(`
                     address
                     ensName
                   }
+                  super
+                  inactive
                   metadata {
                     createdAt
                     updatedAt
@@ -488,6 +494,8 @@ export const GET_ADMIN = graphql(`
           address
           ensName
         }
+        super
+        inactive
         metadata {
           createdAt
           updatedAt
@@ -507,6 +515,29 @@ export const CREATE_ADMIN = graphql(`
           address
           ensName
         }
+        super
+        inactive
+        metadata {
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`)
+
+export const UPDATE_ADMIN = graphql(`
+  mutation UpdateaAdmin($input: UpdateAdminInput!) {
+    updateAdmin(input: $input) {
+      document {
+        id
+        adminID
+        admin {
+          address
+          ensName
+        }
+        super
+        inactive
         metadata {
           createdAt
           updatedAt

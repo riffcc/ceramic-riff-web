@@ -1,12 +1,15 @@
 import { useFragment_experimental, useMutation } from "@apollo/client"
 import { ChangeEvent, useMemo, useState } from "react"
-import { AdminFragment, CREATE_ADMIN, CREATE_ETH_ACCOUNT, UserFragment, WebsiteData, websiteDataQueryParams } from "../utils/constants"
+import { AdminFragment, CREATE_ADMIN, CREATE_ETH_ACCOUNT, UPDATE_ADMIN, UserFragment, WebsiteData, websiteDataQueryParams } from "../utils/constants"
 import { getDate } from "../utils/getDate";
 import Spinner from "./Layout/Spinner";
 
 export default function NewAdmin() {
   const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
-  const [newAdminAddress, setNewAdminAddress] = useState("")
+  const [newAdminAddress, setNewAdminAddress] = useState("");
+  const [adminSuper, setAdminSuper] = useState(false)
+
+
   const [createAdmin, { loading: loadingNewAdmin }] = useMutation(CREATE_ADMIN, {
     update: (cache, result) => {
       cache.updateFragment({
@@ -63,13 +66,17 @@ export default function NewAdmin() {
       })
     }
   });
-
+  const [updateAdmin, { loading: loadingUpdateAdmin }] = useMutation(UPDATE_ADMIN)
   const handleOnChangeNewAdminAddress = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
       setNewAdminAddress('')
       return
     }
     setNewAdminAddress(e.target.value)
+  }
+
+  const handleOnCheckAdminSuper = (e: ChangeEvent<HTMLInputElement>) => {
+    setAdminSuper(e.target.checked)
   }
 
   const isValidAddress = useMemo(() => newAdminAddress.length === 42, [newAdminAddress])
@@ -82,7 +89,7 @@ export default function NewAdmin() {
     fragment: UserFragment,
   })
 
-  const { complete: isAdminUser } = useFragment_experimental({
+  const { complete: isAdminUser, data: adminData } = useFragment_experimental({
     from: {
       __typename: "Admin",
       admin: {
@@ -117,6 +124,7 @@ export default function NewAdmin() {
             content: {
               websiteID,
               adminID,
+              super: adminSuper,
               metadata: {
                 createdAt: getDate(),
                 updatedAt: getDate()
@@ -126,46 +134,76 @@ export default function NewAdmin() {
         }
       })
     } else {
-      await createAdmin({
-        variables: {
-          input: {
-            content: {
-              websiteID,
-              adminID: userData?.id,
-              metadata: {
-                createdAt: getDate(),
-                updatedAt: getDate()
+      if (isAdminUser && adminData.inactive) {
+        await updateAdmin({
+          variables: {
+            input: {
+              id: adminData.id,
+              content: {
+                super: adminSuper,
+                inactive: false,
+                metadata: {
+                  createdAt: adminData.metadata.createdAt,
+                  updatedAt: getDate()
+                }
+              }
+              
+            }
+          }
+        })
+      }
+      else {
+        await createAdmin({
+          variables: {
+            input: {
+              content: {
+                websiteID,
+                adminID: userData?.id,
+                super: adminSuper,
+                metadata: {
+                  createdAt: getDate(),
+                  updatedAt: getDate()
+                }
               }
             }
           }
-        }
-      })
+        })
+      }
+      
     }
   }
 
   return (
-    <div className="h-24">
-      <p className="font-medium mb-2">Add New Admin</p>
-      <div className="flex items-center gap-2">
+    <div className="grid w-[25rem] h-48">
+      <p className="font-medium mx-auto">Add new admin</p>
+      <div className="h-24">
+        <p className="text-sm mb-1 ml-1">Address:</p>
         <input
           placeholder="0xa5Cf4DDFe4BfDbE712bD2f54EAadaCebb809fAED"
-          name="newAdminAddress"
           type="text"
-          className=" text-black text-sm rounded-lg h-10 w-80"
+          className="form-input text-black rounded-lg w-full"
           onChange={handleOnChangeNewAdminAddress}
           value={newAdminAddress}
         />
-        <button
-          className="py-2 px-4 h-10 w-24 rounded-lg bg-cyan-500 disabled:hover:bg-cyan-900 disabled:bg-cyan-900 disabled:text-slate-400 hover:cursor-point disabled:hover:cursor-default delay-100 hover:bg-cyan-600"
-          disabled={loadingNewAdmin || loadingNewEthAccount || !isValidAddress || isAdminUser}
-          onClick={handleSubmit}
-        >
-          {loadingNewAdmin || loadingNewEthAccount ? <Spinner className="h-5 w-5 text-white animate-spin mx-auto" /> : <p>Submit</p>}
-        </button>
+        {newAdminAddress.length > 0 && !isValidAddress && <p className="text-xs text-red-600 mt-1 ml-2">Not a valid address.</p>}
+        {isAdminUser && !adminData.inactive && <p className="text-xs mt-1 ml-2 text-red-600">This address is already admin.</p>}
       </div>
-      {newAdminAddress.length > 0 && !isValidAddress && <p className="text-xs text-red-600 mt-1 ml-2">Not a valid address.</p>}
-      {isAdminUser && <p className="text-xs mt-1 ml-2 text-red-600">This address is already admin.</p>}
-
+      <div className="flex items-center">
+        <p className="text-sm ml-1 mr-3">Super:</p>
+        <input
+          type="checkbox"
+          className="form-checkbox rounded"
+          onChange={handleOnCheckAdminSuper}
+          checked={adminSuper}
+        />
+      </div>
+      <button
+        className="py-2 px-4 h-10 w-16 justify-self-end rounded-lg bg-cyan-500 disabled:hover:bg-cyan-900 disabled:bg-cyan-900 disabled:text-slate-400 hover:cursor-point disabled:hover:cursor-default delay-100 hover:bg-cyan-600"
+        disabled={loadingNewAdmin || loadingNewEthAccount || loadingUpdateAdmin || !isValidAddress || (isAdminUser && !adminData.inactive)}
+        onClick={handleSubmit}
+      >
+        {loadingNewAdmin || loadingNewEthAccount || loadingUpdateAdmin ? <Spinner className="h-5 w-5 text-white animate-spin mx-auto" /> : <p>Add</p>}
+      </button>
     </div>
   )
 }
