@@ -77,15 +77,15 @@ const AdminPage: NextPage = () => {
                 <h1 className='font-bold text-xl border-b border-slate-500 pb-2'>Content</h1>
                 <p className='font-semibold mx-auto flex-none'>Approved</p>
                 <div className='border rounded-xl border-slate-500 min-h-[20rem] flex'>
-                  {pieces.approvedPieces && pieces.approvedPieces.length > 0 ? <PieceList list={pieces.approvedPieces} table /> : <p className='m-auto'>Not content found.</p>}
+                  {pieces.approvedPieces && pieces.approvedPieces.length > 0 ? <PieceList list={pieces.approvedPieces} table /> : <p className='m-auto'>No content found.</p>}
                 </div>
                 <p className='font-semibold mx-auto flex-none'>Pending</p>
                 <div className='border rounded-xl border-slate-500 min-h-[20rem] flex'>
-                  {pieces.pendingPieces && pieces.pendingPieces.length > 0 ? <PieceList list={pieces.pendingPieces} table /> : <p className='m-auto'>Not content found.</p>}
+                  {pieces.pendingPieces && pieces.pendingPieces.length > 0 ? <PieceList list={pieces.pendingPieces} table /> : <p className='m-auto'>No content found.</p>}
                 </div>
                 <p className='font-semibold mx-auto flex-none'>Rejected</p>
                 <div className='border rounded-xl border-slate-500 min-h-[20rem] flex'>
-                  {pieces.rejectedPieces && pieces.rejectedPieces.length > 0 ? <PieceList list={pieces.rejectedPieces} table /> : <p className='m-auto'>Not content found.</p>}
+                  {pieces.rejectedPieces && pieces.rejectedPieces.length > 0 ? <PieceList list={pieces.rejectedPieces} table /> : <p className='m-auto'>No content found.</p>}
                 </div>
               </div>
               <div className='flex flex-col w-full mt-10 border-t-2 border-slate-500 py-2'>
@@ -96,7 +96,7 @@ const AdminPage: NextPage = () => {
                       <h1 className='font-bold text-xl flex-none mb-2'>Subscriptions</h1>
                       <div className='border-t border-slate-500 py-10'>
 
-                        {subscriptionList && subscriptionList.length > 0 ? <SubscriptionList list={subscriptionList} /> : <p className='m-auto'>Not subscriptions found.</p>}
+                        {subscriptionList && subscriptionList.length > 0 ? <SubscriptionList list={subscriptionList} /> : <p className='m-auto'>No subscriptions found.</p>}
                       </div>
                     </div>
                 }
@@ -110,7 +110,7 @@ const AdminPage: NextPage = () => {
                       <div className='w-[25rem]'>
                         {adminList && adminList.length > 0 ?
                           <AdminList list={adminList} />
-                          : <p className='m-auto text-sm text-center'>Not extra admins found.</p>
+                          : <p className='m-auto text-sm text-center'>No extra admins found.</p>
                         }
                       </div>
                     </div>
