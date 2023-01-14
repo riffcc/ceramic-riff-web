@@ -9,7 +9,6 @@ interface Props {
   subscription: Website
 }
 export default function SubscriptionItem({ subscription }: Props) {
-  console.log(subscription)
   const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
 
   const { complete: isSubscribed } = useFragment_experimental({
@@ -82,12 +81,13 @@ export default function SubscriptionItem({ subscription }: Props) {
     <div className="flex items-center justify-center gap-1 ">
       <div className="h-24 w-24 border-slate-800 border relative">
         {
-          subscription.image ? <Image
-            alt=""
-            src={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${subscription.image}`}
-            fill
-            priority
-          /> :
+          subscription.image ?
+            <Image
+              alt=""
+              src={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${subscription.image}`}
+              fill
+              priority
+            /> :
             <div className="flex h-full">
               <HiOutlineCreditCard className="h-12 w-12 text-slate-200 m-auto" />
             </div>
@@ -97,18 +97,18 @@ export default function SubscriptionItem({ subscription }: Props) {
         <div className="flex items-center justify-between w-60 h-8">
           <p className="truncate text-sm font-medium">{subscription.websiteName}</p>
           {
-          !isSubscribed ?
-            <button
-              className="uppercase text-sm font-bold bg-cyan-600 rounded delay-200 w-24 h-8 px-1 disabled:border disabled:bg-transparent disabled:cursor-default hover:disabled:cursor-default"
-              onClick={handleOnSubscribe}
-              disabled={loading || isSubscribed}
-            >
-              Subscribe
-            </button>
-              : <button className="uppercase text-sm font-bold text-cyan-700 w-24 h-8 px-1" disabled>Subscribed</button>
-            }
+            !isSubscribed ?
+              <button
+                className="uppercase text-sm font-bold bg-cyan-600 rounded delay-200 w-24 h-8 px-1 disabled:border disabled:bg-transparent disabled:cursor-default hover:disabled:cursor-default"
+                onClick={handleOnSubscribe}
+                disabled={loading || isSubscribed}
+              >
+                Subscribe
+              </button> :
+              <button className="uppercase text-sm font-bold text-cyan-700 w-24 h-8 px-1" disabled>Subscribed</button>
+          }
         </div>
-        <div className="overflow-y-auto h-16 w-60 pt-2">
+        <div className="overflow-y-auto h-16 w-60 pt-1">
           <p className="text-xs text-slate-400">{subscription.description}</p>
         </div>
       </div>
