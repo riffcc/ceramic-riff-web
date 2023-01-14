@@ -178,6 +178,7 @@ export default function PieceActions({ piece }: Props) {
       {
         piece?.rejected &&
         <Tooltip
+          key="rejection-reason"
           containerClassname="w-30 bg-slate-800 rounded-md"
           container={<HiOutlineEye className="h-4 w-4 text-slate-50 hover:cursor-pointer" />}
           content={`Rejection reason: ${piece?.rejectionReason}`}
@@ -186,6 +187,7 @@ export default function PieceActions({ piece }: Props) {
       {
         isAdminUser && !piece?.approved &&
         <Tooltip
+          key="approve"
           containerClassname="w-20 bg-slate-800 rounded-md"
           container={<HiOutlineCheckCircle className="h-4 w-4 text-green-400 hover:cursor-pointer" />}
           onClickContainer={handleApprovePiece}
@@ -196,6 +198,7 @@ export default function PieceActions({ piece }: Props) {
       {
         isAdminUser && !piece?.rejected &&
         <Tooltip
+          key="reject"
           containerClassname="w-20 bg-slate-800 rounded-md"
           container={<HiOutlineXCircle className="h-4 w-4 text-red-400 hover:cursor-pointer" />}
           onClickContainer={showRejectModal}
@@ -203,18 +206,9 @@ export default function PieceActions({ piece }: Props) {
         />
       }
       {
-        (!isAdminUser && !piece?.approved && !piece?.rejected) &&
-        <Tooltip
-          containerClassname="w-20 bg-slate-800 rounded-md"
-          container={<HiOutlinePencilAlt className="h-4 w-4 text-slate-50 hover:cursor-pointer" />}
-          onClickContainer={showEditModal}
-          content="Edit"
-        />
-      }
-      
-      {
         (!isAdminUser && piece?.approved) &&
         <Tooltip
+          key="share"
           containerClassname="w-20 bg-slate-800 rounded-md"
           container={<HiOutlineExternalLink className="h-4 w-4 text-slate-50 hover:cursor-pointer" />}
           //onClickContainer={}
@@ -224,15 +218,17 @@ export default function PieceActions({ piece }: Props) {
       {
         (isAdminUser && piece?.rejected) &&
         <Tooltip
+          key="unreject"
           containerClassname="w-30 bg-slate-800 rounded-md"
           container={<HiOutlineClock className="h-4 w-4 text-blue-400 hover:cursor-pointer" />}
           onClickContainer={handleUnrejectPiece}
-          content={'Unreject'}
+          content="Unreject"
         />
       }
       {
         isAdminUser &&
         <Tooltip
+          key="edit"
           containerClassname="w-20 bg-slate-800 rounded-md"
           container={<HiOutlinePencilAlt className="h-4 w-4 text-slate-50 hover:cursor-pointer" />}
           onClickContainer={showEditModal}
@@ -242,10 +238,11 @@ export default function PieceActions({ piece }: Props) {
       {
         isAdminUser &&
         <Tooltip
+          key='remove'
           containerClassname="w-20 bg-slate-800 rounded-md"
           container={<HiOutlineTrash className="h-4 w-4 text-red-400 hover:cursor-pointer" />}
           onClickContainer={handleDeletePiece}
-          content="Delete"
+          content="Remove"
         />
       }
       {
