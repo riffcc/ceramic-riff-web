@@ -8,18 +8,14 @@ type Props = {
 export default function SubscriptionList({ list }: Props) {
 
   return (
-    <div className="min-h-[20rem]">
-      <SubscriptionSearch />
-      <div className="grid grid-cols-2 gap-3 mt-4">
-
-        {
-          list.map((subscription: SubscriptionEdge) => (
-            subscription &&
-            subscription.node &&
-            <SubscriptionItem key={subscription.node.subscribedWebsite?.id} subscription={subscription.node.subscribedWebsite as Website} />
-          ))
-        }
-      </div>
+    <div className="grid grid-cols-2 gap-3 mt-4">
+      {
+        list.map((subscription: SubscriptionEdge) => (
+          subscription &&
+          subscription.node &&
+          <SubscriptionItem key={subscription.node.subscribedWebsite?.id} subscription={subscription.node.subscribedWebsite as Website} />
+        ))
+      }
     </div>
   )
 }

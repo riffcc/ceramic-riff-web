@@ -92,7 +92,8 @@ const AdminPage: NextPage = () => {
               <div className='flex flex-col w-full mt-10 border-t-2 border-slate-500 py-2'>
                 <div>
                   <h1 className='font-bold text-xl flex-none mb-2'>Subscriptions</h1>
-                  <div className='border-t border-slate-500 py-4'>
+                  <div className='grid border-t border-slate-500 py-4 min-h-[20rem]'>
+                    <SubscriptionSearch />
                     {subscriptionList && subscriptionList.length > 0 ? <SubscriptionList list={subscriptionList} /> : <p className='m-auto'>No subscriptions found.</p>}
                   </div>
                 </div>
