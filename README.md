@@ -13,12 +13,6 @@ A proof-of-concept version of Riff.CC, implemented using Ceramic and ComposeDB. 
 yarn install
 ```
 
-* Copy lib/Composite.graphql and lib/definitions.ts from the ceramic-node repository.
-```bash
-cp ../ceramic-node/composites/Composite.graphql lib/
-cp ../ceramic-node/composites/definitions.ts lib/
-```
-
 * Rename .env.local.example to env.local and fill variables
 ```bash
 NEXT_PUBLIC_PRIVATE_KEY<NODE_PRIVATE_KEY> # Generated in riffcc/ceramic-node repository via yarn run generate:private-key
