@@ -4,8 +4,9 @@ import { ComposeClient } from '@composedb/client'
 import { definition } from './definitions'
 
 export const createComposeClient = (did: DID) => {
-  // replace api url env var
-  const ceramic = new CeramicClient('http://localhost:7007')
+  if (!process.env.NEXT_PUBLIC_NODE_URL )
+    throw new Error('ENVIROMENT VARIABLE NEXT_PUBLIC_NODE_URL UNDEFINED')
+  const ceramic = new CeramicClient(process.env.NEXT_PUBLIC_NODE_URL)
   ceramic.did = did
   return new ComposeClient({
     ceramic: ceramic,

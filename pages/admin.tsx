@@ -9,6 +9,7 @@ import Spinner from '../components/Layout/Spinner';
 import NewAdmin from '../components/NewAdmin';
 import PieceList from '../components/PieceList';
 import SubscriptionList from '../components/SubscriptionList';
+import SubscriptionSearch from '../components/SubscriptionSearch';
 import { AdminFragment, GET_WEBSITE_INDEX, WebsiteData, websiteDataQueryParams } from '../utils/constants';
 
 const AdminPage: NextPage = () => {
@@ -16,11 +17,11 @@ const AdminPage: NextPage = () => {
   const router = useRouter()
   const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
 
-  const { loading: loadingWebsiteIndex, data: websiteIndexData } = useQuery(GET_WEBSITE_INDEX, {
-    variables: {
-      pageSize: 100
-    }
-  })
+  // const { loading: loadingWebsiteIndex, data: websiteIndexData } = useQuery(GET_WEBSITE_INDEX, {
+  //   variables: {
+  //     pageSize: 100
+  //   }
+  // })
 
   const { data: websiteData } = useFragment_experimental({
     from: { __typename: "Website", id: websiteID },
@@ -57,9 +58,9 @@ const AdminPage: NextPage = () => {
   }, [websiteData, address])
 
   const subscriptionList = useMemo(() => {
-    const list = websiteIndexData?.websiteIndex?.edges
-    return list ? list.filter((edge) => edge?.node?.id !== websiteID) : []
-  }, [websiteIndexData])
+    const list = websiteData?.subscriptions.edges
+    return list ? list : []
+  }, [websiteData])
 
   const adminList = useMemo(() => {
     const list = websiteData?.admins.edges
@@ -89,6 +90,14 @@ const AdminPage: NextPage = () => {
                 </div>
               </div>
               <div className='flex flex-col w-full mt-10 border-t-2 border-slate-500 py-2'>
+<<<<<<< HEAD
+                <div>
+                  <h1 className='font-bold text-xl flex-none mb-2'>Subscriptions</h1>
+                  <div className='border-t border-slate-500 py-4'>
+                    {subscriptionList && subscriptionList.length > 0 ? <SubscriptionList list={subscriptionList} /> : <p className='m-auto'>Not subscriptions found.</p>}
+                  </div>
+                </div>
+=======
                 {
                   loadingWebsiteIndex ?
                     <Spinner className="h-8 w-8 animate-spin text-slate-200 m-auto" /> :
@@ -100,6 +109,7 @@ const AdminPage: NextPage = () => {
                       </div>
                     </div>
                 }
+>>>>>>> a6bec289f629bc2cfd8d3a6ef14f9a3206e644aa
               </div>
               {
                 adminData.super &&

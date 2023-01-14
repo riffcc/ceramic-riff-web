@@ -17,23 +17,23 @@ export const WebsiteData = gql`
   fragment WebsiteData on Website {
     id
     admins(first: $adminsPageSize) {
-          edges {
-            node {
-              id
-              adminID
-              admin {
-                address
-                ensName
-              }
-              super
-              inactive
-              metadata {
-                createdAt
-                updatedAt
-              }
-            }
+      edges {
+        node {
+          id
+          adminID
+          admin {
+            address
+            ensName
+          }
+          super
+          inactive
+          metadata {
+            createdAt
+            updatedAt
           }
         }
+      }
+    }
     adminsCount
     pieces(first: $piecesPageSize) {
       edges {
@@ -64,6 +64,9 @@ export const WebsiteData = gql`
           id
           subscribedWebsite {
             id
+            websiteName
+            description
+            image
             pieces(first: $piecesPageSize) {
               edges {
                 node {
@@ -84,8 +87,8 @@ export const WebsiteData = gql`
             piecesCount
           }
           metadata {
-          createdAt
-          updatedAt
+            createdAt
+            updatedAt
           }
         }
       }
@@ -135,6 +138,18 @@ export const UserFragment = gql`
     }
   }
 `
+export const GET_WEBSITE = graphql(`
+  query Website($id: ID!) {
+    node(id: $id) {
+      ... on Website {
+        id
+        websiteName
+        description
+        image
+      }
+    }
+  }
+`)
 
 export const GET_WEBSITE_DATA = graphql(`
   query WebsiteData(
@@ -195,6 +210,9 @@ export const GET_WEBSITE_DATA = graphql(`
               id
               subscribedWebsite {
                 id
+                websiteName
+                description
+                image
                 pieces(first: $piecesPageSize) {
                   edges {
                     node {

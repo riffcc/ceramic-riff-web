@@ -9,9 +9,10 @@ interface Props {
   subscription: Website
 }
 export default function SubscriptionItem({ subscription }: Props) {
+  console.log(subscription)
   const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
 
-  const { complete: isSubscribed, data } = useFragment_experimental({
+  const { complete: isSubscribed } = useFragment_experimental({
     from: { __typename: "Subscription", subscribedWebsite: { id: subscription.id } },
     fragment: gql`
       fragment SubscriptionFragment on Subscription {
@@ -78,8 +79,8 @@ export default function SubscriptionItem({ subscription }: Props) {
   }
 
   return (
-    <div className="grid grid-rows-3 grid-flow-col ">
-      <div className="row-span-3 rounded-xl relative p-4 h-24 w-24 m-auto bg-gradient-to-b from-slate-700 to-slate-600">
+    <div className="flex items-center justify-center gap-1 ">
+      <div className="h-24 w-24 border-slate-800 border relative">
         {
           subscription.image ? <Image
             alt=""
@@ -92,17 +93,24 @@ export default function SubscriptionItem({ subscription }: Props) {
             </div>
         }
       </div>
-      <div className="col-span-2 flex items-center justify-between px-4 w-80">
-        <p className="truncate">{subscription.websiteName}</p>
-        <button
-          className="bg-cyan-600 text-sm delay-200 w-24 h-8 px-2 rounded disabled:border disabled:bg-transparent disabled:cursor-default hover:disabled:cursor-default"
-          onClick={handleOnSubscribe}
-          disabled={loading || isSubscribed}>
-          {!isSubscribed ? <p>Subscribe</p> : <p>Subscribed</p>}
-        </button>
-      </div>
-      <div className="row-span-2 col-span-2 overflow-y-auto w-80 h-24">
-        <p className="text-xs text-slate-400">{subscription.description}</p>
+      <div className="border-slate-800 border h-24 px-2 py-1">
+        <div className="flex items-center justify-between w-60 h-8">
+          <p className="truncate text-sm font-medium">{subscription.websiteName}</p>
+          {
+          !isSubscribed ?
+            <button
+              className="uppercase text-sm font-bold bg-cyan-600 rounded delay-200 w-24 h-8 px-1 disabled:border disabled:bg-transparent disabled:cursor-default hover:disabled:cursor-default"
+              onClick={handleOnSubscribe}
+              disabled={loading || isSubscribed}
+            >
+              Subscribe
+            </button>
+              : <button className="uppercase text-sm font-bold text-cyan-700 w-24 h-8 px-1" disabled>Subscribed</button>
+            }
+        </div>
+        <div className="overflow-y-auto h-16 w-60 pt-2">
+          <p className="text-xs text-slate-400">{subscription.description}</p>
+        </div>
       </div>
     </div>
   )

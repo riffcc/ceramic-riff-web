@@ -1,5 +1,6 @@
-import { WebsiteEdge } from "../utils/__generated__/graphql";
+import { Subscription, SubscriptionEdge, Website, WebsiteEdge } from "../utils/__generated__/graphql";
 import SubscriptionItem from "./SubscriptionItem";
+import SubscriptionSearch from "./SubscriptionSearch";
 
 type Props = {
   list: any;
@@ -7,14 +8,18 @@ type Props = {
 export default function SubscriptionList({ list }: Props) {
 
   return (
-    <div className="grid grid-cols-2 gap-3 min-h-[20rem]">
-      {
-        list.map((subscription: WebsiteEdge) => (
-          subscription &&
-          subscription.node &&
-          <SubscriptionItem key={subscription.node.id} subscription={subscription.node} />
-        ))
-      }
+    <div className="min-h-[20rem]">
+      <SubscriptionSearch />
+      <div className="grid grid-cols-2 gap-3 mt-4">
+
+        {
+          list.map((subscription: SubscriptionEdge) => (
+            subscription &&
+            subscription.node &&
+            <SubscriptionItem key={subscription.node.subscribedWebsite?.id} subscription={subscription.node.subscribedWebsite as Website} />
+          ))
+        }
+      </div>
     </div>
   )
 }
