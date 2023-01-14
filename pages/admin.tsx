@@ -90,26 +90,12 @@ const AdminPage: NextPage = () => {
                 </div>
               </div>
               <div className='flex flex-col w-full mt-10 border-t-2 border-slate-500 py-2'>
-<<<<<<< HEAD
                 <div>
                   <h1 className='font-bold text-xl flex-none mb-2'>Subscriptions</h1>
                   <div className='border-t border-slate-500 py-4'>
                     {subscriptionList && subscriptionList.length > 0 ? <SubscriptionList list={subscriptionList} /> : <p className='m-auto'>Not subscriptions found.</p>}
                   </div>
                 </div>
-=======
-                {
-                  loadingWebsiteIndex ?
-                    <Spinner className="h-8 w-8 animate-spin text-slate-200 m-auto" /> :
-                    <div>
-                      <h1 className='font-bold text-xl flex-none mb-2'>Subscriptions</h1>
-                      <div className='border-t border-slate-500 py-10'>
-
-                        {subscriptionList && subscriptionList.length > 0 ? <SubscriptionList list={subscriptionList} /> : <p className='m-auto'>No subscriptions found.</p>}
-                      </div>
-                    </div>
-                }
->>>>>>> a6bec289f629bc2cfd8d3a6ef14f9a3206e644aa
               </div>
               {
                 adminData.super &&
