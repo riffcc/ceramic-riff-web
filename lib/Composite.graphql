@@ -1,0 +1,781 @@
+type Query {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  pieceIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): PieceConnection
+  subscriptionIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): SubscriptionConnection
+  adminIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): AdminConnection
+  ethAccountIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): EthAccountConnection
+  websiteIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): WebsiteConnection
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+type CeramicAccount implements Node {
+  """Globally unique identifier of the account (DID string)"""
+  id: ID!
+
+  """
+  Whether the Ceramic instance is currently authenticated with this account or not
+  """
+  isViewer: Boolean!
+  pieceList(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): PieceConnection
+  subscriptionList(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): SubscriptionConnection
+  adminList(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): AdminConnection
+  ethAccountList(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): EthAccountConnection
+  websiteList(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): WebsiteConnection
+}
+
+"""A connection to a list of items."""
+type PieceConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PieceEdge]
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+"""An edge in a connection."""
+type PieceEdge {
+  """The item at the end of the edge"""
+  node: Piece
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Piece implements Node {
+  id: ID!
+  cid: String
+  name: String
+  ownerID: CeramicStreamID!
+  approved: Boolean
+  category: String
+  metadata: PieceMetadata!
+  rejected: Boolean
+  websiteID: CeramicStreamID!
+  rejectionReason: String
+  owner: EthAccount
+  website: Website
+}
+
+"""A Ceramic Stream ID"""
+scalar CeramicStreamID
+
+type PieceMetadata {
+  createdAt: String!
+  updatedAt: String!
+}
+
+type EthAccount implements Node {
+  id: ID!
+  address: String!
+  ensName: String
+  metadata: EthAccountMetadata!
+  websiteID: CeramicStreamID!
+  pieces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+
+    """Returns only documents created by the provided account"""
+    account: ID
+  ): PieceConnection!
+  piecesCount(
+    """Counts only documents created by the provided account"""
+    account: ID
+  ): Int!
+  managedWebsites(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+
+    """Returns only documents created by the provided account"""
+    account: ID
+  ): AdminConnection!
+  managedWebsitesCount(
+    """Counts only documents created by the provided account"""
+    account: ID
+  ): Int!
+}
+
+type EthAccountMetadata {
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""A connection to a list of items."""
+type AdminConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AdminEdge]
+}
+
+"""An edge in a connection."""
+type AdminEdge {
+  """The item at the end of the edge"""
+  node: Admin
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Admin implements Node {
+  id: ID!
+  super: Boolean!
+  adminID: CeramicStreamID!
+  inactive: Boolean
+  metadata: AdminMetadata!
+  websiteID: CeramicStreamID!
+  admin: EthAccount
+  website: Website
+}
+
+type AdminMetadata {
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Website implements Node {
+  id: ID!
+  image: String
+  metadata: WebsiteMetadata!
+  description: String
+  websiteName: String!
+  pieces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+
+    """Returns only documents created by the provided account"""
+    account: ID
+  ): PieceConnection!
+  piecesCount(
+    """Counts only documents created by the provided account"""
+    account: ID
+  ): Int!
+  subscriptions(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+
+    """Returns only documents created by the provided account"""
+    account: ID
+  ): SubscriptionConnection!
+  subscriptionsCount(
+    """Counts only documents created by the provided account"""
+    account: ID
+  ): Int!
+  admins(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+
+    """Returns only documents created by the provided account"""
+    account: ID
+  ): AdminConnection!
+  adminsCount(
+    """Counts only documents created by the provided account"""
+    account: ID
+  ): Int!
+  users(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+
+    """Returns only documents created by the provided account"""
+    account: ID
+  ): EthAccountConnection!
+  usersCount(
+    """Counts only documents created by the provided account"""
+    account: ID
+  ): Int!
+}
+
+type WebsiteMetadata {
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""A connection to a list of items."""
+type SubscriptionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SubscriptionEdge]
+}
+
+"""An edge in a connection."""
+type SubscriptionEdge {
+  """The item at the end of the edge"""
+  node: Subscription
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Subscription implements Node {
+  id: ID!
+  metadata: SubscriptionMetadata!
+  websiteID: CeramicStreamID!
+  subscribedID: CeramicStreamID!
+  website: Website
+  subscribedWebsite: Website
+}
+
+type SubscriptionMetadata {
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""A connection to a list of items."""
+type EthAccountConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [EthAccountEdge]
+}
+
+"""An edge in a connection."""
+type EthAccountEdge {
+  """The item at the end of the edge"""
+  node: EthAccount
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""A connection to a list of items."""
+type WebsiteConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [WebsiteEdge]
+}
+
+"""An edge in a connection."""
+type WebsiteEdge {
+  """The item at the end of the edge"""
+  node: Website
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Mutation {
+  createPiece(input: CreatePieceInput!): CreatePiecePayload
+  updatePiece(input: UpdatePieceInput!): UpdatePiecePayload
+  createSubscription(input: CreateSubscriptionInput!): CreateSubscriptionPayload
+  updateSubscription(input: UpdateSubscriptionInput!): UpdateSubscriptionPayload
+  createAdmin(input: CreateAdminInput!): CreateAdminPayload
+  updateAdmin(input: UpdateAdminInput!): UpdateAdminPayload
+  createEthAccount(input: CreateEthAccountInput!): CreateEthAccountPayload
+  updateEthAccount(input: UpdateEthAccountInput!): UpdateEthAccountPayload
+  createWebsite(input: CreateWebsiteInput!): CreateWebsitePayload
+  updateWebsite(input: UpdateWebsiteInput!): UpdateWebsitePayload
+}
+
+type CreatePiecePayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: Piece!
+  clientMutationId: String
+}
+
+input CreatePieceInput {
+  content: PieceInput!
+  clientMutationId: String
+}
+
+input PieceInput {
+  cid: String
+  name: String
+  ownerID: CeramicStreamID!
+  approved: Boolean
+  category: String
+  metadata: PieceMetadataInput!
+  rejected: Boolean
+  websiteID: CeramicStreamID!
+  rejectionReason: String
+}
+
+input PieceMetadataInput {
+  createdAt: String!
+  updatedAt: String!
+}
+
+type UpdatePiecePayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: Piece!
+  clientMutationId: String
+}
+
+input UpdatePieceInput {
+  id: ID!
+  content: PartialPieceInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input PartialPieceInput {
+  cid: String
+  name: String
+  ownerID: CeramicStreamID
+  approved: Boolean
+  category: String
+  metadata: PieceMetadataInput
+  rejected: Boolean
+  websiteID: CeramicStreamID
+  rejectionReason: String
+}
+
+input UpdateOptionsInput {
+  """
+  Fully replace the document contents instead of performing a shallow merge
+  """
+  replace: Boolean = false
+
+  """Only perform mutation if the document matches the provided version"""
+  version: CeramicCommitID
+}
+
+"""A Ceramic Commit ID"""
+scalar CeramicCommitID
+
+type CreateSubscriptionPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: Subscription!
+  clientMutationId: String
+}
+
+input CreateSubscriptionInput {
+  content: SubscriptionInput!
+  clientMutationId: String
+}
+
+input SubscriptionInput {
+  metadata: SubscriptionMetadataInput!
+  websiteID: CeramicStreamID!
+  subscribedID: CeramicStreamID!
+}
+
+input SubscriptionMetadataInput {
+  createdAt: String!
+  updatedAt: String!
+}
+
+type UpdateSubscriptionPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: Subscription!
+  clientMutationId: String
+}
+
+input UpdateSubscriptionInput {
+  id: ID!
+  content: PartialSubscriptionInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input PartialSubscriptionInput {
+  metadata: SubscriptionMetadataInput
+  websiteID: CeramicStreamID
+  subscribedID: CeramicStreamID
+}
+
+type CreateAdminPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: Admin!
+  clientMutationId: String
+}
+
+input CreateAdminInput {
+  content: AdminInput!
+  clientMutationId: String
+}
+
+input AdminInput {
+  super: Boolean!
+  adminID: CeramicStreamID!
+  inactive: Boolean
+  metadata: AdminMetadataInput!
+  websiteID: CeramicStreamID!
+}
+
+input AdminMetadataInput {
+  createdAt: String!
+  updatedAt: String!
+}
+
+type UpdateAdminPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: Admin!
+  clientMutationId: String
+}
+
+input UpdateAdminInput {
+  id: ID!
+  content: PartialAdminInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input PartialAdminInput {
+  super: Boolean
+  adminID: CeramicStreamID
+  inactive: Boolean
+  metadata: AdminMetadataInput
+  websiteID: CeramicStreamID
+}
+
+type CreateEthAccountPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: EthAccount!
+  clientMutationId: String
+}
+
+input CreateEthAccountInput {
+  content: EthAccountInput!
+  clientMutationId: String
+}
+
+input EthAccountInput {
+  address: String!
+  ensName: String
+  metadata: EthAccountMetadataInput!
+  websiteID: CeramicStreamID!
+}
+
+input EthAccountMetadataInput {
+  createdAt: String!
+  updatedAt: String!
+}
+
+type UpdateEthAccountPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: EthAccount!
+  clientMutationId: String
+}
+
+input UpdateEthAccountInput {
+  id: ID!
+  content: PartialEthAccountInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input PartialEthAccountInput {
+  address: String
+  ensName: String
+  metadata: EthAccountMetadataInput
+  websiteID: CeramicStreamID
+}
+
+type CreateWebsitePayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: Website!
+  clientMutationId: String
+}
+
+input CreateWebsiteInput {
+  content: WebsiteInput!
+  clientMutationId: String
+}
+
+input WebsiteInput {
+  image: String
+  metadata: WebsiteMetadataInput!
+  description: String
+  websiteName: String!
+}
+
+input WebsiteMetadataInput {
+  createdAt: String!
+  updatedAt: String!
+}
+
+type UpdateWebsitePayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: Website!
+  clientMutationId: String
+}
+
+input UpdateWebsiteInput {
+  id: ID!
+  content: PartialWebsiteInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input PartialWebsiteInput {
+  image: String
+  metadata: WebsiteMetadataInput
+  description: String
+  websiteName: String
+}
