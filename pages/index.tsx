@@ -41,7 +41,7 @@ const IndexPage: NextPage = () => {
       <div className='bg-gradient-to-b from-slate-800 to-slate-700 rounded-xl mx-auto w-5/6 p-6 min-h-screen flex'>      
         <div className='flex flex-col w-full'>
           <h1 className='font-bold text-xl border-b border-slate-500 flex-none pb-2'>Content</h1>
-          {piecesList.length > 0 ? <PieceList list={piecesList} /> : <p className='m-auto'>Not content found.</p>}
+          {piecesList.length > 0 ? <PieceList list={piecesList} /> : <p className='m-auto'>No content found.</p>}
         </div>
       </div>
     </div>

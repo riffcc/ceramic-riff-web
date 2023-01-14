@@ -93,7 +93,7 @@ const AdminPage: NextPage = () => {
                 <div>
                   <h1 className='font-bold text-xl flex-none mb-2'>Subscriptions</h1>
                   <div className='border-t border-slate-500 py-4'>
-                    {subscriptionList && subscriptionList.length > 0 ? <SubscriptionList list={subscriptionList} /> : <p className='m-auto'>Not subscriptions found.</p>}
+                    {subscriptionList && subscriptionList.length > 0 ? <SubscriptionList list={subscriptionList} /> : <p className='m-auto'>No subscriptions found.</p>}
                   </div>
                 </div>
               </div>

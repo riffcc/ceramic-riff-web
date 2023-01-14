@@ -53,15 +53,15 @@ const ProfilePage: NextPage = () => {
               <div className='flex flex-col w-full gap-3'>
                 <p className='font-semibold ml-4 text-lg flex-none'>Approved</p>
                 <div className='border rounded-xl border-slate-500 min-h-[20rem] flex'>
-                  {pieces.approvedPieces && pieces.approvedPieces.length > 0 ? <PieceList list={pieces.approvedPieces} table/> : <p className='m-auto'>Not content found.</p>}
+                  {pieces.approvedPieces && pieces.approvedPieces.length > 0 ? <PieceList list={pieces.approvedPieces} table/> : <p className='m-auto'>No content found.</p>}
                 </div>
                 <p className='font-semibold ml-4 text-lg flex-none'>Pending</p>
                 <div className='border rounded-xl border-slate-500 min-h-[20rem] flex'>
-                  {pieces.pendingPieces && pieces.pendingPieces.length > 0 ? <PieceList list={pieces.pendingPieces} table/> : <p className='m-auto'>Not content found.</p>}
+                  {pieces.pendingPieces && pieces.pendingPieces.length > 0 ? <PieceList list={pieces.pendingPieces} table/> : <p className='m-auto'>No content found.</p>}
                 </div>
                 <p className='font-semibold ml-4 text-lg flex-none'>Rejected</p>
                 <div className='border rounded-xl border-slate-500 min-h-[20rem] flex'>
-                  {pieces.rejectedPieces && pieces.rejectedPieces.length > 0 ? <PieceList list={pieces.rejectedPieces} table/> : <p className='m-auto'>Not content found.</p>}
+                  {pieces.rejectedPieces && pieces.rejectedPieces.length > 0 ? <PieceList list={pieces.rejectedPieces} table/> : <p className='m-auto'>No content found.</p>}
                 </div>
               </div>
             </div> : <p>You are not an user</p>
