@@ -429,6 +429,26 @@ export const UPDATE_PIECE = graphql(`
   }
 `)
 
+
+export const GET_SUBSCRIPTION_INDEX = graphql(`
+  query SubscriptionIndex($pageSize: Int!) {
+    subscriptionIndex(first: $pageSize) {
+      edges {
+        node {
+          id
+          websiteID
+          website {
+            websiteName
+            description
+            image
+          }
+          subscribedID
+        }
+      }
+    }
+  }
+`)
+
 export const GET_SUBSCRIPTION = graphql(`
   query Subscription($id: ID!, $piecesPageSize: Int!) {
     node(id: $id) {
