@@ -8,7 +8,7 @@ import Connect from '../components/Layout/Connect';
 import Spinner from '../components/Layout/Spinner';
 import NewAdmin from '../components/NewAdmin';
 import PieceList from '../components/PieceList';
-import SubscriberList from '../components/SubscriberList';
+// import SubscriberList from '../components/SubscriberList';
 import SubscriptionList from '../components/SubscriptionList';
 import SubscriptionSearch from '../components/SubscriptionSearch';
 import { AdminFragment, GET_SUBSCRIPTION_INDEX, GET_WEBSITE_INDEX, WebsiteData, websiteDataQueryParams } from '../utils/constants';
@@ -108,7 +108,7 @@ const AdminPage: NextPage = () => {
                   <div className='grid border-t border-slate-500 py-4 min-h-[20rem]'>
                     <SubscriptionSearch />
                     {subscriptionList && subscriptionList.length > 0 ? <SubscriptionList list={subscriptionList} /> : <p className='m-auto'>No subscriptions found.</p>}
-                    {subscriberList && subscriberList.length > 0 ? <SubscriberList list={subscriberList} /> : <p className='m-auto'>No subscribers found.</p>}
+                    {/* {subscriberList && subscriberList.length > 0 ? <SubscriberList list={subscriberList} /> : <p className='m-auto'>No subscribers found.</p>} */}
 
                   </div>
                 </div>
