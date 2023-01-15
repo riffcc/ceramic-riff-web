@@ -87,7 +87,7 @@ export default function PieceActions({ piece }: Props) {
 
   const handleDeletePiece = () => {
 
-    const zeroAddressEthAccount = apolloClient.cache.readFragment({
+    const zeroAddressEthAccount = apolloClient.cache.readFragment<any>({
       id: apolloClient.cache.identify({
         __typename: 'EthAccount',
         address: "0x0000000000000000000000000000000000000000"

@@ -10,7 +10,7 @@ import PieceList from '../components/PieceList';
 const ProfilePage: NextPage = () => {
   const { address, isConnected } = useAccount()
   const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
-  const { data: websiteData } = useFragment_experimental({
+  const { data: websiteData } = useFragment_experimental<any, any>({
     from: { __typename: "Website", id: websiteID },
     fragment: WebsiteData,
     fragmentName: 'WebsiteData',

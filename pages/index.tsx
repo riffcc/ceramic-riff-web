@@ -8,7 +8,7 @@ import { WebsiteData, websiteDataQueryParams } from '../utils/constants';
 const IndexPage: NextPage = () => {
   const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
 
-  const { data: websiteData } = useFragment_experimental({
+  const { data: websiteData } = useFragment_experimental<any, any>({
     from: { __typename: "Website", id: websiteID },
     fragment: WebsiteData,
     fragmentName: 'WebsiteData',
@@ -33,7 +33,7 @@ const IndexPage: NextPage = () => {
 
     const subscriptionsPieceEdgesFlat = Array.prototype.concat.apply([], subscriptionsPieceEdges ? subscriptionsPieceEdges : [])
     const mergedList = websitePieceEdges ? websitePieceEdges.concat.apply(websitePieceEdges, subscriptionsPieceEdgesFlat) : subscriptionsPieceEdgesFlat
-    return mergedList.filter((piece) => piece?.node?.approved)
+    return mergedList.filter((piece: any) => piece?.node?.approved)
   }, [websiteData])
 
   return (

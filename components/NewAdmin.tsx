@@ -81,7 +81,7 @@ export default function NewAdmin() {
 
   const isValidAddress = useMemo(() => newAdminAddress.length === 42, [newAdminAddress])
 
-  const { complete: isUser, data: userData } = useFragment_experimental({
+  const { complete: isUser, data: userData } = useFragment_experimental<any, any>({
     from: {
       __typename: "EthAccount",
       address: isValidAddress ? newAdminAddress : null
@@ -89,7 +89,7 @@ export default function NewAdmin() {
     fragment: UserFragment,
   })
 
-  const { complete: isAdminUser, data: adminData } = useFragment_experimental({
+  const { complete: isAdminUser, data: adminData } = useFragment_experimental<any, any>({
     from: {
       __typename: "Admin",
       admin: {
