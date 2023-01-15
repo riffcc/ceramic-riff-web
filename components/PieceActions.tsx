@@ -185,6 +185,16 @@ export default function PieceActions({ piece }: Props) {
         />
       }
       {
+        (!isAdminUser && !piece?.approved && !piece?.rejected) &&
+        <Tooltip
+          key="user-edit"
+          containerClassname="w-20 bg-slate-800 rounded-md"
+          container={<HiOutlinePencilAlt className="h-4 w-4 text-slate-50 hover:cursor-pointer" />}
+          onClickContainer={showEditModal}
+          content="Edit"
+        />
+      }
+      {
         isAdminUser && !piece?.approved &&
         <Tooltip
           key="approve"
