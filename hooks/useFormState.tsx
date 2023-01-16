@@ -207,7 +207,7 @@ const formStateReduce = (state: FormState, action: { type: string; payload: any 
 }
 
 
-export default function useFormState(props: FormState) {
+export default function useFormState(props?: FormState) {
   const [store, dispatch] = useReducer(formStateReduce, {...initialFormState, ...props})
 
   return { store, dispatch }

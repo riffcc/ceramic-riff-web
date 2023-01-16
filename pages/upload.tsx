@@ -6,7 +6,7 @@ import { useAccount } from "wagmi"
 import Connect from "../components/Layout/Connect"
 import Spinner from "../components/Layout/Spinner"
 import Tooltip from "../components/Layout/Tooltip"
-import useDetailFormState from "../hooks/useFormState"
+import useFormState from "../hooks/useFormState"
 import { CREATE_PIECE, formatOptions, mediaOptions, movieTypeOptions, pieceCategories, releaseTypesOptions, WebsiteData, websiteDataQueryParams } from "../utils/constants"
 import { getDate } from "../utils/getDate"
 
@@ -16,7 +16,7 @@ const UploadPage: NextPage = () => {
   const { address, isConnected } = useAccount()
   const apolloClient = useApolloClient()
   const [showAdvancedForm, setShowAdvancedForm] = useState(false)
-  const { store, dispatch } = useDetailFormState()
+  const { store, dispatch } = useFormState()
 
   const [createPiece, { loading: loadingMutation }] = useMutation(CREATE_PIECE, {
     update: (cache, result) => {
