@@ -16,8 +16,8 @@ export default function SubscriptionItem({ subscription }: Props) {
     fragment: gql`
       fragment SubscriptionFragment on Subscription {
         id
+        subscribedID
         subscribedWebsite {
-          id
           websiteName
           description
           image

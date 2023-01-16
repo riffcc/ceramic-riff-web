@@ -190,8 +190,9 @@ type PieceEdge {
 
 type Piece implements Node {
   id: ID!
-  cid: String
+  CID: String
   name: String
+  details: PieceDetails
   ownerID: CeramicStreamID!
   approved: Boolean
   category: String
@@ -201,6 +202,24 @@ type Piece implements Node {
   rejectionReason: String
   owner: EthAccount
   website: Website
+}
+
+type PieceDetails {
+  tags: String
+  type: String
+  media: String
+  IMDBID: String
+  TMDBID: String
+  format: String
+  poster: String
+  bitrate: String
+  albumTitle: String
+  artistNames: String
+  releaseType: String
+  musicBrainzID: String
+  imageThumbnailCID: String
+  initialReleaseYear: String
+  releaseDescription: String
 }
 
 """A Ceramic Stream ID"""
@@ -491,8 +510,9 @@ input CreatePieceInput {
 }
 
 input PieceInput {
-  cid: String
+  CID: String
   name: String
+  details: PieceDetailsInput
   ownerID: CeramicStreamID!
   approved: Boolean
   category: String
@@ -500,6 +520,24 @@ input PieceInput {
   rejected: Boolean
   websiteID: CeramicStreamID!
   rejectionReason: String
+}
+
+input PieceDetailsInput {
+  tags: String
+  type: String
+  media: String
+  IMDBID: String
+  TMDBID: String
+  format: String
+  poster: String
+  bitrate: String
+  albumTitle: String
+  artistNames: String
+  releaseType: String
+  musicBrainzID: String
+  imageThumbnailCID: String
+  initialReleaseYear: String
+  releaseDescription: String
 }
 
 input PieceMetadataInput {
@@ -528,8 +566,9 @@ input UpdatePieceInput {
 }
 
 input PartialPieceInput {
-  cid: String
+  CID: String
   name: String
+  details: PieceDetailsInput
   ownerID: CeramicStreamID
   approved: Boolean
   category: String

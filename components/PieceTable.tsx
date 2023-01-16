@@ -14,7 +14,7 @@ const columns = [
   columnHelper.accessor('node', {
     id: 'thumbnail',
     cell: props => <div className='h-16 w-16 mx-auto relative my-1'>
-      <Image src={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${props.getValue()?.cid}`} fill alt='' />
+      <Image src={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${props.getValue()?.CID}`} fill alt='' />
     </div>
   }),
   columnHelper.accessor('node', {
@@ -30,9 +30,9 @@ const columns = [
   columnHelper.accessor('node', {
     id: 'cid',
     cell: props =>
-      <a href={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${props.getValue()?.cid}`} target='_blank'>
+      <a href={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${props.getValue()?.CID}`} target='_blank'>
         <p className='text-center hover:text-cyan-200'>
-          {`${props.getValue()?.cid?.substring(0, 5)}...${props.getValue()?.cid?.substring(props.getValue()?.cid?.length! - 5)}`}
+          {`${props.getValue()?.CID?.substring(0, 5)}...${props.getValue()?.CID?.substring(props.getValue()?.CID?.length! - 5)}`}
         </p>
       </a>
   }),

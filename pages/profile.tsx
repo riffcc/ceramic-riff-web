@@ -33,7 +33,7 @@ const ProfilePage: NextPage = () => {
 
   const pieces = useMemo(() => {
     const list = websiteData?.pieces.edges && websiteData.pieces.edges
-      .filter((piece: any) => (piece?.node.name && piece.node.cid && piece?.node.owner.address === address))
+      .filter((piece: any) => (piece?.node.name && piece.node.CID && piece?.node.owner.address === address))
     const approvedPieces = list && list.filter((piece: any) => (piece?.node.approved))
     const pendingPieces = list && list.filter((piece: any) => (!piece?.node.approved && !piece?.node.rejected))
     const rejectedPieces = list && list.filter((piece: any) => (piece?.node.rejected))

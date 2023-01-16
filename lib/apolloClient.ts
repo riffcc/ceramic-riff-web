@@ -67,7 +67,7 @@ async function createApolloClient() {
           },
         },
         Subscription: {
-          keyFields: ['subscribedWebsite', ['id']],
+          keyFields: ['subscribedID'],
         },
         // Website: {
         //   fields: {

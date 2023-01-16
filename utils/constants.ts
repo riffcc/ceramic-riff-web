@@ -39,9 +39,26 @@ export const WebsiteData = gql`
       edges {
         node {
           id
-          cid
+          CID
           name
           category
+          details {
+            tags
+            type
+            media
+            IMDBID
+            TMDBID
+            format
+            poster
+            bitrate
+            albumTitle
+            artistNames
+            releaseType
+            musicBrainzID
+            imageThumbnailCID
+            initialReleaseYear
+            releaseDescription
+          }
           approved
           rejected
           rejectionReason
@@ -62,8 +79,8 @@ export const WebsiteData = gql`
       edges {
         node {
           id
+          subscribedID
           subscribedWebsite {
-            id
             websiteName
             description
             image
@@ -71,9 +88,26 @@ export const WebsiteData = gql`
               edges {
                 node {
                   id
-                  cid
+                  CID
                   name
                   category
+                  details {
+                    tags
+                    type
+                    media
+                    IMDBID
+                    TMDBID
+                    format
+                    poster
+                    bitrate
+                    albumTitle
+                    artistNames
+                    releaseType
+                    musicBrainzID
+                    imageThumbnailCID
+                    initialReleaseYear
+                    releaseDescription
+                  }
                   approved
                   rejected
                   rejectionReason
@@ -110,6 +144,7 @@ export const WebsiteData = gql`
     usersCount
   }
 `
+
 export const AdminFragment = gql`
   fragment WebsiteAdmin on Admin {
     id
@@ -153,41 +188,58 @@ export const GET_WEBSITE = graphql(`
 
 export const GET_WEBSITE_DATA = graphql(`
   query WebsiteData(
-      $id: ID!, 
-      $adminsPageSize: Int!,
-      $piecesPageSize: Int!, 
-      $subscriptionsPageSize: Int!, 
-      $usersPageSize: Int!
-    ) {
+    $id: ID!
+    $adminsPageSize: Int!
+    $piecesPageSize: Int!
+    $subscriptionsPageSize: Int!
+    $usersPageSize: Int!
+  ) {
     node(id: $id) {
       ... on Website {
         id
         admins(first: $adminsPageSize) {
-              edges {
-                node {
-                  id
-                  adminID
-                  admin {
-                    address
-                    ensName
-                  }
-                  super
-                  inactive
-                  metadata {
-                    createdAt
-                    updatedAt
-                  }
-                }
+          edges {
+            node {
+              id
+              adminID
+              admin {
+                address
+                ensName
+              }
+              super
+              inactive
+              metadata {
+                createdAt
+                updatedAt
               }
             }
+          }
+        }
         adminsCount
         pieces(first: $piecesPageSize) {
           edges {
             node {
               id
-              cid
+              CID
               name
               category
+              details {
+                tags
+                type
+                media
+                IMDBID
+                TMDBID
+                format
+                poster
+                bitrate
+                albumTitle
+                artistNames
+                releaseType
+                musicBrainzID
+                imageThumbnailCID
+                initialReleaseYear
+                releaseDescription
+              }
               approved
               rejected
               rejectionReason
@@ -208,8 +260,8 @@ export const GET_WEBSITE_DATA = graphql(`
           edges {
             node {
               id
+              subscribedID
               subscribedWebsite {
-                id
                 websiteName
                 description
                 image
@@ -217,9 +269,26 @@ export const GET_WEBSITE_DATA = graphql(`
                   edges {
                     node {
                       id
-                      cid
+                      CID
                       name
                       category
+                      details {
+                        tags
+                        type
+                        media
+                        IMDBID
+                        TMDBID
+                        format
+                        poster
+                        bitrate
+                        albumTitle
+                        artistNames
+                        releaseType
+                        musicBrainzID
+                        imageThumbnailCID
+                        initialReleaseYear
+                        releaseDescription
+                      }
                       approved
                       rejected
                       rejectionReason
@@ -233,8 +302,8 @@ export const GET_WEBSITE_DATA = graphql(`
                 piecesCount
               }
               metadata {
-              createdAt
-              updatedAt
+                createdAt
+                updatedAt
               }
             }
           }
@@ -287,39 +356,53 @@ export const GET_WEBSITE_USERS = graphql(`
 `)
 
 export const GET_WEBSITE_PIECES = graphql(`
-  query WebsitePieces(
-    $id: ID!
-    $piecesPageSize: Int!,
-  ) {
-      node(id: $id) {
-        ... on Website {
-          id
-          pieces(first: $piecesPageSize) {
-            edges {
-              node {
-                id
-                cid
-                name
-                category
-                approved
-                rejected
-                rejectionReason
-                ownerID
-                owner {
-                  address
-                  ensName
-                }
-                metadata {
-                  createdAt
-                  updatedAt
-                }
+  query WebsitePieces($id: ID!, $piecesPageSize: Int!) {
+    node(id: $id) {
+      ... on Website {
+        id
+        pieces(first: $piecesPageSize) {
+          edges {
+            node {
+              id
+              CID
+              name
+              category
+              details {
+                tags
+                type
+                media
+                IMDBID
+                TMDBID
+                format
+                poster
+                bitrate
+                albumTitle
+                artistNames
+                releaseType
+                musicBrainzID
+                imageThumbnailCID
+                initialReleaseYear
+                releaseDescription
+              }
+              approved
+              rejected
+              rejectionReason
+              ownerID
+              owner {
+                address
+                ensName
+              }
+              metadata {
+                createdAt
+                updatedAt
               }
             }
           }
-          piecesCount
         }
+        piecesCount
       }
     }
+  }
 `)
 
 export const GET_ETH_ACCOUNT = graphql(`
@@ -359,9 +442,26 @@ export const GET_PIECE = graphql(`
     node(id: $id) {
       ... on Piece {
         id
-        cid
+        CID
         name
         category
+        details {
+          tags
+          type
+          media
+          IMDBID
+          TMDBID
+          format
+          poster
+          bitrate
+          albumTitle
+          artistNames
+          releaseType
+          musicBrainzID
+          imageThumbnailCID
+          initialReleaseYear
+          releaseDescription
+        }
         approved
         rejected
         rejectionReason
@@ -384,9 +484,26 @@ export const CREATE_PIECE = graphql(`
     createPiece(input: $input) {
       document {
         id
-        cid
+        CID
         name
         category
+        details {
+          tags
+          type
+          media
+          IMDBID
+          TMDBID
+          format
+          poster
+          bitrate
+          albumTitle
+          artistNames
+          releaseType
+          musicBrainzID
+          imageThumbnailCID
+          initialReleaseYear
+          releaseDescription
+        }
         approved
         rejected
         rejectionReason
@@ -409,9 +526,26 @@ export const UPDATE_PIECE = graphql(`
     updatePiece(input: $input) {
       document {
         id
-        cid
+        CID
         name
         category
+        details {
+          tags
+          type
+          media
+          IMDBID
+          TMDBID
+          format
+          poster
+          bitrate
+          albumTitle
+          artistNames
+          releaseType
+          musicBrainzID
+          imageThumbnailCID
+          initialReleaseYear
+          releaseDescription
+        }
         approved
         rejected
         rejectionReason
@@ -454,8 +588,8 @@ export const GET_SUBSCRIPTION = graphql(`
     node(id: $id) {
       ... on Subscription {
         id
+        subscribedID
         subscribedWebsite {
-          id
           websiteName
           description
           image
@@ -474,13 +608,13 @@ export const CREATE_SUBSCRIPTION = graphql(`
     createSubscription(input: $input) {
       document {
         id
+        subscribedID
         subscribedWebsite {
-          id
           pieces(first: $piecesPageSize) {
             edges {
               node {
                 id
-                cid
+                CID
                 name
                 approved
                 rejected
@@ -507,8 +641,8 @@ export const UPDATE_SUBSCRIPTION = graphql(`
     updateSubscription(input: $input) {
       document {
         id
+        subscribedID
         subscribedWebsite {
-          id
           websiteName
           description
           image
@@ -609,4 +743,44 @@ export const pieceCategories = [
   'Music',
   'Videos',
   'Other',
+]
+
+export const releaseTypesOptions = [
+  'Album',
+  'Soundtrack',
+  'EP',
+  'Anthology',
+  'Compilation',
+  'Single',
+  'Live Album',
+  'Remix',
+  'Bootleg',
+  'Interview',
+  'Mixtape',
+  'Demo',
+  'Concert Recording',
+  'DJ Mix',
+  'Unknown',
+]
+
+export const formatOptions = ['MP3', 'FLAC', 'AAC', 'AC3', 'DTS']
+
+export const mediaOptions = [
+  'CD',
+  'DVD',
+  'Vinyl',
+  'Soundboard',
+  'SACD',
+  'DAT',
+  'WEB',
+  'Blu-Ray',
+]
+
+export const movieTypeOptions = [
+  'Feature Film',
+  'Short Film',
+  'Miniseries',
+  'Stand-up Comedy',
+  'Live Performance',
+  'Movie Collection',
 ]

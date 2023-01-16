@@ -17,7 +17,7 @@ export default function PieceList({ list, table = false }: Props) {
             piece &&
             piece.node &&
             piece.node.name &&
-            piece.node.cid &&
+            piece.node.CID &&
             <PieceItem
               key={piece.node.id}
               piece={piece.node}
