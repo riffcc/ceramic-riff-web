@@ -2,6 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: [process.env.NEXT_PUBLIC_IPFS_GATEWAY]
+    domains: [process.env.NEXT_PUBLIC_IPFS_GATEWAY],
+    unoptimized: true
   },
 }
