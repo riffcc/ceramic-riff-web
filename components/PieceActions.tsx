@@ -548,7 +548,6 @@ export default function PieceActions({ piece }: Props) {
               <button
                 className="h-10 w-20 py-1 px-2 mt-1 bg-cyan-600 hover:cursor-pointer disabled:hover:bg-cyan-900 disabled:bg-cyan-900 disabled:text-slate-400 disabled:cursor-default hover:disabled:coursor-default mx-auto rounded"
                 onClick={handleRejectPiece}
-                disabled={rejectionReason === ''}
               >
                 <p>Reject</p>
               </button>
