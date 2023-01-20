@@ -430,6 +430,7 @@ type SubscriptionEdge {
 
 type Subscription implements Node {
   id: ID!
+  inactive: Boolean
   metadata: SubscriptionMetadata!
   websiteID: CeramicStreamID!
   subscribedID: CeramicStreamID!
@@ -610,6 +611,7 @@ input CreateSubscriptionInput {
 }
 
 input SubscriptionInput {
+  inactive: Boolean
   metadata: SubscriptionMetadataInput!
   websiteID: CeramicStreamID!
   subscribedID: CeramicStreamID!
@@ -641,6 +643,7 @@ input UpdateSubscriptionInput {
 }
 
 input PartialSubscriptionInput {
+  inactive: Boolean
   metadata: SubscriptionMetadataInput
   websiteID: CeramicStreamID
   subscribedID: CeramicStreamID

@@ -120,6 +120,7 @@ export const WebsiteData = gql`
             }
             piecesCount
           }
+          inactive
           metadata {
             createdAt
             updatedAt
@@ -301,6 +302,7 @@ export const GET_WEBSITE_DATA = graphql(`
                 }
                 piecesCount
               }
+              inactive
               metadata {
                 createdAt
                 updatedAt
@@ -594,6 +596,7 @@ export const GET_SUBSCRIPTION = graphql(`
           description
           image
         }
+        inactive
         metadata {
           createdAt
           updatedAt
@@ -627,6 +630,7 @@ export const CREATE_SUBSCRIPTION = graphql(`
           }
           piecesCount
         }
+        inactive
         metadata {
           createdAt
           updatedAt
@@ -647,6 +651,7 @@ export const UPDATE_SUBSCRIPTION = graphql(`
           description
           image
         }
+        inactive
         metadata {
           createdAt
           updatedAt
