@@ -29,7 +29,11 @@ export default function AdminItem({ admin }: Props) {
   return (
     <li>
       <div className="flex items-center justify-between gap-1">
-        <HiOutlineUser className="h-4 w-4" />
+        {
+          admin.super ?
+            <HiOutlineUser className="h-4 w-4" /> :
+            <p className="h-4 w-4">🇸</p>
+        }
         <p className="text-sm font-semibold">{admin.admin?.address}</p>
         <Tooltip
           containerClassname="w-20 bg-slate-800 rounded-md"
