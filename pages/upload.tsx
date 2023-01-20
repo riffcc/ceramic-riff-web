@@ -9,6 +9,7 @@ import Tooltip from "../components/Layout/Tooltip"
 import useFormState from "../hooks/useFormState"
 import { CREATE_PIECE, formatOptions, mediaOptions, movieTypeOptions, pieceCategories, releaseTypesOptions, WebsiteData, websiteDataQueryParams } from "../utils/constants"
 import { getDate } from "../utils/getDate"
+import { CID } from 'multiformats'
 
 const UploadPage: NextPage = () => {
 
@@ -82,6 +83,10 @@ const UploadPage: NextPage = () => {
     })
   }
 
+  const isValidCID = useMemo(() => {
+    return !!(CID.asCID(store.CID))
+  }, [store.CID])
+
   return (
     <div className='px-4 py-10 min-h-screen'>
       <div className="w-[25rem] border px-6 pt-8 pb-12 m-auto rounded">
@@ -105,6 +110,7 @@ const UploadPage: NextPage = () => {
             onChange={(e) => dispatch({ type: 'CID', payload: e.target.value })}
             value={store.CID}
           />
+          {!isValidCID && <p className="text-xs text-red-500">Please enter a valid CIDv0 or CIDv1 ID.</p>}
           <p className="text-sm mb-1 ml-1">Category:</p>
           <select
             className='form-select bg-slate-800 mb-4'

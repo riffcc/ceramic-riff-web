@@ -1,6 +1,6 @@
 import { useApolloClient, useFragment_experimental, useMutation } from "@apollo/client";
 import { Maybe } from "graphql/jsutils/Maybe";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useMemo, useState } from "react";
 import { HiOutlineTrash, HiOutlinePencilAlt, HiOutlineCheckCircle, HiOutlineXCircle, HiOutlineX, HiOutlineExternalLink, HiOutlineEye, HiOutlineClock, HiQuestionMarkCircle, HiOutlineQuestionMarkCircle } from "react-icons/hi";
 import { useAccount } from "wagmi";
 import useFormState from "../hooks/useFormState";
@@ -9,6 +9,7 @@ import { getDate } from "../utils/getDate";
 import { Piece } from "../utils/__generated__/graphql";
 import Spinner from "./Layout/Spinner";
 import Tooltip from "./Layout/Tooltip";
+import { CID } from 'multiformats'
 
 interface Props {
   piece: Maybe<Piece>;
@@ -160,6 +161,10 @@ export default function PieceActions({ piece }: Props) {
     })
   }
 
+  const isValidCID = useMemo(() => {
+    return !!(CID.asCID(store.CID))
+  }, [store.CID])
+
   return (
     <div className="flex gap-2 items-center justify-center w-full">
       {
@@ -267,6 +272,7 @@ export default function PieceActions({ piece }: Props) {
                   onChange={(e) => dispatch({ type: 'CID', payload: e.target.value })}
                   value={store.CID}
                 />
+                {!isValidCID && <p className="text-xs text-red-500">Please enter a valid CIDv0 or CIDv1 ID.</p>}
                 <p className="text-sm mb-1 ml-1">Category:</p>
                 <select
                   className='form-select bg-slate-800 mb-4'
@@ -517,7 +523,7 @@ export default function PieceActions({ piece }: Props) {
               <button
                 className="h-10 py-1 px-2 mt-2 bg-cyan-600 disabled:hover:bg-cyan-900 disabled:bg-cyan-900 disabled:text-slate-400 hover:cursor-pointer disabled:cursor-default hover:disabled:coursor-default uppercase font-medium rounded"
                 onClick={handleEditPiece}
-                disabled={loadingUpdatePiece || store.name === '' || store.CID === '' || store.category === 'default'}
+                disabled={loadingUpdatePiece || store.name === '' || store.CID === '' || store.category === 'default' || !isValidCID}
               >
                 {
                   loadingUpdatePiece ?
