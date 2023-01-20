@@ -23,6 +23,7 @@
     "key-did-provider-ed25519": "^2.0.1",
     "key-did-resolver": "^2.3.0",
     "lodash": "4.17.20",
+    "multiformats": "^11.0.1",
     "next": "latest",
     "prop-types": "^15.6.2",
     "react": "^18.0.2",
