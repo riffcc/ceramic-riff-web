@@ -26,13 +26,14 @@ export default function AdminItem({ admin }: Props) {
   const handleDeleteAdmin = async () => {
     await updateAdmin()
   }
+  console.log(admin)
   return (
     <li>
       <div className="flex items-center justify-between gap-1">
         {
           admin.super ?
-            <HiOutlineUser className="h-4 w-4" /> :
-            <p className="h-4 w-4">🇸</p>
+            <p className="">🇸</p> :
+            <HiOutlineUser className="h-4 w-4" />
         }
         <p className="text-sm font-semibold">{admin.admin?.address}</p>
         <Tooltip
