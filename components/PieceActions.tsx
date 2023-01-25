@@ -162,7 +162,7 @@ export default function PieceActions({ piece }: Props) {
   }
 
   const isValidCID = useMemo(() => {
-    return !!((store.CID.startWith('Qm') && store.CID.length === 46))
+    return !!((store.CID.startsWith('Qm') && store.CID.length === 46))
   }, [store.CID])
 
   return (
