@@ -13,7 +13,8 @@ export default function SubscriptionList({ list }: Props) {
         list.map((subscription: SubscriptionEdge) => (
           subscription &&
           subscription.node &&
-          <SubscriptionItem key={subscription.node.subscribedWebsite?.id} subscription={subscription.node.subscribedWebsite as Website} />
+          !subscription.node.inactive &&
+          <SubscriptionItem key={subscription.node.id} subscription={subscription.node.subscribedWebsite as Website} />
         ))
       }
     </div>

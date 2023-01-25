@@ -81,6 +81,7 @@ export const WebsiteData = gql`
           id
           subscribedID
           subscribedWebsite {
+            id
             websiteName
             description
             image
@@ -263,6 +264,7 @@ export const GET_WEBSITE_DATA = graphql(`
               id
               subscribedID
               subscribedWebsite {
+                id
                 websiteName
                 description
                 image
@@ -572,13 +574,18 @@ export const GET_SUBSCRIPTION_INDEX = graphql(`
       edges {
         node {
           id
-          websiteID
-          website {
+          subscribedID
+          subscribedWebsite {
+            id
             websiteName
             description
             image
           }
-          subscribedID
+          inactive
+          metadata {
+            createdAt
+            updatedAt
+          }
         }
       }
     }
@@ -592,6 +599,7 @@ export const GET_SUBSCRIPTION = graphql(`
         id
         subscribedID
         subscribedWebsite {
+          id
           websiteName
           description
           image
@@ -607,28 +615,16 @@ export const GET_SUBSCRIPTION = graphql(`
 `)
 
 export const CREATE_SUBSCRIPTION = graphql(`
-  mutation CreateSubscription($input: CreateSubscriptionInput!, $piecesPageSize: Int!) {
+  mutation CreateSubscription($input: CreateSubscriptionInput!) {
     createSubscription(input: $input) {
       document {
         id
         subscribedID
         subscribedWebsite {
-          pieces(first: $piecesPageSize) {
-            edges {
-              node {
-                id
-                CID
-                name
-                approved
-                rejected
-                metadata {
-                  createdAt
-                  updatedAt
-                }
-              }
-            }
-          }
-          piecesCount
+          id
+          websiteName
+          description
+          image
         }
         inactive
         metadata {
@@ -647,6 +643,7 @@ export const UPDATE_SUBSCRIPTION = graphql(`
         id
         subscribedID
         subscribedWebsite {
+          id
           websiteName
           description
           image

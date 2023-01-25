@@ -1,9 +1,35 @@
 import { gql, useFragment_experimental, useMutation } from "@apollo/client";
 import Image from "next/image";
+import { useMemo } from "react";
 import { HiOutlineCreditCard } from "react-icons/hi";
-import { CREATE_SUBSCRIPTION, WebsiteData, websiteDataQueryParams } from "../utils/constants";
+import { CREATE_SUBSCRIPTION, UPDATE_SUBSCRIPTION, WebsiteData, websiteDataQueryParams } from "../utils/constants";
 import { getDate } from "../utils/getDate";
-import { Website } from "../utils/__generated__/graphql";
+import { SubscriptionEdge, Website } from "../utils/__generated__/graphql";
+
+const subscriptionFragment = gql`
+  fragment SubscriptionFragment on Subscription {
+    id
+    subscribedID
+    subscribedWebsite {
+      id
+      websiteName
+      description
+      image
+    }
+    websiteID
+    website {
+      id
+      websiteName
+      description
+      image
+    }
+    inactive
+    metadata {
+      createdAt
+      updatedAt
+    }
+  }
+`
 
 interface Props {
   subscription: Website
@@ -11,25 +37,24 @@ interface Props {
 export default function SubscriptionItem({ subscription }: Props) {
   const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
 
-  const { complete: isSubscribed } = useFragment_experimental({
-    from: { __typename: "Subscription", subscribedWebsite: { id: subscription.id } },
-    fragment: gql`
-      fragment SubscriptionFragment on Subscription {
-        id
-        subscribedID
-        subscribedWebsite {
-          websiteName
-          description
-          image
-        }
-        metadata {
-          createdAt
-          updatedAt
-        }
-      }
-    `,
-    fragmentName: 'SubscriptionFragment',
+  const { complete: isSubscription, data: subscriptionCacheData } = useFragment_experimental<any, any>({
+    from: { __typename: "Subscription", subscribedID: subscription.id },
+    fragment: subscriptionFragment
   })
+
+  const { data: websiteData } = useFragment_experimental<any, any>({
+    from: { __typename: 'Website', id: websiteID },
+    fragment: WebsiteData,
+    variables: {
+      ...websiteDataQueryParams
+    }
+  })
+
+  const isSubscribed = useMemo(() => {
+    if (!websiteData) return false
+    const index = websiteData.subscriptions.edges.findIndex((edge: SubscriptionEdge) => edge.node?.subscribedID === subscription.id && !edge.node.inactive)
+    return index === -1 ? false : true
+  }, [websiteData])
 
   const [createSubscription, { loading }] = useMutation(CREATE_SUBSCRIPTION, {
     variables: {
@@ -43,39 +68,81 @@ export default function SubscriptionItem({ subscription }: Props) {
           }
         }
       },
-      piecesPageSize: websiteDataQueryParams.piecesPageSize
     },
     update: (cache, result) => {
       cache.updateFragment({
-        id: `Website:${websiteID}`,
-        fragment: WebsiteData,
-        fragmentName: 'WebsiteData',
-        variables: {
-          ...websiteDataQueryParams
-        }
-      }, (data) => {
-        if (data?.subscriptions.edges) {
-          return {
-            ...data,
-            subscriptions: {
-              ...data.subscriptions,
-              edges: [
-                ...data.subscriptions.edges,
-                { __typename: 'SubscriptionEdge', node: result.data?.createSubscription?.document }
-              ]
-            },
-            subscriptionsCount: data.subscriptionsCount + 1
-          }
-        } else {
-          return data
-        }
-      })
+        id: cache.identify({ __typename: "Subscription", subscribedId: result.data?.createSubscription?.document.subscribedID }),
+        fragment: subscriptionFragment,
+      }, (data) => ({
+        ...data,
+        
+      }))
     }
   })
 
+  const [updateSubscription] = useMutation(UPDATE_SUBSCRIPTION)
+
   const handleOnSubscribe = () => {
-    createSubscription()
+
+    if (isSubscription) {
+      updateSubscription({
+        variables: {
+          input: {
+            id: subscriptionCacheData.id,
+            content: {
+              inactive: null,
+              metadata: {
+                createdAt: subscriptionCacheData.metadata.createAt,
+                updatedAt: getDate()
+              }
+            }
+          }
+        },
+        update: (cache, result) => {
+          cache.updateFragment({
+            id: `Website:${websiteID}`,
+            fragment: gql`
+
+            `,
+            fragmentName: 'WebsiteData',
+            variables: {
+              ...websiteDataQueryParams
+            }
+          }, (data) => data)
+        }
+      })
+    } else {
+      createSubscription()
+    }
   }
+
+  const handleOnUnSubscribe = () => {
+    updateSubscription({
+      variables: {
+        input: {
+          id: subscriptionCacheData.id,
+          content: {
+            inactive: true,
+            metadata: {
+              createdAt: subscriptionCacheData.metadata.createdAt,
+              updatedAt: getDate()
+            }
+          }
+        }
+      },
+      update: (cache, result) => {
+        cache.updateFragment({
+          id: `Website:${websiteID}`,
+          fragment: WebsiteData,
+          fragmentName: 'WebsiteData',
+          variables: {
+            ...websiteDataQueryParams
+          }
+        }, (data) => data)
+      }
+    })
+  }
+
 
   return (
     <div className="flex items-center justify-center gap-1 ">
@@ -105,7 +172,12 @@ export default function SubscriptionItem({ subscription }: Props) {
               >
                 Subscribe
               </button> :
-              <button className="uppercase text-sm font-bold text-cyan-700 w-24 h-8 px-1" disabled>Subscribed</button>
+              <button
+                className="uppercase text-sm font-bold text-cyan-700 w-24 h-8 px-1"
+                onClick={handleOnUnSubscribe}
+              >
+                Subscribed
+              </button>
           }
         </div>
         <div className="overflow-y-auto h-16 w-60 pt-1">
