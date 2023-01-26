@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Piece } from "../utils/__generated__/graphql";
 
 interface Props {
@@ -17,7 +18,9 @@ export default function PieceItem({ piece }: Props) {
           />
         </div>
       </a>
-      <p className="text-xs mt-2 truncate text-ellipsis text-center">{piece.name}</p>
+      <Link href={`/pin/${piece.id}`}>
+        <p className="text-xs mt-2 truncate text-ellipsis text-center">{piece.name}</p>
+      </Link>
     </div>
   )
 }
