@@ -9,8 +9,7 @@ import Tooltip from "../components/Layout/Tooltip"
 import useFormState from "../hooks/useFormState"
 import { CREATE_PIECE, formatOptions, mediaOptions, movieTypeOptions, pieceCategories, releaseTypesOptions, WebsiteData, websiteDataQueryParams } from "../utils/constants"
 import { getDate } from "../utils/getDate"
-import { CID } from 'multiformats'
-import { ethers } from "ethers"
+import checkCID from "../utils/checkCID"
 
 const UploadPage: NextPage = () => {
 
@@ -85,8 +84,8 @@ const UploadPage: NextPage = () => {
   }
 
   const isValidCID = useMemo(() => {
-    return !!((store.CID.startsWith('Qm') && store.CID.length === 46))
-  },[store.CID])
+    return checkCID(store.CID)
+  }, [store.CID])
 
   return (
     <div className='px-4 py-10 min-h-screen'>
@@ -111,7 +110,7 @@ const UploadPage: NextPage = () => {
             onChange={(e) => dispatch({ type: 'CID', payload: e.target.value })}
             value={store.CID}
           />
-          { store.CID.length > 0 && !isValidCID && <p className="text-xs text-red-500 mb-2">Please enter a valid CIDv0 or CIDv1 ID.</p>}
+          {store.CID.length > 0 && !isValidCID && <p className="text-xs text-red-500 mb-2">Please enter a valid CIDv0 or CIDv1 ID.</p>}
           <p className="text-sm mb-1 ml-1">Category:</p>
           <select
             className='form-select bg-slate-800 mb-4'

@@ -10,6 +10,7 @@ import { Piece } from "../utils/__generated__/graphql";
 import Spinner from "./Layout/Spinner";
 import Tooltip from "./Layout/Tooltip";
 import { CID } from 'multiformats'
+import checkCID from "../utils/checkCID";
 
 interface Props {
   piece: Maybe<Piece>;
@@ -162,7 +163,7 @@ export default function PieceActions({ piece }: Props) {
   }
 
   const isValidCID = useMemo(() => {
-    return !!((store.CID.startsWith('Qm') && store.CID.length === 46))
+    return checkCID(store.CID)
   }, [store.CID])
 
   return (
