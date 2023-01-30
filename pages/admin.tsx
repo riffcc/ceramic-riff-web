@@ -1,4 +1,4 @@
-import { useFragment_experimental, useQuery } from '@apollo/client';
+import { useFragment_experimental as useFragment, useQuery } from '@apollo/client';
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
@@ -7,6 +7,7 @@ import AdminList from '../components/AdminList';
 import Connect from '../components/Layout/Connect';
 import Spinner from '../components/Layout/Spinner';
 import NewAdmin from '../components/NewAdmin';
+import NewFeatured from '../components/NewFeatured';
 import PieceList from '../components/PieceList';
 // import SubscriberList from '../components/SubscriberList';
 import SubscriptionList from '../components/SubscriptionList';
@@ -30,7 +31,7 @@ const AdminPage: NextPage = () => {
     }
   })
 
-  const { data: websiteData } = useFragment_experimental<any, any>({
+  const { data: websiteData } = useFragment<any, any>({
     from: { __typename: "Website", id: websiteID },
     fragment: WebsiteData,
     fragmentName: 'WebsiteData',
@@ -39,7 +40,7 @@ const AdminPage: NextPage = () => {
     }
   })
 
-  const { complete: isAdminUser, data: adminData } = useFragment_experimental<any, any>({
+  const { complete: isAdminUser, data: adminData } = useFragment<any, any>({
     from: {
       __typename: "Admin",
       admin: {
@@ -110,6 +111,14 @@ const AdminPage: NextPage = () => {
                     {subscriptionList && subscriptionList.length > 0 ? <SubscriptionList list={subscriptionList} /> : <p className='m-auto'>No subscriptions found.</p>}
                     {/* {subscriberList && subscriberList.length > 0 ? <SubscriberList list={subscriberList} /> : <p className='m-auto'>No subscribers found.</p>} */}
 
+                  </div>
+                </div>
+              </div>
+              <div className='flex flex-col w-full mt-10 border-t-2 border-slate-500 py-2'>
+                <div>
+                  <h1 className='font-bold text-xl flex-none mb-2'>Featured</h1>
+                  <div className='grid border-t border-slate-500 py-4 min-h-[20rem]'>
+                    <NewFeatured />
                   </div>
                 </div>
               </div>
