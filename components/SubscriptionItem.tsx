@@ -63,8 +63,8 @@ export default function SubscriptionItem({ subscription }: Props) {
           websiteID,
           subscribedID: subscription.id,
           metadata: {
-            createdAt: getDate(),
-            updatedAt: getDate()
+            createdAt: getDate() as string,
+            updatedAt: getDate() as string
           }
         }
       },
@@ -93,7 +93,7 @@ export default function SubscriptionItem({ subscription }: Props) {
               inactive: null,
               metadata: {
                 createdAt: subscriptionCacheData.metadata.createAt,
-                updatedAt: getDate()
+                updatedAt: getDate() as string
               }
             }
           }
@@ -125,7 +125,7 @@ export default function SubscriptionItem({ subscription }: Props) {
             inactive: true,
             metadata: {
               createdAt: subscriptionCacheData.metadata.createdAt,
-              updatedAt: getDate()
+              updatedAt: getDate() as string
             }
           }
         }

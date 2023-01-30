@@ -16,7 +16,7 @@ export default function AdminItem({ admin }: Props) {
           inactive: true,
           metadata: {
             createdAt: admin.metadata.createdAt,
-            updatedAt: getDate()
+            updatedAt: getDate() as string
           }
         }
       }

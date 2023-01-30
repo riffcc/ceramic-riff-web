@@ -111,8 +111,8 @@ export default function NewAdmin() {
               address: newAdminAddress,
               websiteID,
               metadata: {
-                createdAt: getDate(),
-                updatedAt: getDate()
+                createdAt: getDate() as string,
+                updatedAt: getDate() as string
               }
             }
           },
@@ -129,8 +129,8 @@ export default function NewAdmin() {
               adminID,
               super: adminSuper,
               metadata: {
-                createdAt: getDate(),
-                updatedAt: getDate()
+                createdAt: getDate() as string,
+                updatedAt: getDate() as string
               }
             }
           }
@@ -147,7 +147,7 @@ export default function NewAdmin() {
                 inactive: false,
                 metadata: {
                   createdAt: adminData.metadata.createdAt,
-                  updatedAt: getDate()
+                  updatedAt: getDate() as string
                 }
               }
               
@@ -164,8 +164,8 @@ export default function NewAdmin() {
                 adminID: userData?.id,
                 super: adminSuper,
                 metadata: {
-                  createdAt: getDate(),
-                  updatedAt: getDate()
+                  createdAt: getDate() as string,
+                  updatedAt: getDate() as string
                 }
               }
             }

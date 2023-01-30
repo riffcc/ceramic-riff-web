@@ -85,8 +85,8 @@ const UploadPage: NextPage = () => {
             approved: false,
             rejected: false,
             metadata: {
-              createdAt: getDate(),
-              updatedAt: getDate()
+              createdAt: getDate() as string,
+              updatedAt: getDate() as string
             }
           }
         }

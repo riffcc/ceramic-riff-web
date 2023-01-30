@@ -76,7 +76,7 @@ export default function PieceActions({ piece }: Props) {
             details: store.details,
             metadata: {
               createdAt: piece?.metadata.createdAt!,
-              updatedAt: getDate()
+              updatedAt: getDate() as string
             }
           }
         }
@@ -107,7 +107,7 @@ export default function PieceActions({ piece }: Props) {
             ownerID: zeroAddressEthAccount?.id,
             metadata: {
               createdAt: piece?.metadata.createdAt!,
-              updatedAt: getDate()
+              updatedAt: getDate() as string
             }
           },
           options: {
@@ -128,7 +128,7 @@ export default function PieceActions({ piece }: Props) {
             rejected: false,
             metadata: {
               createdAt: piece?.metadata.createdAt!,
-              updatedAt: getDate()
+              updatedAt: getDate() as string
             }
           }
         }
@@ -147,7 +147,7 @@ export default function PieceActions({ piece }: Props) {
             rejectionReason,
             metadata: {
               createdAt: piece?.metadata.createdAt!,
-              updatedAt: getDate()
+              updatedAt: getDate() as string
             }
           }
         }
@@ -168,7 +168,7 @@ export default function PieceActions({ piece }: Props) {
             rejectionReason: '',
             metadata: {
               createdAt: piece?.metadata.createdAt!,
-              updatedAt: getDate()
+              updatedAt: getDate() as string
             }
           }
         }

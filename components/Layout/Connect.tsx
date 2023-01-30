@@ -36,8 +36,8 @@ export default function Connect({ className }: Props) {
                 address: account as string,
                 websiteID,
                 metadata: {
-                  createdAt: getDate(),
-                  updatedAt: getDate()
+                  createdAt: getDate() as string,
+                  updatedAt: getDate() as string
                 }
               }
             },
