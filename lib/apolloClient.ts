@@ -44,8 +44,7 @@ async function createApolloLinkWithCompose(composeClient: ComposeClient) {
 }
 
 async function createApolloClient() {
-  const did = getDID()
-  await did.authenticate()
+  const did = await getDID()
   const composeClient = createComposeClient(did)
   const apolloLinkWithCompose = await createApolloLinkWithCompose(composeClient)
   return new ApolloClient({
@@ -54,6 +53,9 @@ async function createApolloClient() {
       typePolicies: {
         EthAccount: {
           keyFields: ['address'],
+        },
+        Category: {
+          keyFields: ['name'],
         },
         Admin: {
           keyFields: ['admin', ['address']],
@@ -68,6 +70,12 @@ async function createApolloClient() {
         },
         Subscription: {
           keyFields: ['subscribedID'],
+        },
+        PieceLike: {
+          keyFields: ['owner', ['address'], 'piece', ['id']],
+        },
+        PieceDislike: {
+          keyFields: ['owner', ['address'], 'piece', ['id']],
         },
         // Website: {
         //   fields: {
