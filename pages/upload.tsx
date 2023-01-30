@@ -1,4 +1,4 @@
-import { gql, useApolloClient, useMutation } from "@apollo/client"
+import { gql, useApolloClient, useMutation, useFragment_experimental as useFragment } from "@apollo/client"
 import { NextPage } from "next/types"
 import { useState, useMemo } from "react"
 import { HiOutlineQuestionMarkCircle } from "react-icons/hi"
@@ -7,9 +7,10 @@ import Connect from "../components/Layout/Connect"
 import Spinner from "../components/Layout/Spinner"
 import Tooltip from "../components/Layout/Tooltip"
 import useFormState from "../hooks/useFormState"
-import { CREATE_PIECE, formatOptions, mediaOptions, movieTypeOptions, pieceCategories, releaseTypesOptions, WebsiteData, websiteDataQueryParams } from "../utils/constants"
+import { CategoryFragment, CREATE_PIECE, formatOptions, mediaOptions, movieTypeOptions, pageSizeMedium, pieceCategories, releaseTypesOptions, WebsiteData, websiteDataQueryParams } from "../utils/constants"
 import { getDate } from "../utils/getDate"
 import checkCID from "../utils/checkCID"
+import { CategoryFragment as CategoryFragmentType, PieceFragment as PieceFragmentType } from '../utils/__generated__/graphql';
 
 const UploadPage: NextPage = () => {
 
@@ -52,6 +53,16 @@ const UploadPage: NextPage = () => {
     setShowAdvancedForm(prev => !prev)
   }
 
+  const { data: categoryData } = useFragment<CategoryFragmentType, any>({
+    from: {
+      __typename: "Category",
+      name: store?.category ? store.category : null
+    },
+    fragment: CategoryFragment,
+    variables: {
+      pageSizeMedium
+    }
+  })
   const handleSubmit = () => {
     dispatch({ type: 'reset', payload: undefined });
     const userEthAccount = apolloClient.readFragment({
@@ -69,7 +80,7 @@ const UploadPage: NextPage = () => {
             ownerID: userEthAccount.id,
             name: store.name,
             CID: store.CID,
-            category: store.category,
+            categoryID: categoryData?.id,
             details: store.details,
             approved: false,
             rejected: false,

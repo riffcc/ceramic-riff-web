@@ -1,7 +1,7 @@
 import { gql, useApolloClient } from "@apollo/client"
 import { useConnect } from "wagmi"
 import { MetaMaskConnector } from "wagmi/connectors/metaMask"
-import { CREATE_ETH_ACCOUNT, UserFragment, WebsiteData, websiteDataQueryParams } from "../../utils/constants"
+import { CREATE_ETH_ACCOUNT, pageSizeMedium, UserFragment, WebsiteData, websiteDataQueryParams } from "../../utils/constants"
 import { getDate } from "../../utils/getDate"
 import Spinner from "./Spinner"
 
@@ -21,7 +21,10 @@ export default function Connect({ className }: Props) {
 
       const userEthAccount = apolloClient.cache.readFragment({
         id: apolloClient.cache.identify({ __typename: "EthAccount", address: account }),
-        fragment: UserFragment
+        fragment: UserFragment,
+        variables: {
+          pageSizeMedium
+        }
       })
 
       if (!userEthAccount) {

@@ -24,7 +24,7 @@ const columns = [
   columnHelper.accessor('node', {
     id: 'category',
     cell: props => {
-      return <p className='text-center'>{props.getValue()?.category}</p>
+      return <p className='text-center'>{props.getValue()?.category?.name}</p>
     }
   }),
   columnHelper.accessor('node', {

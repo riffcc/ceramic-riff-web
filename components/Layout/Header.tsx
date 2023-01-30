@@ -4,8 +4,8 @@ import { useAccount, useDisconnect, useEnsName } from 'wagmi'
 import Account from './Account'
 import Connect from './Connect'
 import { useState } from 'react'
-import { useFragment_experimental } from '@apollo/client'
-import { AdminFragment, UserFragment } from '../../utils/constants'
+import { gql, useFragment_experimental as useFragment } from '@apollo/client'
+import { AdminFragment, pageSizeMax, pageSizeMedium, UserFragment } from '../../utils/constants'
 
 export default function Header() {
   const { pathname } = useRouter()
@@ -14,7 +14,7 @@ export default function Header() {
   const { disconnect } = useDisconnect()
   const [showUserMenu, setShowUserMenu] = useState(false);
 
-  const { complete: isAdminUser } = useFragment_experimental({
+  const { complete: isAdminUser } = useFragment({
     from: {
       __typename: "Admin",
       admin: {
@@ -24,14 +24,16 @@ export default function Header() {
     fragment: AdminFragment
   })
 
-  const { complete: isUser } = useFragment_experimental({
+  const { complete: isUser } = useFragment({
     from: {
       __typename: "EthAccount",
       address: address ? address : null
     },
-    fragment: UserFragment
+    fragment: UserFragment,
+    variables: {
+      pageSizeMedium
+    }
   })
-
   const handleShowUserMenu = () => setShowUserMenu((prev) => !prev)
   const handleOnDisconnect = () => {
     setShowUserMenu(false)
@@ -57,7 +59,7 @@ export default function Header() {
             <a className={pathname === '/profile' ? 'text-cyan-200' : ''}>My Pins</a>
           </Link>
         </div>}
-        { isAdminUser && <div>
+        {isAdminUser && <div>
           <Link href="/admin" legacyBehavior>
             <a className={pathname === '/admin' ? 'text-cyan-200' : ''}>Admin Website</a>
           </Link>

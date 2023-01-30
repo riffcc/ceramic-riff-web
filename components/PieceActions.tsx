@@ -1,16 +1,17 @@
-import { useApolloClient, useFragment_experimental, useMutation } from "@apollo/client";
+import { useApolloClient, useFragment_experimental as useFragment, useMutation } from "@apollo/client";
 import { Maybe } from "graphql/jsutils/Maybe";
 import { ChangeEvent, useMemo, useState } from "react";
 import { HiOutlineTrash, HiOutlinePencilAlt, HiOutlineCheckCircle, HiOutlineXCircle, HiOutlineX, HiOutlineExternalLink, HiOutlineEye, HiOutlineClock, HiQuestionMarkCircle, HiOutlineQuestionMarkCircle } from "react-icons/hi";
 import { useAccount } from "wagmi";
 import useFormState from "../hooks/useFormState";
-import { AdminFragment, formatOptions, mediaOptions, movieTypeOptions, pieceCategories, releaseTypesOptions, UPDATE_PIECE, UserFragment } from "../utils/constants"
+import { AdminFragment, CategoryFragment, formatOptions, mediaOptions, movieTypeOptions, pageSizeMedium, pieceCategories, releaseTypesOptions, UPDATE_PIECE, UserFragment } from "../utils/constants"
 import { getDate } from "../utils/getDate";
 import { Piece } from "../utils/__generated__/graphql";
 import Spinner from "./Layout/Spinner";
 import Tooltip from "./Layout/Tooltip";
 import { CID } from 'multiformats'
 import checkCID from "../utils/checkCID";
+import { CategoryFragment as CategoryFragmentType, PieceFragment as PieceFragmentType } from '../utils/__generated__/graphql';
 
 interface Props {
   piece: Maybe<Piece>;
@@ -18,7 +19,7 @@ interface Props {
 
 export default function PieceActions({ piece }: Props) {
   const { address } = useAccount()
-  const { complete: isAdminUser } = useFragment_experimental({
+  const { complete: isAdminUser } = useFragment({
     from: {
       __typename: "Admin",
       admin: {
@@ -34,9 +35,19 @@ export default function PieceActions({ piece }: Props) {
   const [rejectionReason, setRejectionReason] = useState('')
 
   const [showAdvancedForm, setShowAdvancedForm] = useState(false)
+  const { data: categoryData } = useFragment<CategoryFragmentType, any>({
+    from: {
+      __typename: "Category",
+      name: piece?.category?.name ? piece.category.name : null
+    },
+    fragment: CategoryFragment,
+    variables: {
+      pageSizeMedium
+    }
+  })
   const { store, dispatch } = useFormState({ 
     name: piece?.name as string, 
-    category: piece?.category as string, 
+    category: piece?.category?.name as string, 
     CID: piece?.CID as string, 
     ...piece?.details 
   })
@@ -61,7 +72,7 @@ export default function PieceActions({ piece }: Props) {
           content: {
             name: store.name,
             CID: store.CID,
-            category: store.category,
+            categoryID: categoryData?.id,
             details: store.details,
             metadata: {
               createdAt: piece?.metadata.createdAt!,
@@ -81,7 +92,10 @@ export default function PieceActions({ piece }: Props) {
         __typename: 'EthAccount',
         address: "0x0000000000000000000000000000000000000000"
       }),
-      fragment: UserFragment
+      fragment: UserFragment,
+      variables: {
+        pageSizeMedium
+      }
     })
 
     updatePiece({

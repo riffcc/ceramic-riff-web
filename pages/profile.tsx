@@ -1,8 +1,8 @@
-import { useFragment_experimental } from '@apollo/client';
+import { useFragment_experimental as useFragment } from '@apollo/client';
 import type { NextPage } from 'next'
 import { useMemo } from 'react';
 import { useAccount } from 'wagmi';
-import { UserFragment, WebsiteData, websiteDataQueryParams,  } from '../utils/constants'
+import { pageSizeMax, pageSizeMedium, UserFragment, WebsiteData, websiteDataQueryParams,  } from '../utils/constants'
 import Connect from '../components/Layout/Connect'
 import React from 'react';
 import PieceList from '../components/PieceList';
@@ -10,7 +10,7 @@ import PieceList from '../components/PieceList';
 const ProfilePage: NextPage = () => {
   const { address, isConnected } = useAccount()
   const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
-  const { data: websiteData } = useFragment_experimental<any, any>({
+  const { data: websiteData } = useFragment<any, any>({
     from: { __typename: "Website", id: websiteID },
     fragment: WebsiteData,
     fragmentName: 'WebsiteData',
@@ -19,12 +19,15 @@ const ProfilePage: NextPage = () => {
     }
   })
 
-  const { complete: isUser } = useFragment_experimental({
+  const { complete: isUser } = useFragment({
     from: {
       __typename: "EthAccount",
       address: address ? address : null
     },
     fragment: UserFragment,
+    variables: {
+      pageSizeMedium
+    }
   })
 
   if (isConnected && !isUser) {

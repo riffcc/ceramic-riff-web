@@ -1,6 +1,6 @@
-import { useFragment_experimental, useMutation } from "@apollo/client"
+import { useFragment_experimental as useFragment, useMutation } from "@apollo/client"
 import { ChangeEvent, useMemo, useState } from "react"
-import { AdminFragment, CREATE_ADMIN, CREATE_ETH_ACCOUNT, UPDATE_ADMIN, UserFragment, WebsiteData, websiteDataQueryParams } from "../utils/constants"
+import { AdminFragment, CREATE_ADMIN, CREATE_ETH_ACCOUNT, pageSizeMedium, UPDATE_ADMIN, UserFragment, WebsiteData, websiteDataQueryParams } from "../utils/constants"
 import { getDate } from "../utils/getDate";
 import Spinner from "./Layout/Spinner";
 
@@ -81,15 +81,18 @@ export default function NewAdmin() {
 
   const isValidAddress = useMemo(() => newAdminAddress.length === 42, [newAdminAddress])
 
-  const { complete: isUser, data: userData } = useFragment_experimental<any, any>({
+  const { complete: isUser, data: userData } = useFragment<any, any>({
     from: {
       __typename: "EthAccount",
       address: isValidAddress ? newAdminAddress : null
     },
     fragment: UserFragment,
+    variables: {
+      pageSizeMedium
+    }
   })
 
-  const { complete: isAdminUser, data: adminData } = useFragment_experimental<any, any>({
+  const { complete: isAdminUser, data: adminData } = useFragment<any, any>({
     from: {
       __typename: "Admin",
       admin: {
