@@ -138,7 +138,7 @@ const UploadPage: NextPage = () => {
           <button
             className="h-9 my-2 mx-auto px-2 rounded uppercase text-sm font-medium bg-transparent disabled:text-slate-400 hover:cursor-point disabled:hover:cursor-default delay-100 border border-slate-500"
             onClick={handleOnClickAdvanced}
-            disabled={store.category !== 'Movies' && store.category}
+            disabled={store.category !== 'Movies' && store.category !== 'Music'}
           >
             Advanced
           </button>
