@@ -1,22 +1,20 @@
 import { gql } from '@apollo/client'
 import { graphql } from './__generated__/gql'
 
-export const adminsPageSize = 50
-export const piecesPageSize = 50
-export const subscriptionsPageSize = 50
-export const usersPageSize = 1000
+export const pageSizeSmall = 50
+export const pageSizeMedium = 100
+export const pageSizeLarge = 400
+export const pageSizeMax = 1000
 
 export const websiteDataQueryParams = {
-  adminsPageSize,
-  piecesPageSize,
-  subscriptionsPageSize,
-  usersPageSize
+  pageSizeMedium,
+  pageSizeMax
 }
 
 export const WebsiteData = gql`
   fragment WebsiteData on Website {
     id
-    admins(first: $adminsPageSize) {
+    admins(first: $pageSizeMedium) {
       edges {
         node {
           id
@@ -35,13 +33,16 @@ export const WebsiteData = gql`
       }
     }
     adminsCount
-    pieces(first: $piecesPageSize) {
+    pieces(first: $pageSizeMedium) {
       edges {
         node {
           id
           CID
           name
-          category
+          category {
+            id
+            name
+          }
           details {
             tags
             type
@@ -67,6 +68,34 @@ export const WebsiteData = gql`
             address
             ensName
           }
+          likes(first: $pageSizeMax) {
+            edges {
+              node {
+                id
+                owner {
+                  address
+                }
+                piece {
+                  id
+                }
+              }
+            }
+          }
+          likesCount
+          dislikes(first: $pageSizeMax) {
+            edges {
+              node {
+                id
+                owner {
+                  address
+                }
+                piece {
+                  id
+                }
+              }
+            }
+          }
+          dislikesCount
           metadata {
             createdAt
             updatedAt
@@ -75,7 +104,7 @@ export const WebsiteData = gql`
       }
     }
     piecesCount
-    subscriptions(first: $subscriptionsPageSize) {
+    subscriptions(first: $pageSizeMedium) {
       edges {
         node {
           id
@@ -85,13 +114,16 @@ export const WebsiteData = gql`
             websiteName
             description
             image
-            pieces(first: $piecesPageSize) {
+            pieces(first: $pageSizeMedium) {
               edges {
                 node {
                   id
                   CID
                   name
-                  category
+                  category {
+                    id
+                    name
+                  }
                   details {
                     tags
                     type
@@ -112,6 +144,34 @@ export const WebsiteData = gql`
                   approved
                   rejected
                   rejectionReason
+                  likes(first: $pageSizeMax) {
+                    edges {
+                      node {
+                        id
+                        owner {
+                          address
+                        }
+                        piece {
+                          id
+                        }
+                      }
+                    }
+                  }
+                  likesCount
+                  dislikes(first: $pageSizeMax) {
+                    edges {
+                      node {
+                        id
+                        owner {
+                          address
+                        }
+                        piece {
+                          id
+                        }
+                      }
+                    }
+                  }
+                  dislikesCount
                   metadata {
                     createdAt
                     updatedAt
@@ -130,12 +190,48 @@ export const WebsiteData = gql`
       }
     }
     subscriptionsCount
-    users(first: $usersPageSize) {
+    users(first: $pageSizeMedium) {
       edges {
         node {
           id
           address
           ensName
+          pieces(first: $pageSizeMedium) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+          piecesCount
+          pieceLikes(first: $pageSizeMedium) {
+            edges {
+              node {
+                id
+                piece {
+                  id
+                }
+                owner {
+                  address
+                }
+              }
+            }
+          }
+          pieceLikesCount
+          pieceDislikes(first: $pageSizeMedium) {
+            edges {
+              node {
+                id
+                piece {
+                  id
+                }
+                owner {
+                  address
+                }
+              }
+            }
+          }
+          pieceDislikesCount
           metadata {
             createdAt
             updatedAt
@@ -144,6 +240,136 @@ export const WebsiteData = gql`
       }
     }
     usersCount
+    featured(first: $pageSizeMedium) {
+      edges {
+        node {
+          id
+          piece {
+            id
+            CID
+            name
+            category {
+              id
+              name
+            }
+            details {
+              tags
+              type
+              media
+              IMDBID
+              TMDBID
+              format
+              poster
+              bitrate
+              albumTitle
+              artistNames
+              releaseType
+              musicBrainzID
+              imageThumbnailCID
+              initialReleaseYear
+              releaseDescription
+            }
+            approved
+            rejected
+            rejectionReason
+            ownerID
+            owner {
+              address
+              ensName
+            }
+            metadata {
+              createdAt
+              updatedAt
+            }
+          }
+          startAt
+          endAt
+        }
+      }
+    }
+    featuredCount
+    categories(first: $pageSizeMedium) {
+      edges {
+        node {
+          id
+          name
+          pieces(first: $pageSizeMedium) {
+            edges {
+              node {
+                id
+                CID
+                name
+                category {
+                  id
+                  name
+                }
+                details {
+                  tags
+                  type
+                  media
+                  IMDBID
+                  TMDBID
+                  format
+                  poster
+                  bitrate
+                  albumTitle
+                  artistNames
+                  releaseType
+                  musicBrainzID
+                  imageThumbnailCID
+                  initialReleaseYear
+                  releaseDescription
+                }
+                approved
+                rejected
+                rejectionReason
+                likes(first: $pageSizeMax) {
+                  edges {
+                    node {
+                      id
+                      owner {
+                        address
+                      }
+                      piece {
+                        id
+                      }
+                    }
+                  }
+                }
+                likesCount
+                dislikes(first: $pageSizeMax) {
+                  edges {
+                    node {
+                      id
+                      owner {
+                        address
+                      }
+                      piece {
+                        id
+                      }
+                    }
+                  }
+                }
+                dislikesCount
+                ownerID
+                owner {
+                  address
+                  ensName
+                }
+                metadata {
+                  createdAt
+                  updatedAt
+                }
+              }
+            }
+          }
+          piecesCount
+          likesCount
+          dislikesCount
+        }
+      }
+    }
+    categoriesCount
   }
 `
 
@@ -169,6 +395,138 @@ export const UserFragment = gql`
     id
     address
     ensName
+    pieces(first: $pageSizeMedium) {
+      edges {
+        node {
+          id
+        }
+      }
+    }
+    piecesCount
+    pieceLikes(first: $pageSizeMedium) {
+      edges {
+        node {
+          id
+          piece {
+            id
+          }
+          owner {
+            address
+          }
+        }
+      }
+    }
+    pieceLikesCount
+    pieceDislikes(first: $pageSizeMedium) {
+      edges {
+        node {
+          id
+          piece {
+            id
+          }
+          owner {
+            address
+          }
+        }
+      }
+    }
+    pieceDislikesCount
+    metadata {
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const PieceLikeFragment = gql`
+  fragment PieceLike on PieceLike {
+    id
+    piece {
+      id
+    }
+    owner {
+      address
+    }
+  }
+`
+export const PieceDislikeFragment = gql`
+  fragment PieceDislike on PieceDislike {
+    id
+    piece {
+      id
+    }
+    owner {
+      address
+    }
+  }
+`
+export const CategoryFragment = gql`
+  fragment Category on Category {
+    id
+    name
+  }
+`
+export const PieceFragment = gql`
+  fragment Piece on Piece {
+    id
+    CID
+    name
+    category {
+      id
+      name
+    }
+    details {
+      tags
+      type
+      media
+      IMDBID
+      TMDBID
+      format
+      poster
+      bitrate
+      albumTitle
+      artistNames
+      releaseType
+      musicBrainzID
+      imageThumbnailCID
+      initialReleaseYear
+      releaseDescription
+    }
+    approved
+    rejected
+    rejectionReason
+    likes(first: $pageSizeMax) {
+      edges {
+        node {
+          id
+          owner {
+            address
+          }
+          piece {
+            id
+          }
+        }
+      }
+    }
+    likesCount
+    dislikes(first: $pageSizeMax) {
+      edges {
+        node {
+          id
+          owner {
+            address
+          }
+          piece {
+            id
+          }
+        }
+      }
+    }
+    dislikesCount
+    ownerID
+    owner {
+      address
+      ensName
+    }
     metadata {
       createdAt
       updatedAt
@@ -189,17 +547,11 @@ export const GET_WEBSITE = graphql(`
 `)
 
 export const GET_WEBSITE_DATA = graphql(`
-  query WebsiteData(
-    $id: ID!
-    $adminsPageSize: Int!
-    $piecesPageSize: Int!
-    $subscriptionsPageSize: Int!
-    $usersPageSize: Int!
-  ) {
+  query WebsiteData($id: ID!, $pageSizeMedium: Int!, $pageSizeMax: Int!) {
     node(id: $id) {
       ... on Website {
         id
-        admins(first: $adminsPageSize) {
+        admins(first: $pageSizeMedium) {
           edges {
             node {
               id
@@ -218,13 +570,16 @@ export const GET_WEBSITE_DATA = graphql(`
           }
         }
         adminsCount
-        pieces(first: $piecesPageSize) {
+        pieces(first: $pageSizeMedium) {
           edges {
             node {
               id
               CID
               name
-              category
+              category {
+                id
+                name
+              }
               details {
                 tags
                 type
@@ -245,6 +600,34 @@ export const GET_WEBSITE_DATA = graphql(`
               approved
               rejected
               rejectionReason
+              likes(first: $pageSizeMax) {
+                edges {
+                  node {
+                    id
+                    owner {
+                      address
+                    }
+                    piece {
+                      id
+                    }
+                  }
+                }
+              }
+              likesCount
+              dislikes(first: $pageSizeMax) {
+                edges {
+                  node {
+                    id
+                    owner {
+                      address
+                    }
+                    piece {
+                      id
+                    }
+                  }
+                }
+              }
+              dislikesCount
               ownerID
               owner {
                 address
@@ -258,7 +641,7 @@ export const GET_WEBSITE_DATA = graphql(`
           }
         }
         piecesCount
-        subscriptions(first: $subscriptionsPageSize) {
+        subscriptions(first: $pageSizeMedium) {
           edges {
             node {
               id
@@ -268,13 +651,16 @@ export const GET_WEBSITE_DATA = graphql(`
                 websiteName
                 description
                 image
-                pieces(first: $piecesPageSize) {
+                pieces(first: $pageSizeMedium) {
                   edges {
                     node {
                       id
                       CID
                       name
-                      category
+                      category {
+                        id
+                        name
+                      }
                       details {
                         tags
                         type
@@ -295,6 +681,34 @@ export const GET_WEBSITE_DATA = graphql(`
                       approved
                       rejected
                       rejectionReason
+                      likes(first: $pageSizeMax) {
+                        edges {
+                          node {
+                            id
+                            owner {
+                              address
+                            }
+                            piece {
+                              id
+                            }
+                          }
+                        }
+                      }
+                      likesCount
+                      dislikes(first: $pageSizeMax) {
+                        edges {
+                          node {
+                            id
+                            owner {
+                              address
+                            }
+                            piece {
+                              id
+                            }
+                          }
+                        }
+                      }
+                      dislikesCount
                       metadata {
                         createdAt
                         updatedAt
@@ -313,12 +727,238 @@ export const GET_WEBSITE_DATA = graphql(`
           }
         }
         subscriptionsCount
-        users(first: $usersPageSize) {
+        users(first: $pageSizeMedium) {
           edges {
             node {
               id
               address
               ensName
+              pieces(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                  }
+                }
+              }
+              piecesCount
+              pieceLikes(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                    piece {
+                      id
+                    }
+                    owner {
+                      address
+                    }
+                  }
+                }
+              }
+              pieceLikesCount
+              pieceDislikes(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                    piece {
+                      id
+                    }
+                    owner {
+                      address
+                    }
+                  }
+                }
+              }
+              pieceDislikesCount
+              metadata {
+                createdAt
+                updatedAt
+              }
+            }
+          }
+        }
+        usersCount
+        featured(first: $pageSizeMedium) {
+          edges {
+            node {
+              id
+              piece {
+                id
+                CID
+                name
+                category {
+                  id
+                  name
+                }
+                details {
+                  tags
+                  type
+                  media
+                  IMDBID
+                  TMDBID
+                  format
+                  poster
+                  bitrate
+                  albumTitle
+                  artistNames
+                  releaseType
+                  musicBrainzID
+                  imageThumbnailCID
+                  initialReleaseYear
+                  releaseDescription
+                }
+                approved
+                rejected
+                rejectionReason
+                ownerID
+                owner {
+                  address
+                  ensName
+                }
+                metadata {
+                  createdAt
+                  updatedAt
+                }
+              }
+              startAt
+              endAt
+            }
+          }
+        }
+        featuredCount
+        categories(first: $pageSizeMedium) {
+          edges {
+            node {
+              id
+              name
+              pieces(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                    CID
+                    name
+                    category {
+                      id
+                      name
+                    }
+                    details {
+                      tags
+                      type
+                      media
+                      IMDBID
+                      TMDBID
+                      format
+                      poster
+                      bitrate
+                      albumTitle
+                      artistNames
+                      releaseType
+                      musicBrainzID
+                      imageThumbnailCID
+                      initialReleaseYear
+                      releaseDescription
+                    }
+                    approved
+                    rejected
+                    rejectionReason
+                    likes(first: $pageSizeMax) {
+                      edges {
+                        node {
+                          id
+                          owner {
+                            address
+                          }
+                          piece {
+                            id
+                          }
+                        }
+                      }
+                    }
+                    likesCount
+                    dislikes(first: $pageSizeMax) {
+                      edges {
+                        node {
+                          id
+                          owner {
+                            address
+                          }
+                          piece {
+                            id
+                          }
+                        }
+                      }
+                    }
+                    dislikesCount
+                    ownerID
+                    owner {
+                      address
+                      ensName
+                    }
+                    metadata {
+                      createdAt
+                      updatedAt
+                    }
+                  }
+                }
+              }
+              piecesCount
+              likesCount
+              dislikesCount
+            }
+          }
+        }
+        categoriesCount
+      }
+    }
+  }
+`)
+
+export const GET_WEBSITE_USERS = graphql(`
+  query WebsiteUsers($id: ID!, $pageSizeMedium: Int!) {
+    node(id: $id) {
+      ... on Website {
+        id
+        users(first: $pageSizeMedium) {
+          edges {
+            node {
+              id
+              address
+              ensName
+              pieces(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                  }
+                }
+              }
+              piecesCount
+              pieceLikes(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                    piece {
+                      id
+                    }
+                    owner {
+                      address
+                    }
+                  }
+                }
+              }
+              pieceLikesCount
+              pieceDislikes(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                    piece {
+                      id
+                    }
+                    owner {
+                      address
+                    }
+                  }
+                }
+              }
+              pieceDislikesCount
               metadata {
                 createdAt
                 updatedAt
@@ -332,35 +972,8 @@ export const GET_WEBSITE_DATA = graphql(`
   }
 `)
 
-export const GET_WEBSITE_USERS = graphql(`
-  query WebsiteUsers(
-    $id: ID!,
-    $usersPageSize: Int!, 
-  ) {
-      node(id: $id) {
-        ... on Website {
-          id
-          users(first: $usersPageSize) {
-            edges {
-              node {
-                id
-                address
-                ensName
-                metadata {
-                  createdAt
-                  updatedAt
-                }
-              }
-            }
-          }
-          usersCount
-        }
-      }
-    }
-`)
-
 export const GET_WEBSITE_PIECES = graphql(`
-  query WebsitePieces($id: ID!, $piecesPageSize: Int!) {
+  query WebsitePieces($id: ID!, $piecesPageSize: Int!, $pageSizeMax: Int!) {
     node(id: $id) {
       ... on Website {
         id
@@ -370,7 +983,10 @@ export const GET_WEBSITE_PIECES = graphql(`
               id
               CID
               name
-              category
+              category {
+                id
+                name
+              }
               details {
                 tags
                 type
@@ -391,6 +1007,34 @@ export const GET_WEBSITE_PIECES = graphql(`
               approved
               rejected
               rejectionReason
+              likes(first: $pageSizeMax) {
+                edges {
+                  node {
+                    id
+                    owner {
+                      address
+                    }
+                    piece {
+                      id
+                    }
+                  }
+                }
+              }
+              likesCount
+              dislikes(first: $pageSizeMax) {
+                edges {
+                  node {
+                    id
+                    owner {
+                      address
+                    }
+                    piece {
+                      id
+                    }
+                  }
+                }
+              }
+              dislikesCount
               ownerID
               owner {
                 address
@@ -410,12 +1054,48 @@ export const GET_WEBSITE_PIECES = graphql(`
 `)
 
 export const GET_ETH_ACCOUNT = graphql(`
-  query EthAccount($id: ID!) {
+  query EthAccount($id: ID!, $pageSizeMedium: Int!) {
     node(id: $id) {
       ... on EthAccount {
         id
         address
         ensName
+        pieces(first: $pageSizeMedium) {
+          edges {
+            node {
+              id
+            }
+          }
+        }
+        piecesCount
+        pieceLikes(first: $pageSizeMedium) {
+          edges {
+            node {
+              id
+              piece {
+                id
+              }
+              owner {
+                address
+              }
+            }
+          }
+        }
+        pieceLikesCount
+        pieceDislikes(first: $pageSizeMedium) {
+          edges {
+            node {
+              id
+              piece {
+                id
+              }
+              owner {
+                address
+              }
+            }
+          }
+        }
+        pieceDislikesCount
         metadata {
           createdAt
           updatedAt
@@ -442,13 +1122,16 @@ export const CREATE_ETH_ACCOUNT = graphql(`
 `)
 
 export const GET_PIECE = graphql(`
-  query Piece($id: ID!) {
+  query Piece($id: ID!, $pageSizeMax: Int!) {
     node(id: $id) {
       ... on Piece {
         id
         CID
         name
-        category
+        category {
+          id
+          name
+        }
         details {
           tags
           type
@@ -474,6 +1157,34 @@ export const GET_PIECE = graphql(`
           address
           ensName
         }
+        likes(first: $pageSizeMax) {
+          edges {
+            node {
+              id
+              piece {
+                id
+              }
+              owner {
+                address
+              }
+            }
+          }
+        }
+        likesCount
+        dislikes(first: $pageSizeMax) {
+          edges {
+            node {
+              id
+              piece {
+                id
+              }
+              owner {
+                address
+              }
+            }
+          }
+        }
+        dislikesCount
         metadata {
           createdAt
           updatedAt
@@ -490,7 +1201,10 @@ export const CREATE_PIECE = graphql(`
         id
         CID
         name
-        category
+        category {
+          id
+          name
+        }
         details {
           tags
           type
@@ -532,7 +1246,10 @@ export const UPDATE_PIECE = graphql(`
         id
         CID
         name
-        category
+        category {
+          id
+          name
+        }
         details {
           tags
           type
@@ -562,6 +1279,76 @@ export const UPDATE_PIECE = graphql(`
           createdAt
           updatedAt
         }
+      }
+    }
+  }
+`)
+
+export const CREATE_PIECE_LIKE = graphql(`
+  mutation CreatePieceLike($input: CreatePieceLikeInput!) {
+    createPieceLike(input: $input) {
+      document {
+        id
+        piece {
+          id
+        }
+        owner {
+          address
+        }
+      }
+    }
+  }
+`)
+
+export const CREATE_CATEGORY_LIKE = graphql(`
+  mutation CreateCategoryLike($input: CreateCategoryLikeInput!) {
+    createCategoryLike(input: $input) {
+      document {
+        id
+        category {
+          id
+          name
+        }
+      }
+    }
+  }
+`)
+
+export const CREATE_PIECE_DISLIKE = graphql(`
+  mutation CreatePieceDislike($input: CreatePieceDislikeInput!) {
+    createPieceDislike(input: $input) {
+      document {
+        id
+        piece {
+          id
+        }
+        owner {
+          address
+        }
+      }
+    }
+  }
+`)
+
+export const CREATE_CATEGORY_DISLIKE = graphql(`
+  mutation CreateCategoryDislike($input: CreateCategoryDislikeInput!) {
+    createCategoryDislike(input: $input) {
+      document {
+        id
+        category {
+          id
+          name
+        }
+      }
+    }
+  }
+`)
+
+export const CREATE_FEATURED = graphql(`
+  mutation CreateFeatured($input: CreateFeaturedInput!) {
+    createFeatured(input: $input) {
+      document {
+        id
       }
     }
   }
