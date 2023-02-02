@@ -45,11 +45,11 @@ export default function PieceActions({ piece }: Props) {
       pageSizeMedium
     }
   })
-  const { store, dispatch } = useFormState({ 
-    name: piece?.name as string, 
-    category: piece?.category?.name as string, 
-    CID: piece?.CID as string, 
-    ...piece?.details 
+  const { store, dispatch } = useFormState({
+    name: piece?.name as string,
+    category: piece?.category?.name as string,
+    CID: piece?.CID as string,
+    ...piece?.details
   })
 
   const handleOnClickAdvanced = () => {
@@ -279,16 +279,16 @@ export default function PieceActions({ piece }: Props) {
                   value={store.name}
                 />
                 <p className="text-sm mb-1 ml-1">IPFS CID:</p>
-                <div>
+                <div className="w-full">
                   <input
-                  placeholder="bafkreico2zlmcinytg2ri26o4mt73i25ikisd3vth6p4du5gcpek4fsace"
-                  name="cid"
-                  type="text"
-                  className="form-input bg-slate-800"
-                  onChange={(e) => dispatch({ type: 'CID', payload: e.target.value })}
-                  value={store.CID}
-                />
-                {store.CID.length > 0 && !isValidCID && <p className="text-xs text-red-500">Please enter a valid CIDv0 or CIDv1 ID.</p>}
+                    placeholder="bafkreico2zlmcinytg2ri26o4mt73i25ikisd3vth6p4du5gcpek4fsace"
+                    name="cid"
+                    type="text"
+                    className="form-input bg-slate-800"
+                    onChange={(e) => dispatch({ type: 'CID', payload: e.target.value })}
+                    value={store.CID}
+                  />
+                  {store.CID.length > 0 && !isValidCID && <p className="text-xs text-red-500">Please enter a valid CIDv0 or CIDv1 ID.</p>}
                 </div>
                 <p className="text-sm mb-1 ml-1">Category:</p>
                 <select

@@ -1,9 +1,9 @@
-import { gql, useApolloClient } from "@apollo/client"
-import { useConnect } from "wagmi"
+import { gql, useApolloClient, useFragment_experimental as useFragment, useMutation } from "@apollo/client"
+import { useAccount, useConnect } from "wagmi"
 import { MetaMaskConnector } from "wagmi/connectors/metaMask"
 import { CREATE_ETH_ACCOUNT, pageSizeMedium, UserFragment, WebsiteData, websiteDataQueryParams } from "../../utils/constants"
 import { getDate } from "../../utils/getDate"
-import Spinner from "./Spinner"
+import Spinner from "./Spinner";
 
 type Props = {
   className: string;
@@ -13,12 +13,22 @@ export default function Connect({ className }: Props) {
   const { connectAsync, isLoading } = useConnect({
     connector: new MetaMaskConnector(),
   })
+  const { address } = useAccount()
+  const [createEthAccount] = useMutation(CREATE_ETH_ACCOUNT)
   const apolloClient = useApolloClient()
+  const { complete: isUser } = useFragment({
+    from: {
+      __typename: "EthAccount",
+      address: address ? address : null
+    },
+    fragment: UserFragment,
+    variables: {
+      pageSizeMedium
+    }
+  })
 
-  const handleConnect = async () => {
-    try {
-      const { account } = await connectAsync()
-
+  const handleConnect = () => {
+    connectAsync().then(({account}) => {
       const userEthAccount = apolloClient.cache.readFragment({
         id: apolloClient.cache.identify({ __typename: "EthAccount", address: account }),
         fragment: UserFragment,
@@ -28,12 +38,11 @@ export default function Connect({ className }: Props) {
       })
 
       if (!userEthAccount) {
-        await apolloClient.mutate({
-          mutation: CREATE_ETH_ACCOUNT,
+        createEthAccount({
           variables: {
             input: {
               content: {
-                address: account as string,
+                address: account as `0x${string}`,
                 websiteID,
                 metadata: {
                   createdAt: getDate() as string,
@@ -70,9 +79,8 @@ export default function Connect({ className }: Props) {
           }
         })
       }
-    } catch (error) {
+    })
 
-    }
   }
 
   return (

@@ -62,7 +62,7 @@ const PiecePage: NextPage = () => {
       pageSizeMedium
     }
   })
-
+  console.log('userData', userData)
   const { data: likedData } = useFragment<PieceLikeFragmentType, any>({
     from: {
       __typename: "PieceLike",
@@ -93,7 +93,7 @@ const PiecePage: NextPage = () => {
       pageSizeMedium
     }
   })
-console.log(likedData)
+
   const handleOnLike = useCallback(() => {
     likePin({
       variables: {
@@ -133,7 +133,7 @@ console.log(likedData)
       }
     })
   }, [userData, piece, categoryData])
-console.log(dislikedData)
+
   const handleOnDisike = useCallback(() => {
     dislikePin({
       variables: {
@@ -220,7 +220,7 @@ console.log(dislikedData)
                       <div className='flex gap-2 items-center'>
                         <button
                           onClick={handleOnLike}
-                          disabled={alreadyLiked}
+                          disabled={alreadyLiked || !isConnected || !isUser}
                         >
                           <HiThumbUp
                             className={alreadyLiked ? 'h-5 w-5 shadow-sm shadow-slate-900 text-slate-400' : 'h-5 w-5'}
@@ -231,7 +231,7 @@ console.log(dislikedData)
                       <div className='flex gap-2 items-center'>
                         <button
                           onClick={handleOnDisike}
-                          disabled={alreadyDisliked}
+                          disabled={alreadyDisliked || !isConnected || !isUser}
                         >
                           <HiThumbDown
                             className={alreadyDisliked ? 'h-5 w-5 shadow-sm shadow-slate-900 text-slate-400' : 'h-5 w-5'}
