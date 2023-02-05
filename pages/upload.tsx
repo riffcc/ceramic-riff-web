@@ -98,6 +98,10 @@ const UploadPage: NextPage = () => {
     return checkCID(store.CID)
   }, [store.CID])
 
+  const disabledAdvancedButton = useMemo(() => {
+    return store.category === 'Movies' || store.category === 'Music' ? false : true
+  }, [store.category])
+
   return (
     <div className='px-4 py-10 min-h-screen'>
       <div className="w-[25rem] border px-6 pt-8 pb-12 m-auto rounded">
@@ -138,7 +142,7 @@ const UploadPage: NextPage = () => {
           <button
             className="h-9 my-2 mx-auto px-2 rounded uppercase text-sm font-medium bg-transparent disabled:text-slate-400 hover:cursor-point disabled:hover:cursor-default delay-100 border border-slate-500"
             onClick={handleOnClickAdvanced}
-            disabled={store.category !== 'Movies' && store.category !== 'Music'}
+            disabled={disabledAdvancedButton}
           >
             Advanced
           </button>
