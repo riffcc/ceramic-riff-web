@@ -31,3 +31,8 @@ Made available under the MIT License.
 
 ## Credits
 Authored by [@en0c-026](https://github.com/en0c-026), [@Zorlin](https://github.com/Zorlin)
+
+## Sponsors
+Thank you to our sponsors, who have generously provided funding for the development of the Riff.CC Project:
+
+* [Money Every 3 Days](http://moneyevery3days.com/)
