@@ -69,14 +69,14 @@ export type AdminMetadataInput = {
 
 export type Category = Node & {
   __typename?: 'Category';
-  dislikes: CategoryDislikeConnection;
+  dislikes: PinDislikeConnection;
   dislikesCount: Scalars['Int'];
   id: Scalars['ID'];
-  likes: CategoryLikeConnection;
+  likes: PinLikeConnection;
   likesCount: Scalars['Int'];
   name: Scalars['String'];
-  pieces: PieceConnection;
-  piecesCount: Scalars['Int'];
+  pins: PinConnection;
+  pinsCount: Scalars['Int'];
   website?: Maybe<Website>;
   websiteID: Scalars['CeramicStreamID'];
 };
@@ -110,7 +110,7 @@ export type CategoryLikesCountArgs = {
 };
 
 
-export type CategoryPiecesArgs = {
+export type CategoryPinsArgs = {
   account?: InputMaybe<Scalars['ID']>;
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -119,7 +119,7 @@ export type CategoryPiecesArgs = {
 };
 
 
-export type CategoryPiecesCountArgs = {
+export type CategoryPinsCountArgs = {
   account?: InputMaybe<Scalars['ID']>;
 };
 
@@ -130,35 +130,6 @@ export type CategoryConnection = {
   edges?: Maybe<Array<Maybe<CategoryEdge>>>;
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
-};
-
-export type CategoryDislike = Node & {
-  __typename?: 'CategoryDislike';
-  category?: Maybe<Category>;
-  categoryID: Scalars['CeramicStreamID'];
-  id: Scalars['ID'];
-};
-
-/** A connection to a list of items. */
-export type CategoryDislikeConnection = {
-  __typename?: 'CategoryDislikeConnection';
-  /** A list of edges. */
-  edges?: Maybe<Array<Maybe<CategoryDislikeEdge>>>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
-/** An edge in a connection. */
-export type CategoryDislikeEdge = {
-  __typename?: 'CategoryDislikeEdge';
-  /** A cursor for use in pagination */
-  cursor: Scalars['String'];
-  /** The item at the end of the edge */
-  node?: Maybe<CategoryDislike>;
-};
-
-export type CategoryDislikeInput = {
-  categoryID: Scalars['CeramicStreamID'];
 };
 
 /** An edge in a connection. */
@@ -175,40 +146,9 @@ export type CategoryInput = {
   websiteID: Scalars['CeramicStreamID'];
 };
 
-export type CategoryLike = Node & {
-  __typename?: 'CategoryLike';
-  category?: Maybe<Category>;
-  categoryID: Scalars['CeramicStreamID'];
-  id: Scalars['ID'];
-};
-
-/** A connection to a list of items. */
-export type CategoryLikeConnection = {
-  __typename?: 'CategoryLikeConnection';
-  /** A list of edges. */
-  edges?: Maybe<Array<Maybe<CategoryLikeEdge>>>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
-/** An edge in a connection. */
-export type CategoryLikeEdge = {
-  __typename?: 'CategoryLikeEdge';
-  /** A cursor for use in pagination */
-  cursor: Scalars['String'];
-  /** The item at the end of the edge */
-  node?: Maybe<CategoryLike>;
-};
-
-export type CategoryLikeInput = {
-  categoryID: Scalars['CeramicStreamID'];
-};
-
 export type CeramicAccount = Node & {
   __typename?: 'CeramicAccount';
   adminList?: Maybe<AdminConnection>;
-  categoryDislikeList?: Maybe<CategoryDislikeConnection>;
-  categoryLikeList?: Maybe<CategoryLikeConnection>;
   categoryList?: Maybe<CategoryConnection>;
   ethAccountList?: Maybe<EthAccountConnection>;
   featuredList?: Maybe<FeaturedConnection>;
@@ -216,31 +156,16 @@ export type CeramicAccount = Node & {
   id: Scalars['ID'];
   /** Whether the Ceramic instance is currently authenticated with this account or not */
   isViewer: Scalars['Boolean'];
-  pieceDislikeList?: Maybe<PieceDislikeConnection>;
-  pieceLikeList?: Maybe<PieceLikeConnection>;
   pieceList?: Maybe<PieceConnection>;
+  pinDislikeList?: Maybe<PinDislikeConnection>;
+  pinLikeList?: Maybe<PinLikeConnection>;
+  pinList?: Maybe<PinConnection>;
   subscriptionList?: Maybe<SubscriptionConnection>;
   websiteList?: Maybe<WebsiteConnection>;
 };
 
 
 export type CeramicAccountAdminListArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type CeramicAccountCategoryDislikeListArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type CeramicAccountCategoryLikeListArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
@@ -272,23 +197,31 @@ export type CeramicAccountFeaturedListArgs = {
 };
 
 
-export type CeramicAccountPieceDislikeListArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type CeramicAccountPieceLikeListArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-};
-
-
 export type CeramicAccountPieceListArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type CeramicAccountPinDislikeListArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type CeramicAccountPinLikeListArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type CeramicAccountPinListArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
@@ -331,49 +264,9 @@ export type CreateAdminPayloadNodeArgs = {
   id: Scalars['ID'];
 };
 
-export type CreateCategoryDislikeInput = {
-  clientMutationId?: InputMaybe<Scalars['String']>;
-  content: CategoryDislikeInput;
-};
-
-export type CreateCategoryDislikePayload = {
-  __typename?: 'CreateCategoryDislikePayload';
-  clientMutationId?: Maybe<Scalars['String']>;
-  document: CategoryDislike;
-  /** Fetches an object given its ID */
-  node?: Maybe<Node>;
-  /** Account currently authenticated on the Ceramic instance, if set */
-  viewer?: Maybe<CeramicAccount>;
-};
-
-
-export type CreateCategoryDislikePayloadNodeArgs = {
-  id: Scalars['ID'];
-};
-
 export type CreateCategoryInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   content: CategoryInput;
-};
-
-export type CreateCategoryLikeInput = {
-  clientMutationId?: InputMaybe<Scalars['String']>;
-  content: CategoryLikeInput;
-};
-
-export type CreateCategoryLikePayload = {
-  __typename?: 'CreateCategoryLikePayload';
-  clientMutationId?: Maybe<Scalars['String']>;
-  document: CategoryLike;
-  /** Fetches an object given its ID */
-  node?: Maybe<Node>;
-  /** Account currently authenticated on the Ceramic instance, if set */
-  viewer?: Maybe<CeramicAccount>;
-};
-
-
-export type CreateCategoryLikePayloadNodeArgs = {
-  id: Scalars['ID'];
 };
 
 export type CreateCategoryPayload = {
@@ -431,49 +324,9 @@ export type CreateFeaturedPayloadNodeArgs = {
   id: Scalars['ID'];
 };
 
-export type CreatePieceDislikeInput = {
-  clientMutationId?: InputMaybe<Scalars['String']>;
-  content: PieceDislikeInput;
-};
-
-export type CreatePieceDislikePayload = {
-  __typename?: 'CreatePieceDislikePayload';
-  clientMutationId?: Maybe<Scalars['String']>;
-  document: PieceDislike;
-  /** Fetches an object given its ID */
-  node?: Maybe<Node>;
-  /** Account currently authenticated on the Ceramic instance, if set */
-  viewer?: Maybe<CeramicAccount>;
-};
-
-
-export type CreatePieceDislikePayloadNodeArgs = {
-  id: Scalars['ID'];
-};
-
 export type CreatePieceInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   content: PieceInput;
-};
-
-export type CreatePieceLikeInput = {
-  clientMutationId?: InputMaybe<Scalars['String']>;
-  content: PieceLikeInput;
-};
-
-export type CreatePieceLikePayload = {
-  __typename?: 'CreatePieceLikePayload';
-  clientMutationId?: Maybe<Scalars['String']>;
-  document: PieceLike;
-  /** Fetches an object given its ID */
-  node?: Maybe<Node>;
-  /** Account currently authenticated on the Ceramic instance, if set */
-  viewer?: Maybe<CeramicAccount>;
-};
-
-
-export type CreatePieceLikePayloadNodeArgs = {
-  id: Scalars['ID'];
 };
 
 export type CreatePiecePayload = {
@@ -488,6 +341,66 @@ export type CreatePiecePayload = {
 
 
 export type CreatePiecePayloadNodeArgs = {
+  id: Scalars['ID'];
+};
+
+export type CreatePinDislikeInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  content: PinDislikeInput;
+};
+
+export type CreatePinDislikePayload = {
+  __typename?: 'CreatePinDislikePayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  document: PinDislike;
+  /** Fetches an object given its ID */
+  node?: Maybe<Node>;
+  /** Account currently authenticated on the Ceramic instance, if set */
+  viewer?: Maybe<CeramicAccount>;
+};
+
+
+export type CreatePinDislikePayloadNodeArgs = {
+  id: Scalars['ID'];
+};
+
+export type CreatePinInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  content: PinInput;
+};
+
+export type CreatePinLikeInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  content: PinLikeInput;
+};
+
+export type CreatePinLikePayload = {
+  __typename?: 'CreatePinLikePayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  document: PinLike;
+  /** Fetches an object given its ID */
+  node?: Maybe<Node>;
+  /** Account currently authenticated on the Ceramic instance, if set */
+  viewer?: Maybe<CeramicAccount>;
+};
+
+
+export type CreatePinLikePayloadNodeArgs = {
+  id: Scalars['ID'];
+};
+
+export type CreatePinPayload = {
+  __typename?: 'CreatePinPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  document: Pin;
+  /** Fetches an object given its ID */
+  node?: Maybe<Node>;
+  /** Account currently authenticated on the Ceramic instance, if set */
+  viewer?: Maybe<CeramicAccount>;
+};
+
+
+export type CreatePinPayloadNodeArgs = {
   id: Scalars['ID'];
 };
 
@@ -539,12 +452,12 @@ export type EthAccount = Node & {
   managedWebsites: AdminConnection;
   managedWebsitesCount: Scalars['Int'];
   metadata: EthAccountMetadata;
-  pieceDislikes: PieceDislikeConnection;
-  pieceDislikesCount: Scalars['Int'];
-  pieceLikes: PieceLikeConnection;
-  pieceLikesCount: Scalars['Int'];
-  pieces: PieceConnection;
-  piecesCount: Scalars['Int'];
+  pinDislikes: PinDislikeConnection;
+  pinDislikesCount: Scalars['Int'];
+  pinLikes: PinLikeConnection;
+  pinLikesCount: Scalars['Int'];
+  pins: PinConnection;
+  pinsCount: Scalars['Int'];
   websiteID: Scalars['CeramicStreamID'];
 };
 
@@ -563,7 +476,7 @@ export type EthAccountManagedWebsitesCountArgs = {
 };
 
 
-export type EthAccountPieceDislikesArgs = {
+export type EthAccountPinDislikesArgs = {
   account?: InputMaybe<Scalars['ID']>;
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -572,26 +485,12 @@ export type EthAccountPieceDislikesArgs = {
 };
 
 
-export type EthAccountPieceDislikesCountArgs = {
+export type EthAccountPinDislikesCountArgs = {
   account?: InputMaybe<Scalars['ID']>;
 };
 
 
-export type EthAccountPieceLikesArgs = {
-  account?: InputMaybe<Scalars['ID']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type EthAccountPieceLikesCountArgs = {
-  account?: InputMaybe<Scalars['ID']>;
-};
-
-
-export type EthAccountPiecesArgs = {
+export type EthAccountPinLikesArgs = {
   account?: InputMaybe<Scalars['ID']>;
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -600,7 +499,21 @@ export type EthAccountPiecesArgs = {
 };
 
 
-export type EthAccountPiecesCountArgs = {
+export type EthAccountPinLikesCountArgs = {
+  account?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type EthAccountPinsArgs = {
+  account?: InputMaybe<Scalars['ID']>;
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type EthAccountPinsCountArgs = {
   account?: InputMaybe<Scalars['ID']>;
 };
 
@@ -644,8 +557,8 @@ export type Featured = Node & {
   __typename?: 'Featured';
   endAt: Scalars['String'];
   id: Scalars['ID'];
-  piece?: Maybe<Piece>;
-  pieceID: Scalars['CeramicStreamID'];
+  pin?: Maybe<Pin>;
+  pinID: Scalars['CeramicStreamID'];
   startAt: Scalars['String'];
   website?: Maybe<Website>;
   websiteID: Scalars['CeramicStreamID'];
@@ -671,7 +584,7 @@ export type FeaturedEdge = {
 
 export type FeaturedInput = {
   endAt: Scalars['String'];
-  pieceID: Scalars['CeramicStreamID'];
+  pinID: Scalars['CeramicStreamID'];
   startAt: Scalars['String'];
   websiteID: Scalars['CeramicStreamID'];
 };
@@ -680,24 +593,22 @@ export type Mutation = {
   __typename?: 'Mutation';
   createAdmin?: Maybe<CreateAdminPayload>;
   createCategory?: Maybe<CreateCategoryPayload>;
-  createCategoryDislike?: Maybe<CreateCategoryDislikePayload>;
-  createCategoryLike?: Maybe<CreateCategoryLikePayload>;
   createEthAccount?: Maybe<CreateEthAccountPayload>;
   createFeatured?: Maybe<CreateFeaturedPayload>;
   createPiece?: Maybe<CreatePiecePayload>;
-  createPieceDislike?: Maybe<CreatePieceDislikePayload>;
-  createPieceLike?: Maybe<CreatePieceLikePayload>;
+  createPin?: Maybe<CreatePinPayload>;
+  createPinDislike?: Maybe<CreatePinDislikePayload>;
+  createPinLike?: Maybe<CreatePinLikePayload>;
   createSubscription?: Maybe<CreateSubscriptionPayload>;
   createWebsite?: Maybe<CreateWebsitePayload>;
   updateAdmin?: Maybe<UpdateAdminPayload>;
   updateCategory?: Maybe<UpdateCategoryPayload>;
-  updateCategoryDislike?: Maybe<UpdateCategoryDislikePayload>;
-  updateCategoryLike?: Maybe<UpdateCategoryLikePayload>;
   updateEthAccount?: Maybe<UpdateEthAccountPayload>;
   updateFeatured?: Maybe<UpdateFeaturedPayload>;
   updatePiece?: Maybe<UpdatePiecePayload>;
-  updatePieceDislike?: Maybe<UpdatePieceDislikePayload>;
-  updatePieceLike?: Maybe<UpdatePieceLikePayload>;
+  updatePin?: Maybe<UpdatePinPayload>;
+  updatePinDislike?: Maybe<UpdatePinDislikePayload>;
+  updatePinLike?: Maybe<UpdatePinLikePayload>;
   updateSubscription?: Maybe<UpdateSubscriptionPayload>;
   updateWebsite?: Maybe<UpdateWebsitePayload>;
 };
@@ -710,16 +621,6 @@ export type MutationCreateAdminArgs = {
 
 export type MutationCreateCategoryArgs = {
   input: CreateCategoryInput;
-};
-
-
-export type MutationCreateCategoryDislikeArgs = {
-  input: CreateCategoryDislikeInput;
-};
-
-
-export type MutationCreateCategoryLikeArgs = {
-  input: CreateCategoryLikeInput;
 };
 
 
@@ -738,13 +639,18 @@ export type MutationCreatePieceArgs = {
 };
 
 
-export type MutationCreatePieceDislikeArgs = {
-  input: CreatePieceDislikeInput;
+export type MutationCreatePinArgs = {
+  input: CreatePinInput;
 };
 
 
-export type MutationCreatePieceLikeArgs = {
-  input: CreatePieceLikeInput;
+export type MutationCreatePinDislikeArgs = {
+  input: CreatePinDislikeInput;
+};
+
+
+export type MutationCreatePinLikeArgs = {
+  input: CreatePinLikeInput;
 };
 
 
@@ -768,16 +674,6 @@ export type MutationUpdateCategoryArgs = {
 };
 
 
-export type MutationUpdateCategoryDislikeArgs = {
-  input: UpdateCategoryDislikeInput;
-};
-
-
-export type MutationUpdateCategoryLikeArgs = {
-  input: UpdateCategoryLikeInput;
-};
-
-
 export type MutationUpdateEthAccountArgs = {
   input: UpdateEthAccountInput;
 };
@@ -793,13 +689,18 @@ export type MutationUpdatePieceArgs = {
 };
 
 
-export type MutationUpdatePieceDislikeArgs = {
-  input: UpdatePieceDislikeInput;
+export type MutationUpdatePinArgs = {
+  input: UpdatePinInput;
 };
 
 
-export type MutationUpdatePieceLikeArgs = {
-  input: UpdatePieceLikeInput;
+export type MutationUpdatePinDislikeArgs = {
+  input: UpdatePinDislikeInput;
+};
+
+
+export type MutationUpdatePinLikeArgs = {
+  input: UpdatePinLikeInput;
 };
 
 
@@ -839,17 +740,9 @@ export type PartialAdminInput = {
   websiteID?: InputMaybe<Scalars['CeramicStreamID']>;
 };
 
-export type PartialCategoryDislikeInput = {
-  categoryID?: InputMaybe<Scalars['CeramicStreamID']>;
-};
-
 export type PartialCategoryInput = {
   name?: InputMaybe<Scalars['String']>;
   websiteID?: InputMaybe<Scalars['CeramicStreamID']>;
-};
-
-export type PartialCategoryLikeInput = {
-  categoryID?: InputMaybe<Scalars['CeramicStreamID']>;
 };
 
 export type PartialEthAccountInput = {
@@ -861,32 +754,39 @@ export type PartialEthAccountInput = {
 
 export type PartialFeaturedInput = {
   endAt?: InputMaybe<Scalars['String']>;
-  pieceID?: InputMaybe<Scalars['CeramicStreamID']>;
+  pinID?: InputMaybe<Scalars['CeramicStreamID']>;
   startAt?: InputMaybe<Scalars['String']>;
   websiteID?: InputMaybe<Scalars['CeramicStreamID']>;
 };
 
-export type PartialPieceDislikeInput = {
-  ownerID?: InputMaybe<Scalars['CeramicStreamID']>;
-  pieceID?: InputMaybe<Scalars['CeramicStreamID']>;
-};
-
 export type PartialPieceInput = {
   CID?: InputMaybe<Scalars['String']>;
-  approved?: InputMaybe<Scalars['Boolean']>;
-  categoryID?: InputMaybe<Scalars['CeramicStreamID']>;
   details?: InputMaybe<PieceDetailsInput>;
   metadata?: InputMaybe<PieceMetadataInput>;
   name?: InputMaybe<Scalars['String']>;
+};
+
+export type PartialPinDislikeInput = {
+  categoryID?: InputMaybe<Scalars['CeramicStreamID']>;
   ownerID?: InputMaybe<Scalars['CeramicStreamID']>;
+  pinID?: InputMaybe<Scalars['CeramicStreamID']>;
+};
+
+export type PartialPinInput = {
+  approved?: InputMaybe<Scalars['Boolean']>;
+  categoryID?: InputMaybe<Scalars['CeramicStreamID']>;
+  deleted?: InputMaybe<Scalars['Boolean']>;
+  ownerID?: InputMaybe<Scalars['CeramicStreamID']>;
+  pieceID?: InputMaybe<Scalars['CeramicStreamID']>;
   rejected?: InputMaybe<Scalars['Boolean']>;
   rejectionReason?: InputMaybe<Scalars['String']>;
   websiteID?: InputMaybe<Scalars['CeramicStreamID']>;
 };
 
-export type PartialPieceLikeInput = {
+export type PartialPinLikeInput = {
+  categoryID?: InputMaybe<Scalars['CeramicStreamID']>;
   ownerID?: InputMaybe<Scalars['CeramicStreamID']>;
-  pieceID?: InputMaybe<Scalars['CeramicStreamID']>;
+  pinID?: InputMaybe<Scalars['CeramicStreamID']>;
 };
 
 export type PartialSubscriptionInput = {
@@ -906,51 +806,10 @@ export type PartialWebsiteInput = {
 export type Piece = Node & {
   __typename?: 'Piece';
   CID?: Maybe<Scalars['String']>;
-  approved?: Maybe<Scalars['Boolean']>;
-  category?: Maybe<Category>;
-  categoryID: Scalars['CeramicStreamID'];
   details?: Maybe<PieceDetails>;
-  dislikes: PieceDislikeConnection;
-  dislikesCount: Scalars['Int'];
   id: Scalars['ID'];
-  likes: PieceLikeConnection;
-  likesCount: Scalars['Int'];
   metadata: PieceMetadata;
   name?: Maybe<Scalars['String']>;
-  owner?: Maybe<EthAccount>;
-  ownerID: Scalars['CeramicStreamID'];
-  rejected?: Maybe<Scalars['Boolean']>;
-  rejectionReason?: Maybe<Scalars['String']>;
-  website?: Maybe<Website>;
-  websiteID: Scalars['CeramicStreamID'];
-};
-
-
-export type PieceDislikesArgs = {
-  account?: InputMaybe<Scalars['ID']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type PieceDislikesCountArgs = {
-  account?: InputMaybe<Scalars['ID']>;
-};
-
-
-export type PieceLikesArgs = {
-  account?: InputMaybe<Scalars['ID']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type PieceLikesCountArgs = {
-  account?: InputMaybe<Scalars['ID']>;
 };
 
 /** A connection to a list of items. */
@@ -999,38 +858,6 @@ export type PieceDetailsInput = {
   type?: InputMaybe<Scalars['String']>;
 };
 
-export type PieceDislike = Node & {
-  __typename?: 'PieceDislike';
-  id: Scalars['ID'];
-  owner?: Maybe<EthAccount>;
-  ownerID: Scalars['CeramicStreamID'];
-  piece?: Maybe<Piece>;
-  pieceID: Scalars['CeramicStreamID'];
-};
-
-/** A connection to a list of items. */
-export type PieceDislikeConnection = {
-  __typename?: 'PieceDislikeConnection';
-  /** A list of edges. */
-  edges?: Maybe<Array<Maybe<PieceDislikeEdge>>>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
-/** An edge in a connection. */
-export type PieceDislikeEdge = {
-  __typename?: 'PieceDislikeEdge';
-  /** A cursor for use in pagination */
-  cursor: Scalars['String'];
-  /** The item at the end of the edge */
-  node?: Maybe<PieceDislike>;
-};
-
-export type PieceDislikeInput = {
-  ownerID: Scalars['CeramicStreamID'];
-  pieceID: Scalars['CeramicStreamID'];
-};
-
 /** An edge in a connection. */
 export type PieceEdge = {
   __typename?: 'PieceEdge';
@@ -1042,47 +869,9 @@ export type PieceEdge = {
 
 export type PieceInput = {
   CID?: InputMaybe<Scalars['String']>;
-  approved?: InputMaybe<Scalars['Boolean']>;
-  categoryID: Scalars['CeramicStreamID'];
   details?: InputMaybe<PieceDetailsInput>;
   metadata: PieceMetadataInput;
   name?: InputMaybe<Scalars['String']>;
-  ownerID: Scalars['CeramicStreamID'];
-  rejected?: InputMaybe<Scalars['Boolean']>;
-  rejectionReason?: InputMaybe<Scalars['String']>;
-  websiteID: Scalars['CeramicStreamID'];
-};
-
-export type PieceLike = Node & {
-  __typename?: 'PieceLike';
-  id: Scalars['ID'];
-  owner?: Maybe<EthAccount>;
-  ownerID: Scalars['CeramicStreamID'];
-  piece?: Maybe<Piece>;
-  pieceID: Scalars['CeramicStreamID'];
-};
-
-/** A connection to a list of items. */
-export type PieceLikeConnection = {
-  __typename?: 'PieceLikeConnection';
-  /** A list of edges. */
-  edges?: Maybe<Array<Maybe<PieceLikeEdge>>>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-};
-
-/** An edge in a connection. */
-export type PieceLikeEdge = {
-  __typename?: 'PieceLikeEdge';
-  /** A cursor for use in pagination */
-  cursor: Scalars['String'];
-  /** The item at the end of the edge */
-  node?: Maybe<PieceLike>;
-};
-
-export type PieceLikeInput = {
-  ownerID: Scalars['CeramicStreamID'];
-  pieceID: Scalars['CeramicStreamID'];
 };
 
 export type PieceMetadata = {
@@ -1096,19 +885,166 @@ export type PieceMetadataInput = {
   updatedAt: Scalars['String'];
 };
 
+export type Pin = Node & {
+  __typename?: 'Pin';
+  approved?: Maybe<Scalars['Boolean']>;
+  category?: Maybe<Category>;
+  categoryID: Scalars['CeramicStreamID'];
+  deleted?: Maybe<Scalars['Boolean']>;
+  dislikes: PinDislikeConnection;
+  dislikesCount: Scalars['Int'];
+  id: Scalars['ID'];
+  likes: PinLikeConnection;
+  likesCount: Scalars['Int'];
+  owner?: Maybe<EthAccount>;
+  ownerID: Scalars['CeramicStreamID'];
+  piece?: Maybe<Piece>;
+  pieceID: Scalars['CeramicStreamID'];
+  rejected?: Maybe<Scalars['Boolean']>;
+  rejectionReason?: Maybe<Scalars['String']>;
+  website?: Maybe<Website>;
+  websiteID: Scalars['CeramicStreamID'];
+};
+
+
+export type PinDislikesArgs = {
+  account?: InputMaybe<Scalars['ID']>;
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type PinDislikesCountArgs = {
+  account?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type PinLikesArgs = {
+  account?: InputMaybe<Scalars['ID']>;
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type PinLikesCountArgs = {
+  account?: InputMaybe<Scalars['ID']>;
+};
+
+/** A connection to a list of items. */
+export type PinConnection = {
+  __typename?: 'PinConnection';
+  /** A list of edges. */
+  edges?: Maybe<Array<Maybe<PinEdge>>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type PinDislike = Node & {
+  __typename?: 'PinDislike';
+  category?: Maybe<Category>;
+  categoryID: Scalars['CeramicStreamID'];
+  id: Scalars['ID'];
+  owner?: Maybe<EthAccount>;
+  ownerID: Scalars['CeramicStreamID'];
+  pin?: Maybe<Pin>;
+  pinID: Scalars['CeramicStreamID'];
+};
+
+/** A connection to a list of items. */
+export type PinDislikeConnection = {
+  __typename?: 'PinDislikeConnection';
+  /** A list of edges. */
+  edges?: Maybe<Array<Maybe<PinDislikeEdge>>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+/** An edge in a connection. */
+export type PinDislikeEdge = {
+  __typename?: 'PinDislikeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge */
+  node?: Maybe<PinDislike>;
+};
+
+export type PinDislikeInput = {
+  categoryID: Scalars['CeramicStreamID'];
+  ownerID: Scalars['CeramicStreamID'];
+  pinID: Scalars['CeramicStreamID'];
+};
+
+/** An edge in a connection. */
+export type PinEdge = {
+  __typename?: 'PinEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge */
+  node?: Maybe<Pin>;
+};
+
+export type PinInput = {
+  approved?: InputMaybe<Scalars['Boolean']>;
+  categoryID: Scalars['CeramicStreamID'];
+  deleted?: InputMaybe<Scalars['Boolean']>;
+  ownerID: Scalars['CeramicStreamID'];
+  pieceID: Scalars['CeramicStreamID'];
+  rejected?: InputMaybe<Scalars['Boolean']>;
+  rejectionReason?: InputMaybe<Scalars['String']>;
+  websiteID: Scalars['CeramicStreamID'];
+};
+
+export type PinLike = Node & {
+  __typename?: 'PinLike';
+  category?: Maybe<Category>;
+  categoryID: Scalars['CeramicStreamID'];
+  id: Scalars['ID'];
+  owner?: Maybe<EthAccount>;
+  ownerID: Scalars['CeramicStreamID'];
+  pin?: Maybe<Pin>;
+  pinID: Scalars['CeramicStreamID'];
+};
+
+/** A connection to a list of items. */
+export type PinLikeConnection = {
+  __typename?: 'PinLikeConnection';
+  /** A list of edges. */
+  edges?: Maybe<Array<Maybe<PinLikeEdge>>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+/** An edge in a connection. */
+export type PinLikeEdge = {
+  __typename?: 'PinLikeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge */
+  node?: Maybe<PinLike>;
+};
+
+export type PinLikeInput = {
+  categoryID: Scalars['CeramicStreamID'];
+  ownerID: Scalars['CeramicStreamID'];
+  pinID: Scalars['CeramicStreamID'];
+};
+
 export type Query = {
   __typename?: 'Query';
   adminIndex?: Maybe<AdminConnection>;
-  categoryDislikeIndex?: Maybe<CategoryDislikeConnection>;
   categoryIndex?: Maybe<CategoryConnection>;
-  categoryLikeIndex?: Maybe<CategoryLikeConnection>;
   ethAccountIndex?: Maybe<EthAccountConnection>;
   featuredIndex?: Maybe<FeaturedConnection>;
   /** Fetches an object given its ID */
   node?: Maybe<Node>;
-  pieceDislikeIndex?: Maybe<PieceDislikeConnection>;
   pieceIndex?: Maybe<PieceConnection>;
-  pieceLikeIndex?: Maybe<PieceLikeConnection>;
+  pinDislikeIndex?: Maybe<PinDislikeConnection>;
+  pinIndex?: Maybe<PinConnection>;
+  pinLikeIndex?: Maybe<PinLikeConnection>;
   subscriptionIndex?: Maybe<SubscriptionConnection>;
   /** Account currently authenticated on the Ceramic instance, if set */
   viewer?: Maybe<CeramicAccount>;
@@ -1124,23 +1060,7 @@ export type QueryAdminIndexArgs = {
 };
 
 
-export type QueryCategoryDislikeIndexArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-};
-
-
 export type QueryCategoryIndexArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type QueryCategoryLikeIndexArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
@@ -1169,14 +1089,6 @@ export type QueryNodeArgs = {
 };
 
 
-export type QueryPieceDislikeIndexArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-};
-
-
 export type QueryPieceIndexArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -1185,7 +1097,23 @@ export type QueryPieceIndexArgs = {
 };
 
 
-export type QueryPieceLikeIndexArgs = {
+export type QueryPinDislikeIndexArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryPinIndexArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryPinLikeIndexArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
@@ -1277,55 +1205,11 @@ export type UpdateAdminPayloadNodeArgs = {
   id: Scalars['ID'];
 };
 
-export type UpdateCategoryDislikeInput = {
-  clientMutationId?: InputMaybe<Scalars['String']>;
-  content: PartialCategoryDislikeInput;
-  id: Scalars['ID'];
-  options?: InputMaybe<UpdateOptionsInput>;
-};
-
-export type UpdateCategoryDislikePayload = {
-  __typename?: 'UpdateCategoryDislikePayload';
-  clientMutationId?: Maybe<Scalars['String']>;
-  document: CategoryDislike;
-  /** Fetches an object given its ID */
-  node?: Maybe<Node>;
-  /** Account currently authenticated on the Ceramic instance, if set */
-  viewer?: Maybe<CeramicAccount>;
-};
-
-
-export type UpdateCategoryDislikePayloadNodeArgs = {
-  id: Scalars['ID'];
-};
-
 export type UpdateCategoryInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   content: PartialCategoryInput;
   id: Scalars['ID'];
   options?: InputMaybe<UpdateOptionsInput>;
-};
-
-export type UpdateCategoryLikeInput = {
-  clientMutationId?: InputMaybe<Scalars['String']>;
-  content: PartialCategoryLikeInput;
-  id: Scalars['ID'];
-  options?: InputMaybe<UpdateOptionsInput>;
-};
-
-export type UpdateCategoryLikePayload = {
-  __typename?: 'UpdateCategoryLikePayload';
-  clientMutationId?: Maybe<Scalars['String']>;
-  document: CategoryLike;
-  /** Fetches an object given its ID */
-  node?: Maybe<Node>;
-  /** Account currently authenticated on the Ceramic instance, if set */
-  viewer?: Maybe<CeramicAccount>;
-};
-
-
-export type UpdateCategoryLikePayloadNodeArgs = {
-  id: Scalars['ID'];
 };
 
 export type UpdateCategoryPayload = {
@@ -1394,55 +1278,11 @@ export type UpdateOptionsInput = {
   version?: InputMaybe<Scalars['CeramicCommitID']>;
 };
 
-export type UpdatePieceDislikeInput = {
-  clientMutationId?: InputMaybe<Scalars['String']>;
-  content: PartialPieceDislikeInput;
-  id: Scalars['ID'];
-  options?: InputMaybe<UpdateOptionsInput>;
-};
-
-export type UpdatePieceDislikePayload = {
-  __typename?: 'UpdatePieceDislikePayload';
-  clientMutationId?: Maybe<Scalars['String']>;
-  document: PieceDislike;
-  /** Fetches an object given its ID */
-  node?: Maybe<Node>;
-  /** Account currently authenticated on the Ceramic instance, if set */
-  viewer?: Maybe<CeramicAccount>;
-};
-
-
-export type UpdatePieceDislikePayloadNodeArgs = {
-  id: Scalars['ID'];
-};
-
 export type UpdatePieceInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   content: PartialPieceInput;
   id: Scalars['ID'];
   options?: InputMaybe<UpdateOptionsInput>;
-};
-
-export type UpdatePieceLikeInput = {
-  clientMutationId?: InputMaybe<Scalars['String']>;
-  content: PartialPieceLikeInput;
-  id: Scalars['ID'];
-  options?: InputMaybe<UpdateOptionsInput>;
-};
-
-export type UpdatePieceLikePayload = {
-  __typename?: 'UpdatePieceLikePayload';
-  clientMutationId?: Maybe<Scalars['String']>;
-  document: PieceLike;
-  /** Fetches an object given its ID */
-  node?: Maybe<Node>;
-  /** Account currently authenticated on the Ceramic instance, if set */
-  viewer?: Maybe<CeramicAccount>;
-};
-
-
-export type UpdatePieceLikePayloadNodeArgs = {
-  id: Scalars['ID'];
 };
 
 export type UpdatePiecePayload = {
@@ -1457,6 +1297,72 @@ export type UpdatePiecePayload = {
 
 
 export type UpdatePiecePayloadNodeArgs = {
+  id: Scalars['ID'];
+};
+
+export type UpdatePinDislikeInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  content: PartialPinDislikeInput;
+  id: Scalars['ID'];
+  options?: InputMaybe<UpdateOptionsInput>;
+};
+
+export type UpdatePinDislikePayload = {
+  __typename?: 'UpdatePinDislikePayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  document: PinDislike;
+  /** Fetches an object given its ID */
+  node?: Maybe<Node>;
+  /** Account currently authenticated on the Ceramic instance, if set */
+  viewer?: Maybe<CeramicAccount>;
+};
+
+
+export type UpdatePinDislikePayloadNodeArgs = {
+  id: Scalars['ID'];
+};
+
+export type UpdatePinInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  content: PartialPinInput;
+  id: Scalars['ID'];
+  options?: InputMaybe<UpdateOptionsInput>;
+};
+
+export type UpdatePinLikeInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  content: PartialPinLikeInput;
+  id: Scalars['ID'];
+  options?: InputMaybe<UpdateOptionsInput>;
+};
+
+export type UpdatePinLikePayload = {
+  __typename?: 'UpdatePinLikePayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  document: PinLike;
+  /** Fetches an object given its ID */
+  node?: Maybe<Node>;
+  /** Account currently authenticated on the Ceramic instance, if set */
+  viewer?: Maybe<CeramicAccount>;
+};
+
+
+export type UpdatePinLikePayloadNodeArgs = {
+  id: Scalars['ID'];
+};
+
+export type UpdatePinPayload = {
+  __typename?: 'UpdatePinPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  document: Pin;
+  /** Fetches an object given its ID */
+  node?: Maybe<Node>;
+  /** Account currently authenticated on the Ceramic instance, if set */
+  viewer?: Maybe<CeramicAccount>;
+};
+
+
+export type UpdatePinPayloadNodeArgs = {
   id: Scalars['ID'];
 };
 
@@ -1516,8 +1422,8 @@ export type Website = Node & {
   id: Scalars['ID'];
   image?: Maybe<Scalars['String']>;
   metadata: WebsiteMetadata;
-  pieces: PieceConnection;
-  piecesCount: Scalars['Int'];
+  pins: PinConnection;
+  pinsCount: Scalars['Int'];
   subscriptions: SubscriptionConnection;
   subscriptionsCount: Scalars['Int'];
   users: EthAccountConnection;
@@ -1568,7 +1474,7 @@ export type WebsiteFeaturedCountArgs = {
 };
 
 
-export type WebsitePiecesArgs = {
+export type WebsitePinsArgs = {
   account?: InputMaybe<Scalars['ID']>;
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -1577,7 +1483,7 @@ export type WebsitePiecesArgs = {
 };
 
 
-export type WebsitePiecesCountArgs = {
+export type WebsitePinsCountArgs = {
   account?: InputMaybe<Scalars['ID']>;
 };
 
@@ -1645,35 +1551,36 @@ export type WebsiteMetadataInput = {
   updatedAt: Scalars['String'];
 };
 
-export type WebsiteDataFragment = { __typename?: 'Website', id: string, adminsCount: number, piecesCount: number, subscriptionsCount: number, usersCount: number, featuredCount: number, categoriesCount: number, admins: { __typename?: 'AdminConnection', edges?: Array<{ __typename?: 'AdminEdge', node?: { __typename?: 'Admin', id: string, adminID: any, super: boolean, inactive?: boolean | null, admin?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'AdminMetadata', createdAt: string, updatedAt: string } } | null } | null> | null }, pieces: { __typename?: 'PieceConnection', edges?: Array<{ __typename?: 'PieceEdge', node?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, ownerID: any, likesCount: number, dislikesCount: number, category?: { __typename?: 'Category', id: string, name: string } | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, owner?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, likes: { __typename?: 'PieceLikeConnection', edges?: Array<{ __typename?: 'PieceLikeEdge', node?: { __typename?: 'PieceLike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, dislikes: { __typename?: 'PieceDislikeConnection', edges?: Array<{ __typename?: 'PieceDislikeEdge', node?: { __typename?: 'PieceDislike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null> | null }, subscriptions: { __typename?: 'SubscriptionConnection', edges?: Array<{ __typename?: 'SubscriptionEdge', node?: { __typename?: 'Subscription', id: string, subscribedID: any, inactive?: boolean | null, subscribedWebsite?: { __typename?: 'Website', id: string, websiteName: string, description?: string | null, image?: string | null, piecesCount: number, pieces: { __typename?: 'PieceConnection', edges?: Array<{ __typename?: 'PieceEdge', node?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, likesCount: number, dislikesCount: number, category?: { __typename?: 'Category', id: string, name: string } | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, likes: { __typename?: 'PieceLikeConnection', edges?: Array<{ __typename?: 'PieceLikeEdge', node?: { __typename?: 'PieceLike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, dislikes: { __typename?: 'PieceDislikeConnection', edges?: Array<{ __typename?: 'PieceDislikeEdge', node?: { __typename?: 'PieceDislike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null> | null } } | null, metadata: { __typename?: 'SubscriptionMetadata', createdAt: string, updatedAt: string } } | null } | null> | null }, users: { __typename?: 'EthAccountConnection', edges?: Array<{ __typename?: 'EthAccountEdge', node?: { __typename?: 'EthAccount', id: string, address: string, ensName?: string | null, piecesCount: number, pieceLikesCount: number, pieceDislikesCount: number, pieces: { __typename?: 'PieceConnection', edges?: Array<{ __typename?: 'PieceEdge', node?: { __typename?: 'Piece', id: string } | null } | null> | null }, pieceLikes: { __typename?: 'PieceLikeConnection', edges?: Array<{ __typename?: 'PieceLikeEdge', node?: { __typename?: 'PieceLike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, pieceDislikes: { __typename?: 'PieceDislikeConnection', edges?: Array<{ __typename?: 'PieceDislikeEdge', node?: { __typename?: 'PieceDislike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, metadata: { __typename?: 'EthAccountMetadata', createdAt: string, updatedAt: string } } | null } | null> | null }, featured: { __typename?: 'FeaturedConnection', edges?: Array<{ __typename?: 'FeaturedEdge', node?: { __typename?: 'Featured', id: string, startAt: string, endAt: string, piece?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, ownerID: any, category?: { __typename?: 'Category', id: string, name: string } | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, owner?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null } | null> | null }, categories: { __typename?: 'CategoryConnection', edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', id: string, name: string, piecesCount: number, likesCount: number, dislikesCount: number, pieces: { __typename?: 'PieceConnection', edges?: Array<{ __typename?: 'PieceEdge', node?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, likesCount: number, dislikesCount: number, ownerID: any, category?: { __typename?: 'Category', id: string, name: string } | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, likes: { __typename?: 'PieceLikeConnection', edges?: Array<{ __typename?: 'PieceLikeEdge', node?: { __typename?: 'PieceLike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, dislikes: { __typename?: 'PieceDislikeConnection', edges?: Array<{ __typename?: 'PieceDislikeEdge', node?: { __typename?: 'PieceDislike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, owner?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null> | null } } | null } | null> | null } } & { ' $fragmentName'?: 'WebsiteDataFragment' };
+export type WebsiteDataFragment = { __typename?: 'Website', id: string, adminsCount: number, pinsCount: number, subscriptionsCount: number, usersCount: number, featuredCount: number, categoriesCount: number, admins: { __typename?: 'AdminConnection', edges?: Array<{ __typename?: 'AdminEdge', node?: { __typename?: 'Admin', id: string, adminID: any, super: boolean, inactive?: boolean | null, admin?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'AdminMetadata', createdAt: string, updatedAt: string } } | null } | null> | null }, pins: { __typename?: 'PinConnection', edges?: Array<{ __typename?: 'PinEdge', node?: { __typename?: 'Pin', id: string, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, deleted?: boolean | null, likesCount: number, dislikesCount: number, website?: { __typename?: 'Website', id: string } | null, owner?: { __typename?: 'EthAccount', id: string, address: string } | null, category?: { __typename?: 'Category', id: string, name: string } | null, piece?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null } | null> | null }, subscriptions: { __typename?: 'SubscriptionConnection', edges?: Array<{ __typename?: 'SubscriptionEdge', node?: { __typename?: 'Subscription', id: string, subscribedID: any, inactive?: boolean | null, subscribedWebsite?: { __typename?: 'Website', id: string, websiteName: string, description?: string | null, image?: string | null, pinsCount: number, pins: { __typename?: 'PinConnection', edges?: Array<{ __typename?: 'PinEdge', node?: { __typename?: 'Pin', id: string, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, deleted?: boolean | null, likesCount: number, dislikesCount: number, website?: { __typename?: 'Website', id: string } | null, owner?: { __typename?: 'EthAccount', id: string, address: string } | null, category?: { __typename?: 'Category', id: string, name: string } | null, piece?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null } | null> | null } } | null, metadata: { __typename?: 'SubscriptionMetadata', createdAt: string, updatedAt: string } } | null } | null> | null }, users: { __typename?: 'EthAccountConnection', edges?: Array<{ __typename?: 'EthAccountEdge', node?: { __typename?: 'EthAccount', id: string, address: string, ensName?: string | null, pinsCount: number, pinLikesCount: number, pinDislikesCount: number, pins: { __typename?: 'PinConnection', edges?: Array<{ __typename?: 'PinEdge', node?: { __typename?: 'Pin', id: string } | null } | null> | null }, pinLikes: { __typename?: 'PinLikeConnection', edges?: Array<{ __typename?: 'PinLikeEdge', node?: { __typename?: 'PinLike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, pinDislikes: { __typename?: 'PinDislikeConnection', edges?: Array<{ __typename?: 'PinDislikeEdge', node?: { __typename?: 'PinDislike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, metadata: { __typename?: 'EthAccountMetadata', createdAt: string, updatedAt: string } } | null } | null> | null }, featured: { __typename?: 'FeaturedConnection', edges?: Array<{ __typename?: 'FeaturedEdge', node?: { __typename?: 'Featured', id: string, startAt: string, endAt: string, pin?: { __typename?: 'Pin', id: string, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, deleted?: boolean | null, likesCount: number, dislikesCount: number, website?: { __typename?: 'Website', id: string } | null, owner?: { __typename?: 'EthAccount', id: string, address: string } | null, category?: { __typename?: 'Category', id: string, name: string } | null, piece?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null } | null } | null> | null }, categories: { __typename?: 'CategoryConnection', edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', id: string, name: string, pinsCount: number, likesCount: number, dislikesCount: number, pins: { __typename?: 'PinConnection', edges?: Array<{ __typename?: 'PinEdge', node?: { __typename?: 'Pin', id: string, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, deleted?: boolean | null, likesCount: number, dislikesCount: number, website?: { __typename?: 'Website', id: string } | null, owner?: { __typename?: 'EthAccount', id: string, address: string } | null, category?: { __typename?: 'Category', id: string, name: string } | null, piece?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null } | null> | null } } | null } | null> | null } } & { ' $fragmentName'?: 'WebsiteDataFragment' };
 
 export type WebsiteAdminFragment = { __typename?: 'Admin', id: string, adminID: any, super: boolean, inactive?: boolean | null, admin?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'AdminMetadata', createdAt: string, updatedAt: string } } & { ' $fragmentName'?: 'WebsiteAdminFragment' };
 
-export type WebsiteUserFragment = { __typename?: 'EthAccount', id: string, address: string, ensName?: string | null, piecesCount: number, pieceLikesCount: number, pieceDislikesCount: number, pieces: { __typename?: 'PieceConnection', edges?: Array<{ __typename?: 'PieceEdge', node?: { __typename?: 'Piece', id: string } | null } | null> | null }, pieceLikes: { __typename?: 'PieceLikeConnection', edges?: Array<{ __typename?: 'PieceLikeEdge', node?: { __typename?: 'PieceLike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, pieceDislikes: { __typename?: 'PieceDislikeConnection', edges?: Array<{ __typename?: 'PieceDislikeEdge', node?: { __typename?: 'PieceDislike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, metadata: { __typename?: 'EthAccountMetadata', createdAt: string, updatedAt: string } } & { ' $fragmentName'?: 'WebsiteUserFragment' };
+export type WebsiteUserFragment = { __typename?: 'EthAccount', id: string, address: string, ensName?: string | null, pinsCount: number, pinLikesCount: number, pinDislikesCount: number, pins: { __typename?: 'PinConnection', edges?: Array<{ __typename?: 'PinEdge', node?: { __typename?: 'Pin', id: string } | null } | null> | null }, pinLikes: { __typename?: 'PinLikeConnection', edges?: Array<{ __typename?: 'PinLikeEdge', node?: { __typename?: 'PinLike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, pinDislikes: { __typename?: 'PinDislikeConnection', edges?: Array<{ __typename?: 'PinDislikeEdge', node?: { __typename?: 'PinDislike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, metadata: { __typename?: 'EthAccountMetadata', createdAt: string, updatedAt: string } } & { ' $fragmentName'?: 'WebsiteUserFragment' };
 
-export type PieceLikeFragment = { __typename?: 'PieceLike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } & { ' $fragmentName'?: 'PieceLikeFragment' };
+export type PinLikeFragment = { __typename?: 'PinLike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } & { ' $fragmentName'?: 'PinLikeFragment' };
 
-export type PieceDislikeFragment = { __typename?: 'PieceDislike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } & { ' $fragmentName'?: 'PieceDislikeFragment' };
+export type PinDislikeFragment = { __typename?: 'PinDislike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } & { ' $fragmentName'?: 'PinDislikeFragment' };
 
 export type CategoryFragment = { __typename?: 'Category', id: string, name: string } & { ' $fragmentName'?: 'CategoryFragment' };
 
-export type PieceFragment = { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, likesCount: number, dislikesCount: number, ownerID: any, category?: { __typename?: 'Category', id: string, name: string } | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, likes: { __typename?: 'PieceLikeConnection', edges?: Array<{ __typename?: 'PieceLikeEdge', node?: { __typename?: 'PieceLike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, dislikes: { __typename?: 'PieceDislikeConnection', edges?: Array<{ __typename?: 'PieceDislikeEdge', node?: { __typename?: 'PieceDislike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, owner?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } & { ' $fragmentName'?: 'PieceFragment' };
+export type PinFragment = { __typename?: 'Pin', id: string, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, deleted?: boolean | null, likesCount: number, dislikesCount: number, website?: { __typename?: 'Website', id: string } | null, owner?: { __typename?: 'EthAccount', id: string, address: string } | null, category?: { __typename?: 'Category', id: string, name: string } | null, piece?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } & { ' $fragmentName'?: 'PinFragment' };
+
+export type PieceFragment = { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } & { ' $fragmentName'?: 'PieceFragment' };
 
 export type WebsiteQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type WebsiteQuery = { __typename?: 'Query', node?: { __typename?: 'Admin' } | { __typename?: 'Category' } | { __typename?: 'CategoryDislike' } | { __typename?: 'CategoryLike' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount' } | { __typename?: 'Featured' } | { __typename?: 'Piece' } | { __typename?: 'PieceDislike' } | { __typename?: 'PieceLike' } | { __typename?: 'Subscription' } | { __typename?: 'Website', id: string, websiteName: string, description?: string | null, image?: string | null } | null };
+export type WebsiteQuery = { __typename?: 'Query', node?: { __typename?: 'Admin' } | { __typename?: 'Category' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount' } | { __typename?: 'Featured' } | { __typename?: 'Piece' } | { __typename?: 'Pin' } | { __typename?: 'PinDislike' } | { __typename?: 'PinLike' } | { __typename?: 'Subscription' } | { __typename?: 'Website', id: string, websiteName: string, description?: string | null, image?: string | null } | null };
 
 export type WebsiteDataQueryVariables = Exact<{
   id: Scalars['ID'];
   pageSizeMedium: Scalars['Int'];
-  pageSizeMax: Scalars['Int'];
 }>;
 
 
-export type WebsiteDataQuery = { __typename?: 'Query', node?: { __typename?: 'Admin' } | { __typename?: 'Category' } | { __typename?: 'CategoryDislike' } | { __typename?: 'CategoryLike' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount' } | { __typename?: 'Featured' } | { __typename?: 'Piece' } | { __typename?: 'PieceDislike' } | { __typename?: 'PieceLike' } | { __typename?: 'Subscription' } | { __typename?: 'Website', id: string, adminsCount: number, piecesCount: number, subscriptionsCount: number, usersCount: number, featuredCount: number, categoriesCount: number, admins: { __typename?: 'AdminConnection', edges?: Array<{ __typename?: 'AdminEdge', node?: { __typename?: 'Admin', id: string, adminID: any, super: boolean, inactive?: boolean | null, admin?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'AdminMetadata', createdAt: string, updatedAt: string } } | null } | null> | null }, pieces: { __typename?: 'PieceConnection', edges?: Array<{ __typename?: 'PieceEdge', node?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, likesCount: number, dislikesCount: number, ownerID: any, category?: { __typename?: 'Category', id: string, name: string } | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, likes: { __typename?: 'PieceLikeConnection', edges?: Array<{ __typename?: 'PieceLikeEdge', node?: { __typename?: 'PieceLike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, dislikes: { __typename?: 'PieceDislikeConnection', edges?: Array<{ __typename?: 'PieceDislikeEdge', node?: { __typename?: 'PieceDislike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, owner?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null> | null }, subscriptions: { __typename?: 'SubscriptionConnection', edges?: Array<{ __typename?: 'SubscriptionEdge', node?: { __typename?: 'Subscription', id: string, subscribedID: any, inactive?: boolean | null, subscribedWebsite?: { __typename?: 'Website', id: string, websiteName: string, description?: string | null, image?: string | null, piecesCount: number, pieces: { __typename?: 'PieceConnection', edges?: Array<{ __typename?: 'PieceEdge', node?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, likesCount: number, dislikesCount: number, category?: { __typename?: 'Category', id: string, name: string } | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, likes: { __typename?: 'PieceLikeConnection', edges?: Array<{ __typename?: 'PieceLikeEdge', node?: { __typename?: 'PieceLike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, dislikes: { __typename?: 'PieceDislikeConnection', edges?: Array<{ __typename?: 'PieceDislikeEdge', node?: { __typename?: 'PieceDislike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null> | null } } | null, metadata: { __typename?: 'SubscriptionMetadata', createdAt: string, updatedAt: string } } | null } | null> | null }, users: { __typename?: 'EthAccountConnection', edges?: Array<{ __typename?: 'EthAccountEdge', node?: { __typename?: 'EthAccount', id: string, address: string, ensName?: string | null, piecesCount: number, pieceLikesCount: number, pieceDislikesCount: number, pieces: { __typename?: 'PieceConnection', edges?: Array<{ __typename?: 'PieceEdge', node?: { __typename?: 'Piece', id: string } | null } | null> | null }, pieceLikes: { __typename?: 'PieceLikeConnection', edges?: Array<{ __typename?: 'PieceLikeEdge', node?: { __typename?: 'PieceLike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, pieceDislikes: { __typename?: 'PieceDislikeConnection', edges?: Array<{ __typename?: 'PieceDislikeEdge', node?: { __typename?: 'PieceDislike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, metadata: { __typename?: 'EthAccountMetadata', createdAt: string, updatedAt: string } } | null } | null> | null }, featured: { __typename?: 'FeaturedConnection', edges?: Array<{ __typename?: 'FeaturedEdge', node?: { __typename?: 'Featured', id: string, startAt: string, endAt: string, piece?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, ownerID: any, category?: { __typename?: 'Category', id: string, name: string } | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, owner?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null } | null> | null }, categories: { __typename?: 'CategoryConnection', edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', id: string, name: string, piecesCount: number, likesCount: number, dislikesCount: number, pieces: { __typename?: 'PieceConnection', edges?: Array<{ __typename?: 'PieceEdge', node?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, likesCount: number, dislikesCount: number, ownerID: any, category?: { __typename?: 'Category', id: string, name: string } | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, likes: { __typename?: 'PieceLikeConnection', edges?: Array<{ __typename?: 'PieceLikeEdge', node?: { __typename?: 'PieceLike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, dislikes: { __typename?: 'PieceDislikeConnection', edges?: Array<{ __typename?: 'PieceDislikeEdge', node?: { __typename?: 'PieceDislike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, owner?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null> | null } } | null } | null> | null } } | null };
+export type WebsiteDataQuery = { __typename?: 'Query', node?: { __typename?: 'Admin' } | { __typename?: 'Category' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount' } | { __typename?: 'Featured' } | { __typename?: 'Piece' } | { __typename?: 'Pin' } | { __typename?: 'PinDislike' } | { __typename?: 'PinLike' } | { __typename?: 'Subscription' } | { __typename?: 'Website', id: string, adminsCount: number, pinsCount: number, subscriptionsCount: number, usersCount: number, featuredCount: number, categoriesCount: number, admins: { __typename?: 'AdminConnection', edges?: Array<{ __typename?: 'AdminEdge', node?: { __typename?: 'Admin', id: string, adminID: any, super: boolean, inactive?: boolean | null, admin?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'AdminMetadata', createdAt: string, updatedAt: string } } | null } | null> | null }, pins: { __typename?: 'PinConnection', edges?: Array<{ __typename?: 'PinEdge', node?: { __typename?: 'Pin', id: string, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, deleted?: boolean | null, likesCount: number, dislikesCount: number, website?: { __typename?: 'Website', id: string } | null, owner?: { __typename?: 'EthAccount', id: string, address: string } | null, category?: { __typename?: 'Category', id: string, name: string } | null, piece?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null } | null> | null }, subscriptions: { __typename?: 'SubscriptionConnection', edges?: Array<{ __typename?: 'SubscriptionEdge', node?: { __typename?: 'Subscription', id: string, subscribedID: any, inactive?: boolean | null, subscribedWebsite?: { __typename?: 'Website', id: string, websiteName: string, description?: string | null, image?: string | null, pinsCount: number, pins: { __typename?: 'PinConnection', edges?: Array<{ __typename?: 'PinEdge', node?: { __typename?: 'Pin', id: string, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, deleted?: boolean | null, likesCount: number, dislikesCount: number, website?: { __typename?: 'Website', id: string } | null, owner?: { __typename?: 'EthAccount', id: string, address: string } | null, category?: { __typename?: 'Category', id: string, name: string } | null, piece?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null } | null> | null } } | null, metadata: { __typename?: 'SubscriptionMetadata', createdAt: string, updatedAt: string } } | null } | null> | null }, users: { __typename?: 'EthAccountConnection', edges?: Array<{ __typename?: 'EthAccountEdge', node?: { __typename?: 'EthAccount', id: string, address: string, ensName?: string | null, pinsCount: number, pinLikesCount: number, pinDislikesCount: number, pins: { __typename?: 'PinConnection', edges?: Array<{ __typename?: 'PinEdge', node?: { __typename?: 'Pin', id: string } | null } | null> | null }, pinLikes: { __typename?: 'PinLikeConnection', edges?: Array<{ __typename?: 'PinLikeEdge', node?: { __typename?: 'PinLike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, pinDislikes: { __typename?: 'PinDislikeConnection', edges?: Array<{ __typename?: 'PinDislikeEdge', node?: { __typename?: 'PinDislike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, metadata: { __typename?: 'EthAccountMetadata', createdAt: string, updatedAt: string } } | null } | null> | null }, featured: { __typename?: 'FeaturedConnection', edges?: Array<{ __typename?: 'FeaturedEdge', node?: { __typename?: 'Featured', id: string, startAt: string, endAt: string, pin?: { __typename?: 'Pin', id: string, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, deleted?: boolean | null, likesCount: number, dislikesCount: number, website?: { __typename?: 'Website', id: string } | null, owner?: { __typename?: 'EthAccount', id: string, address: string } | null, category?: { __typename?: 'Category', id: string, name: string } | null, piece?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null } | null } | null> | null }, categories: { __typename?: 'CategoryConnection', edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', id: string, name: string, pinsCount: number, likesCount: number, dislikesCount: number, pins: { __typename?: 'PinConnection', edges?: Array<{ __typename?: 'PinEdge', node?: { __typename?: 'Pin', id: string, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, deleted?: boolean | null, likesCount: number, dislikesCount: number, website?: { __typename?: 'Website', id: string } | null, owner?: { __typename?: 'EthAccount', id: string, address: string } | null, category?: { __typename?: 'Category', id: string, name: string } | null, piece?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null } | null> | null } } | null } | null> | null } } | null };
 
 export type WebsiteUsersQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -1681,16 +1588,15 @@ export type WebsiteUsersQueryVariables = Exact<{
 }>;
 
 
-export type WebsiteUsersQuery = { __typename?: 'Query', node?: { __typename?: 'Admin' } | { __typename?: 'Category' } | { __typename?: 'CategoryDislike' } | { __typename?: 'CategoryLike' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount' } | { __typename?: 'Featured' } | { __typename?: 'Piece' } | { __typename?: 'PieceDislike' } | { __typename?: 'PieceLike' } | { __typename?: 'Subscription' } | { __typename?: 'Website', id: string, usersCount: number, users: { __typename?: 'EthAccountConnection', edges?: Array<{ __typename?: 'EthAccountEdge', node?: { __typename?: 'EthAccount', id: string, address: string, ensName?: string | null, piecesCount: number, pieceLikesCount: number, pieceDislikesCount: number, pieces: { __typename?: 'PieceConnection', edges?: Array<{ __typename?: 'PieceEdge', node?: { __typename?: 'Piece', id: string } | null } | null> | null }, pieceLikes: { __typename?: 'PieceLikeConnection', edges?: Array<{ __typename?: 'PieceLikeEdge', node?: { __typename?: 'PieceLike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, pieceDislikes: { __typename?: 'PieceDislikeConnection', edges?: Array<{ __typename?: 'PieceDislikeEdge', node?: { __typename?: 'PieceDislike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, metadata: { __typename?: 'EthAccountMetadata', createdAt: string, updatedAt: string } } | null } | null> | null } } | null };
+export type WebsiteUsersQuery = { __typename?: 'Query', node?: { __typename?: 'Admin' } | { __typename?: 'Category' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount' } | { __typename?: 'Featured' } | { __typename?: 'Piece' } | { __typename?: 'Pin' } | { __typename?: 'PinDislike' } | { __typename?: 'PinLike' } | { __typename?: 'Subscription' } | { __typename?: 'Website', id: string, usersCount: number, users: { __typename?: 'EthAccountConnection', edges?: Array<{ __typename?: 'EthAccountEdge', node?: { __typename?: 'EthAccount', id: string, address: string, ensName?: string | null, pinsCount: number, pinLikesCount: number, pinDislikesCount: number, pins: { __typename?: 'PinConnection', edges?: Array<{ __typename?: 'PinEdge', node?: { __typename?: 'Pin', id: string } | null } | null> | null }, pinLikes: { __typename?: 'PinLikeConnection', edges?: Array<{ __typename?: 'PinLikeEdge', node?: { __typename?: 'PinLike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, pinDislikes: { __typename?: 'PinDislikeConnection', edges?: Array<{ __typename?: 'PinDislikeEdge', node?: { __typename?: 'PinDislike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, metadata: { __typename?: 'EthAccountMetadata', createdAt: string, updatedAt: string } } | null } | null> | null } } | null };
 
 export type WebsitePiecesQueryVariables = Exact<{
   id: Scalars['ID'];
-  piecesPageSize: Scalars['Int'];
-  pageSizeMax: Scalars['Int'];
+  pageSizeMedium: Scalars['Int'];
 }>;
 
 
-export type WebsitePiecesQuery = { __typename?: 'Query', node?: { __typename?: 'Admin' } | { __typename?: 'Category' } | { __typename?: 'CategoryDislike' } | { __typename?: 'CategoryLike' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount' } | { __typename?: 'Featured' } | { __typename?: 'Piece' } | { __typename?: 'PieceDislike' } | { __typename?: 'PieceLike' } | { __typename?: 'Subscription' } | { __typename?: 'Website', id: string, piecesCount: number, pieces: { __typename?: 'PieceConnection', edges?: Array<{ __typename?: 'PieceEdge', node?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, likesCount: number, dislikesCount: number, ownerID: any, category?: { __typename?: 'Category', id: string, name: string } | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, likes: { __typename?: 'PieceLikeConnection', edges?: Array<{ __typename?: 'PieceLikeEdge', node?: { __typename?: 'PieceLike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, dislikes: { __typename?: 'PieceDislikeConnection', edges?: Array<{ __typename?: 'PieceDislikeEdge', node?: { __typename?: 'PieceDislike', id: string, owner?: { __typename?: 'EthAccount', address: string } | null, piece?: { __typename?: 'Piece', id: string } | null } | null } | null> | null }, owner?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null> | null } } | null };
+export type WebsitePiecesQuery = { __typename?: 'Query', node?: { __typename?: 'Admin' } | { __typename?: 'Category' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount' } | { __typename?: 'Featured' } | { __typename?: 'Piece' } | { __typename?: 'Pin' } | { __typename?: 'PinDislike' } | { __typename?: 'PinLike' } | { __typename?: 'Subscription' } | { __typename?: 'Website', id: string, pinsCount: number, pins: { __typename?: 'PinConnection', edges?: Array<{ __typename?: 'PinEdge', node?: { __typename?: 'Pin', id: string, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, deleted?: boolean | null, likesCount: number, dislikesCount: number, website?: { __typename?: 'Website', id: string } | null, owner?: { __typename?: 'EthAccount', id: string, address: string } | null, category?: { __typename?: 'Category', id: string, name: string } | null, piece?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | null } | null> | null } } | null };
 
 export type EthAccountQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -1698,64 +1604,50 @@ export type EthAccountQueryVariables = Exact<{
 }>;
 
 
-export type EthAccountQuery = { __typename?: 'Query', node?: { __typename?: 'Admin' } | { __typename?: 'Category' } | { __typename?: 'CategoryDislike' } | { __typename?: 'CategoryLike' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount', id: string, address: string, ensName?: string | null, piecesCount: number, pieceLikesCount: number, pieceDislikesCount: number, pieces: { __typename?: 'PieceConnection', edges?: Array<{ __typename?: 'PieceEdge', node?: { __typename?: 'Piece', id: string } | null } | null> | null }, pieceLikes: { __typename?: 'PieceLikeConnection', edges?: Array<{ __typename?: 'PieceLikeEdge', node?: { __typename?: 'PieceLike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, pieceDislikes: { __typename?: 'PieceDislikeConnection', edges?: Array<{ __typename?: 'PieceDislikeEdge', node?: { __typename?: 'PieceDislike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, metadata: { __typename?: 'EthAccountMetadata', createdAt: string, updatedAt: string } } | { __typename?: 'Featured' } | { __typename?: 'Piece' } | { __typename?: 'PieceDislike' } | { __typename?: 'PieceLike' } | { __typename?: 'Subscription' } | { __typename?: 'Website' } | null };
+export type EthAccountQuery = { __typename?: 'Query', node?: { __typename?: 'Admin' } | { __typename?: 'Category' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount', id: string, address: string, ensName?: string | null, pinsCount: number, pinLikesCount: number, pinDislikesCount: number, pins: { __typename?: 'PinConnection', edges?: Array<{ __typename?: 'PinEdge', node?: { __typename?: 'Pin', id: string } | null } | null> | null }, pinLikes: { __typename?: 'PinLikeConnection', edges?: Array<{ __typename?: 'PinLikeEdge', node?: { __typename?: 'PinLike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, pinDislikes: { __typename?: 'PinDislikeConnection', edges?: Array<{ __typename?: 'PinDislikeEdge', node?: { __typename?: 'PinDislike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, metadata: { __typename?: 'EthAccountMetadata', createdAt: string, updatedAt: string } } | { __typename?: 'Featured' } | { __typename?: 'Piece' } | { __typename?: 'Pin' } | { __typename?: 'PinDislike' } | { __typename?: 'PinLike' } | { __typename?: 'Subscription' } | { __typename?: 'Website' } | null };
 
 export type CreateEthAccountMutationVariables = Exact<{
   input: CreateEthAccountInput;
+  pageSizeMedium: Scalars['Int'];
 }>;
 
 
-export type CreateEthAccountMutation = { __typename?: 'Mutation', createEthAccount?: { __typename?: 'CreateEthAccountPayload', document: { __typename?: 'EthAccount', id: string, address: string, ensName?: string | null, metadata: { __typename?: 'EthAccountMetadata', createdAt: string, updatedAt: string } } } | null };
+export type CreateEthAccountMutation = { __typename?: 'Mutation', createEthAccount?: { __typename?: 'CreateEthAccountPayload', document: { __typename?: 'EthAccount', id: string, address: string, ensName?: string | null, pinsCount: number, pinLikesCount: number, pinDislikesCount: number, pins: { __typename?: 'PinConnection', edges?: Array<{ __typename?: 'PinEdge', node?: { __typename?: 'Pin', id: string } | null } | null> | null }, pinLikes: { __typename?: 'PinLikeConnection', edges?: Array<{ __typename?: 'PinLikeEdge', node?: { __typename?: 'PinLike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, pinDislikes: { __typename?: 'PinDislikeConnection', edges?: Array<{ __typename?: 'PinDislikeEdge', node?: { __typename?: 'PinDislike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, metadata: { __typename?: 'EthAccountMetadata', createdAt: string, updatedAt: string } } } | null };
 
-export type PieceQueryVariables = Exact<{
+export type PinQueryVariables = Exact<{
   id: Scalars['ID'];
-  pageSizeMax: Scalars['Int'];
 }>;
 
 
-export type PieceQuery = { __typename?: 'Query', node?: { __typename?: 'Admin' } | { __typename?: 'Category' } | { __typename?: 'CategoryDislike' } | { __typename?: 'CategoryLike' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount' } | { __typename?: 'Featured' } | { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, ownerID: any, likesCount: number, dislikesCount: number, category?: { __typename?: 'Category', id: string, name: string } | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, owner?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, likes: { __typename?: 'PieceLikeConnection', edges?: Array<{ __typename?: 'PieceLikeEdge', node?: { __typename?: 'PieceLike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, dislikes: { __typename?: 'PieceDislikeConnection', edges?: Array<{ __typename?: 'PieceDislikeEdge', node?: { __typename?: 'PieceDislike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } | null } | null> | null }, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | { __typename?: 'PieceDislike' } | { __typename?: 'PieceLike' } | { __typename?: 'Subscription' } | { __typename?: 'Website' } | null };
+export type PinQuery = { __typename?: 'Query', node?: { __typename?: 'Admin' } | { __typename?: 'Category' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount' } | { __typename?: 'Featured' } | { __typename?: 'Piece' } | { __typename?: 'Pin', id: string, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, deleted?: boolean | null, likesCount: number, dislikesCount: number, website?: { __typename?: 'Website', id: string } | null, owner?: { __typename?: 'EthAccount', id: string, address: string } | null, category?: { __typename?: 'Category', id: string, name: string } | null, piece?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } | { __typename?: 'PinDislike' } | { __typename?: 'PinLike' } | { __typename?: 'Subscription' } | { __typename?: 'Website' } | null };
 
 export type CreatePieceMutationVariables = Exact<{
   input: CreatePieceInput;
 }>;
 
 
-export type CreatePieceMutation = { __typename?: 'Mutation', createPiece?: { __typename?: 'CreatePiecePayload', document: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, ownerID: any, category?: { __typename?: 'Category', id: string, name: string } | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, owner?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } } | null };
+export type CreatePieceMutation = { __typename?: 'Mutation', createPiece?: { __typename?: 'CreatePiecePayload', document: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } } | null };
 
-export type UpdatePieceMutationVariables = Exact<{
-  input: UpdatePieceInput;
+export type UpdatePinMutationVariables = Exact<{
+  input: UpdatePinInput;
 }>;
 
 
-export type UpdatePieceMutation = { __typename?: 'Mutation', updatePiece?: { __typename?: 'UpdatePiecePayload', document: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, ownerID: any, category?: { __typename?: 'Category', id: string, name: string } | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, owner?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } } | null };
+export type UpdatePinMutation = { __typename?: 'Mutation', updatePin?: { __typename?: 'UpdatePinPayload', document: { __typename?: 'Pin', id: string, approved?: boolean | null, rejected?: boolean | null, rejectionReason?: string | null, deleted?: boolean | null, likesCount: number, dislikesCount: number, website?: { __typename?: 'Website', id: string } | null, owner?: { __typename?: 'EthAccount', id: string, address: string } | null, category?: { __typename?: 'Category', id: string, name: string } | null, piece?: { __typename?: 'Piece', id: string, CID?: string | null, name?: string | null, details?: { __typename?: 'PieceDetails', tags?: string | null, type?: string | null, media?: string | null, IMDBID?: string | null, TMDBID?: string | null, format?: string | null, poster?: string | null, bitrate?: string | null, albumTitle?: string | null, artistNames?: string | null, releaseType?: string | null, musicBrainzID?: string | null, imageThumbnailCID?: string | null, initialReleaseYear?: string | null, releaseDescription?: string | null } | null, metadata: { __typename?: 'PieceMetadata', createdAt: string, updatedAt: string } } | null } } | null };
 
-export type CreatePieceLikeMutationVariables = Exact<{
-  input: CreatePieceLikeInput;
+export type CreatePinLikeMutationVariables = Exact<{
+  input: CreatePinLikeInput;
 }>;
 
 
-export type CreatePieceLikeMutation = { __typename?: 'Mutation', createPieceLike?: { __typename?: 'CreatePieceLikePayload', document: { __typename?: 'PieceLike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } } | null };
+export type CreatePinLikeMutation = { __typename?: 'Mutation', createPinLike?: { __typename?: 'CreatePinLikePayload', document: { __typename?: 'PinLike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } } | null };
 
-export type CreateCategoryLikeMutationVariables = Exact<{
-  input: CreateCategoryLikeInput;
+export type CreatePinDislikeMutationVariables = Exact<{
+  input: CreatePinDislikeInput;
 }>;
 
 
-export type CreateCategoryLikeMutation = { __typename?: 'Mutation', createCategoryLike?: { __typename?: 'CreateCategoryLikePayload', document: { __typename?: 'CategoryLike', id: string, category?: { __typename?: 'Category', id: string, name: string } | null } } | null };
-
-export type CreatePieceDislikeMutationVariables = Exact<{
-  input: CreatePieceDislikeInput;
-}>;
-
-
-export type CreatePieceDislikeMutation = { __typename?: 'Mutation', createPieceDislike?: { __typename?: 'CreatePieceDislikePayload', document: { __typename?: 'PieceDislike', id: string, piece?: { __typename?: 'Piece', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } } | null };
-
-export type CreateCategoryDislikeMutationVariables = Exact<{
-  input: CreateCategoryDislikeInput;
-}>;
-
-
-export type CreateCategoryDislikeMutation = { __typename?: 'Mutation', createCategoryDislike?: { __typename?: 'CreateCategoryDislikePayload', document: { __typename?: 'CategoryDislike', id: string, category?: { __typename?: 'Category', id: string, name: string } | null } } | null };
+export type CreatePinDislikeMutation = { __typename?: 'Mutation', createPinDislike?: { __typename?: 'CreatePinDislikePayload', document: { __typename?: 'PinDislike', id: string, pin?: { __typename?: 'Pin', id: string } | null, owner?: { __typename?: 'EthAccount', address: string } | null } } | null };
 
 export type CreateFeaturedMutationVariables = Exact<{
   input: CreateFeaturedInput;
@@ -1777,7 +1669,7 @@ export type SubscriptionQueryVariables = Exact<{
 }>;
 
 
-export type SubscriptionQuery = { __typename?: 'Query', node?: { __typename?: 'Admin' } | { __typename?: 'Category' } | { __typename?: 'CategoryDislike' } | { __typename?: 'CategoryLike' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount' } | { __typename?: 'Featured' } | { __typename?: 'Piece' } | { __typename?: 'PieceDislike' } | { __typename?: 'PieceLike' } | { __typename?: 'Subscription', id: string, subscribedID: any, inactive?: boolean | null, subscribedWebsite?: { __typename?: 'Website', id: string, websiteName: string, description?: string | null, image?: string | null } | null, metadata: { __typename?: 'SubscriptionMetadata', createdAt: string, updatedAt: string } } | { __typename?: 'Website' } | null };
+export type SubscriptionQuery = { __typename?: 'Query', node?: { __typename?: 'Admin' } | { __typename?: 'Category' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount' } | { __typename?: 'Featured' } | { __typename?: 'Piece' } | { __typename?: 'Pin' } | { __typename?: 'PinDislike' } | { __typename?: 'PinLike' } | { __typename?: 'Subscription', id: string, subscribedID: any, inactive?: boolean | null, subscribedWebsite?: { __typename?: 'Website', id: string, websiteName: string, description?: string | null, image?: string | null } | null, metadata: { __typename?: 'SubscriptionMetadata', createdAt: string, updatedAt: string } } | { __typename?: 'Website' } | null };
 
 export type CreateSubscriptionMutationVariables = Exact<{
   input: CreateSubscriptionInput;
@@ -1798,7 +1690,7 @@ export type AdminQueryVariables = Exact<{
 }>;
 
 
-export type AdminQuery = { __typename?: 'Query', node?: { __typename?: 'Admin', id: string, adminID: any, super: boolean, inactive?: boolean | null, admin?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'AdminMetadata', createdAt: string, updatedAt: string } } | { __typename?: 'Category' } | { __typename?: 'CategoryDislike' } | { __typename?: 'CategoryLike' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount' } | { __typename?: 'Featured' } | { __typename?: 'Piece' } | { __typename?: 'PieceDislike' } | { __typename?: 'PieceLike' } | { __typename?: 'Subscription' } | { __typename?: 'Website' } | null };
+export type AdminQuery = { __typename?: 'Query', node?: { __typename?: 'Admin', id: string, adminID: any, super: boolean, inactive?: boolean | null, admin?: { __typename?: 'EthAccount', address: string, ensName?: string | null } | null, metadata: { __typename?: 'AdminMetadata', createdAt: string, updatedAt: string } } | { __typename?: 'Category' } | { __typename?: 'CeramicAccount' } | { __typename?: 'EthAccount' } | { __typename?: 'Featured' } | { __typename?: 'Piece' } | { __typename?: 'Pin' } | { __typename?: 'PinDislike' } | { __typename?: 'PinLike' } | { __typename?: 'Subscription' } | { __typename?: 'Website' } | null };
 
 export type CreateAdminMutationVariables = Exact<{
   input: CreateAdminInput;
@@ -1821,26 +1713,25 @@ export type WebsiteIndexQueryVariables = Exact<{
 
 export type WebsiteIndexQuery = { __typename?: 'Query', websiteIndex?: { __typename?: 'WebsiteConnection', edges?: Array<{ __typename?: 'WebsiteEdge', node?: { __typename?: 'Website', id: string, websiteName: string, description?: string | null, image?: string | null } | null } | null> | null } | null };
 
-export const WebsiteDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WebsiteData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Website"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"adminID"}},{"kind":"Field","name":{"kind":"Name","value":"admin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"super"}},{"kind":"Field","name":{"kind":"Name","value":"inactive"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"adminsCount"}},{"kind":"Field","name":{"kind":"Name","value":"pieces"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"ownerID"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"likes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"piecesCount"}},{"kind":"Field","name":{"kind":"Name","value":"subscriptions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"subscribedID"}},{"kind":"Field","name":{"kind":"Name","value":"subscribedWebsite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"websiteName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"pieces"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"likes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"piecesCount"}}]}},{"kind":"Field","name":{"kind":"Name","value":"inactive"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"subscriptionsCount"}},{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}},{"kind":"Field","name":{"kind":"Name","value":"pieces"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"piecesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pieceLikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pieceLikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pieceDislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pieceDislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"usersCount"}},{"kind":"Field","name":{"kind":"Name","value":"featured"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"ownerID"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"startAt"}},{"kind":"Field","name":{"kind":"Name","value":"endAt"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuredCount"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"pieces"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"likes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"ownerID"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"piecesCount"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"categoriesCount"}}]}}]} as unknown as DocumentNode<WebsiteDataFragment, unknown>;
+export const WebsiteDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WebsiteData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Website"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"adminID"}},{"kind":"Field","name":{"kind":"Name","value":"admin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"super"}},{"kind":"Field","name":{"kind":"Name","value":"inactive"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"adminsCount"}},{"kind":"Field","name":{"kind":"Name","value":"pins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"website"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"deleted"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinsCount"}},{"kind":"Field","name":{"kind":"Name","value":"subscriptions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"subscribedID"}},{"kind":"Field","name":{"kind":"Name","value":"subscribedWebsite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"websiteName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"pins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"website"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"deleted"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinsCount"}}]}},{"kind":"Field","name":{"kind":"Name","value":"inactive"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"subscriptionsCount"}},{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}},{"kind":"Field","name":{"kind":"Name","value":"pins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinsCount"}},{"kind":"Field","name":{"kind":"Name","value":"pinLikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinLikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pinDislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinDislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"usersCount"}},{"kind":"Field","name":{"kind":"Name","value":"featured"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"website"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"deleted"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}},{"kind":"Field","name":{"kind":"Name","value":"startAt"}},{"kind":"Field","name":{"kind":"Name","value":"endAt"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuredCount"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"pins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"website"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"deleted"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinsCount"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"categoriesCount"}}]}}]} as unknown as DocumentNode<WebsiteDataFragment, unknown>;
 export const WebsiteAdminFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WebsiteAdmin"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Admin"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"adminID"}},{"kind":"Field","name":{"kind":"Name","value":"admin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"super"}},{"kind":"Field","name":{"kind":"Name","value":"inactive"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<WebsiteAdminFragment, unknown>;
-export const WebsiteUserFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WebsiteUser"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EthAccount"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}},{"kind":"Field","name":{"kind":"Name","value":"pieces"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"piecesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pieceLikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pieceLikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pieceDislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pieceDislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<WebsiteUserFragment, unknown>;
-export const PieceLikeFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PieceLike"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PieceLike"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]} as unknown as DocumentNode<PieceLikeFragment, unknown>;
-export const PieceDislikeFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PieceDislike"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PieceDislike"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]} as unknown as DocumentNode<PieceDislikeFragment, unknown>;
+export const WebsiteUserFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WebsiteUser"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EthAccount"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}},{"kind":"Field","name":{"kind":"Name","value":"pins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinsCount"}},{"kind":"Field","name":{"kind":"Name","value":"pinLikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinLikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pinDislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinDislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<WebsiteUserFragment, unknown>;
+export const PinLikeFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PinLike"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PinLike"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]} as unknown as DocumentNode<PinLikeFragment, unknown>;
+export const PinDislikeFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PinDislike"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PinDislike"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]} as unknown as DocumentNode<PinDislikeFragment, unknown>;
 export const CategoryFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Category"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Category"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]} as unknown as DocumentNode<CategoryFragment, unknown>;
-export const PieceFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Piece"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Piece"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"likes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"ownerID"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<PieceFragment, unknown>;
+export const PinFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Pin"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Pin"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"website"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"deleted"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}}]} as unknown as DocumentNode<PinFragment, unknown>;
+export const PieceFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Piece"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Piece"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<PieceFragment, unknown>;
 export const WebsiteDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Website"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Website"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"websiteName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]}}]}}]} as unknown as DocumentNode<WebsiteQuery, WebsiteQueryVariables>;
-export const WebsiteDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WebsiteData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Website"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"adminID"}},{"kind":"Field","name":{"kind":"Name","value":"admin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"super"}},{"kind":"Field","name":{"kind":"Name","value":"inactive"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"adminsCount"}},{"kind":"Field","name":{"kind":"Name","value":"pieces"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"likes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"ownerID"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"piecesCount"}},{"kind":"Field","name":{"kind":"Name","value":"subscriptions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"subscribedID"}},{"kind":"Field","name":{"kind":"Name","value":"subscribedWebsite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"websiteName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"pieces"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"likes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"piecesCount"}}]}},{"kind":"Field","name":{"kind":"Name","value":"inactive"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"subscriptionsCount"}},{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}},{"kind":"Field","name":{"kind":"Name","value":"pieces"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"piecesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pieceLikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pieceLikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pieceDislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pieceDislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"usersCount"}},{"kind":"Field","name":{"kind":"Name","value":"featured"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"ownerID"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"startAt"}},{"kind":"Field","name":{"kind":"Name","value":"endAt"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuredCount"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"pieces"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"likes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"ownerID"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"piecesCount"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"categoriesCount"}}]}}]}}]}}]} as unknown as DocumentNode<WebsiteDataQuery, WebsiteDataQueryVariables>;
-export const WebsiteUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WebsiteUsers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Website"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}},{"kind":"Field","name":{"kind":"Name","value":"pieces"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"piecesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pieceLikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pieceLikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pieceDislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pieceDislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"usersCount"}}]}}]}}]}}]} as unknown as DocumentNode<WebsiteUsersQuery, WebsiteUsersQueryVariables>;
-export const WebsitePiecesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WebsitePieces"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"piecesPageSize"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Website"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pieces"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"piecesPageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"likes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"ownerID"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"piecesCount"}}]}}]}}]}}]} as unknown as DocumentNode<WebsitePiecesQuery, WebsitePiecesQueryVariables>;
-export const EthAccountDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"EthAccount"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EthAccount"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}},{"kind":"Field","name":{"kind":"Name","value":"pieces"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"piecesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pieceLikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pieceLikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pieceDislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pieceDislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}}]} as unknown as DocumentNode<EthAccountQuery, EthAccountQueryVariables>;
-export const CreateEthAccountDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateEthAccount"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateEthAccountInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createEthAccount"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"document"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreateEthAccountMutation, CreateEthAccountMutationVariables>;
-export const PieceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Piece"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Piece"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"ownerID"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"likes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMax"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}}]} as unknown as DocumentNode<PieceQuery, PieceQueryVariables>;
-export const CreatePieceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePiece"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatePieceInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPiece"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"document"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"ownerID"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreatePieceMutation, CreatePieceMutationVariables>;
-export const UpdatePieceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePiece"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdatePieceInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePiece"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"document"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"ownerID"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UpdatePieceMutation, UpdatePieceMutationVariables>;
-export const CreatePieceLikeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePieceLike"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatePieceLikeInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPieceLike"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"document"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreatePieceLikeMutation, CreatePieceLikeMutationVariables>;
-export const CreateCategoryLikeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateCategoryLike"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateCategoryLikeInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createCategoryLike"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"document"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreateCategoryLikeMutation, CreateCategoryLikeMutationVariables>;
-export const CreatePieceDislikeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePieceDislike"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatePieceDislikeInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPieceDislike"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"document"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreatePieceDislikeMutation, CreatePieceDislikeMutationVariables>;
-export const CreateCategoryDislikeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateCategoryDislike"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateCategoryDislikeInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createCategoryDislike"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"document"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreateCategoryDislikeMutation, CreateCategoryDislikeMutationVariables>;
+export const WebsiteDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WebsiteData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Website"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"admins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"adminID"}},{"kind":"Field","name":{"kind":"Name","value":"admin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"super"}},{"kind":"Field","name":{"kind":"Name","value":"inactive"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"adminsCount"}},{"kind":"Field","name":{"kind":"Name","value":"pins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"website"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"deleted"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinsCount"}},{"kind":"Field","name":{"kind":"Name","value":"subscriptions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"subscribedID"}},{"kind":"Field","name":{"kind":"Name","value":"subscribedWebsite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"websiteName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"pins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"website"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"deleted"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinsCount"}}]}},{"kind":"Field","name":{"kind":"Name","value":"inactive"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"subscriptionsCount"}},{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}},{"kind":"Field","name":{"kind":"Name","value":"pins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinsCount"}},{"kind":"Field","name":{"kind":"Name","value":"pinLikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinLikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pinDislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinDislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"usersCount"}},{"kind":"Field","name":{"kind":"Name","value":"featured"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"website"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"deleted"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}},{"kind":"Field","name":{"kind":"Name","value":"startAt"}},{"kind":"Field","name":{"kind":"Name","value":"endAt"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuredCount"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"pins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"website"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"deleted"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinsCount"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"categoriesCount"}}]}}]}}]}}]} as unknown as DocumentNode<WebsiteDataQuery, WebsiteDataQueryVariables>;
+export const WebsiteUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WebsiteUsers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Website"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}},{"kind":"Field","name":{"kind":"Name","value":"pins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinsCount"}},{"kind":"Field","name":{"kind":"Name","value":"pinLikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinLikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pinDislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinDislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"usersCount"}}]}}]}}]}}]} as unknown as DocumentNode<WebsiteUsersQuery, WebsiteUsersQueryVariables>;
+export const WebsitePiecesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WebsitePieces"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Website"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"website"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"deleted"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinsCount"}}]}}]}}]}}]} as unknown as DocumentNode<WebsitePiecesQuery, WebsitePiecesQueryVariables>;
+export const EthAccountDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"EthAccount"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EthAccount"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}},{"kind":"Field","name":{"kind":"Name","value":"pins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinsCount"}},{"kind":"Field","name":{"kind":"Name","value":"pinLikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinLikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pinDislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinDislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}}]} as unknown as DocumentNode<EthAccountQuery, EthAccountQueryVariables>;
+export const CreateEthAccountDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateEthAccount"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateEthAccountInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createEthAccount"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"document"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"ensName"}},{"kind":"Field","name":{"kind":"Name","value":"pins"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinsCount"}},{"kind":"Field","name":{"kind":"Name","value":"pinLikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinLikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"pinDislikes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSizeMedium"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pinDislikesCount"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreateEthAccountMutation, CreateEthAccountMutationVariables>;
+export const PinDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Pin"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Pin"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"website"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"deleted"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}}]}}]}}]} as unknown as DocumentNode<PinQuery, PinQueryVariables>;
+export const CreatePieceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePiece"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatePieceInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPiece"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"document"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreatePieceMutation, CreatePieceMutationVariables>;
+export const UpdatePinDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePin"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdatePinInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePin"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"document"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"website"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"piece"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"CID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"media"}},{"kind":"Field","name":{"kind":"Name","value":"IMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"TMDBID"}},{"kind":"Field","name":{"kind":"Name","value":"format"}},{"kind":"Field","name":{"kind":"Name","value":"poster"}},{"kind":"Field","name":{"kind":"Name","value":"bitrate"}},{"kind":"Field","name":{"kind":"Name","value":"albumTitle"}},{"kind":"Field","name":{"kind":"Name","value":"artistNames"}},{"kind":"Field","name":{"kind":"Name","value":"releaseType"}},{"kind":"Field","name":{"kind":"Name","value":"musicBrainzID"}},{"kind":"Field","name":{"kind":"Name","value":"imageThumbnailCID"}},{"kind":"Field","name":{"kind":"Name","value":"initialReleaseYear"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDescription"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}},{"kind":"Field","name":{"kind":"Name","value":"rejectionReason"}},{"kind":"Field","name":{"kind":"Name","value":"deleted"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"dislikesCount"}}]}}]}}]}}]} as unknown as DocumentNode<UpdatePinMutation, UpdatePinMutationVariables>;
+export const CreatePinLikeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePinLike"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatePinLikeInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPinLike"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"document"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreatePinLikeMutation, CreatePinLikeMutationVariables>;
+export const CreatePinDislikeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePinDislike"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatePinDislikeInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPinDislike"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"document"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreatePinDislikeMutation, CreatePinDislikeMutationVariables>;
 export const CreateFeaturedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateFeatured"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateFeaturedInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createFeatured"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"document"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreateFeaturedMutation, CreateFeaturedMutationVariables>;
 export const SubscriptionIndexDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SubscriptionIndex"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subscriptionIndex"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageSize"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"subscribedID"}},{"kind":"Field","name":{"kind":"Name","value":"subscribedWebsite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"websiteName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}},{"kind":"Field","name":{"kind":"Name","value":"inactive"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<SubscriptionIndexQuery, SubscriptionIndexQueryVariables>;
 export const SubscriptionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Subscription"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"piecesPageSize"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Subscription"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"subscribedID"}},{"kind":"Field","name":{"kind":"Name","value":"subscribedWebsite"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"websiteName"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}},{"kind":"Field","name":{"kind":"Name","value":"inactive"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]}}]}}]} as unknown as DocumentNode<SubscriptionQuery, SubscriptionQueryVariables>;
