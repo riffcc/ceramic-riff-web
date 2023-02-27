@@ -66,7 +66,7 @@ export default function NewFeatured() {
         input: {
           content: {
             websiteID,
-            pieceID: pinID,
+            pinID: pinID,
             startAt: Date.parse(startAt).toString(),
             endAt: Date.parse(endAt).toString()
           }
