@@ -58,8 +58,6 @@ export default function NewFeatured() {
     return getDate('number') < Date.parse(startAt) && Date.parse(startAt) < Date.parse(endAt)
   }, [startAt, endAt])
 
-  console.log(startAtIsValid)
-
   const handleSubmit = useCallback(async () => {
     if (pinID === '' || !isPin) throw new Error("Invalid Pin ID");
     if (!startAtIsValid) throw new Error("StartAt invalid");

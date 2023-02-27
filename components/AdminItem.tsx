@@ -26,7 +26,7 @@ export default function AdminItem({ admin }: Props) {
   const handleDeleteAdmin = async () => {
     await updateAdmin()
   }
-  console.log(admin)
+  
   return (
     <li>
       <div className="flex items-center justify-between gap-1">
