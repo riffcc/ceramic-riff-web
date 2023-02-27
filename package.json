@@ -9,10 +9,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@3id/connect": "^0.4.1",
+    "@3id/connect-display": "^0.4.1",
     "@apollo/client": "^3.7.3",
-    "@ceramicnetwork/http-client": "^2.12.1",
-    "@composedb/devtools": "^0.3.1",
-    "@composedb/devtools-node": "^0.3.1",
+    "@ceramicnetwork/3id-did-resolver": "^2.13.0",
+    "@ceramicnetwork/http-client": "2.17.0",
+    "@composedb/devtools": "^0.4.0",
+    "@composedb/devtools-node": "^0.4.0",
     "@headlessui-float/react": "^0.10.1",
     "@headlessui/react": "^1.7.7",
     "@tanstack/react-table": "^8.7.6",
@@ -32,11 +35,12 @@
     "react-datetime": "^3.2.0",
     "react-dom": "^18.0.2",
     "react-icons": "^4.7.1",
+    "react-query": "^3.39.3",
     "uint8arrays": "^4.0.2",
     "wagmi": "^0.10.10"
   },
   "devDependencies": {
-    "@composedb/types": "^0.3.1",
+    "@composedb/types": "^0.4.0",
     "@graphql-codegen/cli": "^2.16.2",
     "@graphql-codegen/client-preset": "^1.2.4",
     "@tailwindcss/forms": "^0.5.3",
