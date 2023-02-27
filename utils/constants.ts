@@ -7,8 +7,7 @@ export const pageSizeLarge = 400
 export const pageSizeMax = 1000
 
 export const websiteDataQueryParams = {
-  pageSizeMedium,
-  pageSizeMax
+  pageSizeMedium
 }
 
 export const WebsiteData = gql`
@@ -33,225 +32,25 @@ export const WebsiteData = gql`
       }
     }
     adminsCount
-    pieces(first: $pageSizeMedium) {
+    pins(first: $pageSizeMedium) {
       edges {
         node {
           id
-          CID
-          name
+          website {
+            id
+          }
+          owner {
+            id
+            address
+          }
           category {
             id
             name
           }
-          details {
-            tags
-            type
-            media
-            IMDBID
-            TMDBID
-            format
-            poster
-            bitrate
-            albumTitle
-            artistNames
-            releaseType
-            musicBrainzID
-            imageThumbnailCID
-            initialReleaseYear
-            releaseDescription
-          }
-          approved
-          rejected
-          rejectionReason
-          ownerID
-          owner {
-            address
-            ensName
-          }
-          likes(first: $pageSizeMax) {
-            edges {
-              node {
-                id
-                owner {
-                  address
-                }
-                piece {
-                  id
-                }
-              }
-            }
-          }
-          likesCount
-          dislikes(first: $pageSizeMax) {
-            edges {
-              node {
-                id
-                owner {
-                  address
-                }
-                piece {
-                  id
-                }
-              }
-            }
-          }
-          dislikesCount
-          metadata {
-            createdAt
-            updatedAt
-          }
-        }
-      }
-    }
-    piecesCount
-    subscriptions(first: $pageSizeMedium) {
-      edges {
-        node {
-          id
-          subscribedID
-          subscribedWebsite {
-            id
-            websiteName
-            description
-            image
-            pieces(first: $pageSizeMedium) {
-              edges {
-                node {
-                  id
-                  CID
-                  name
-                  category {
-                    id
-                    name
-                  }
-                  details {
-                    tags
-                    type
-                    media
-                    IMDBID
-                    TMDBID
-                    format
-                    poster
-                    bitrate
-                    albumTitle
-                    artistNames
-                    releaseType
-                    musicBrainzID
-                    imageThumbnailCID
-                    initialReleaseYear
-                    releaseDescription
-                  }
-                  approved
-                  rejected
-                  rejectionReason
-                  likes(first: $pageSizeMax) {
-                    edges {
-                      node {
-                        id
-                        owner {
-                          address
-                        }
-                        piece {
-                          id
-                        }
-                      }
-                    }
-                  }
-                  likesCount
-                  dislikes(first: $pageSizeMax) {
-                    edges {
-                      node {
-                        id
-                        owner {
-                          address
-                        }
-                        piece {
-                          id
-                        }
-                      }
-                    }
-                  }
-                  dislikesCount
-                  metadata {
-                    createdAt
-                    updatedAt
-                  }
-                }
-              }
-            }
-            piecesCount
-          }
-          inactive
-          metadata {
-            createdAt
-            updatedAt
-          }
-        }
-      }
-    }
-    subscriptionsCount
-    users(first: $pageSizeMedium) {
-      edges {
-        node {
-          id
-          address
-          ensName
-          pieces(first: $pageSizeMedium) {
-            edges {
-              node {
-                id
-              }
-            }
-          }
-          piecesCount
-          pieceLikes(first: $pageSizeMedium) {
-            edges {
-              node {
-                id
-                piece {
-                  id
-                }
-                owner {
-                  address
-                }
-              }
-            }
-          }
-          pieceLikesCount
-          pieceDislikes(first: $pageSizeMedium) {
-            edges {
-              node {
-                id
-                piece {
-                  id
-                }
-                owner {
-                  address
-                }
-              }
-            }
-          }
-          pieceDislikesCount
-          metadata {
-            createdAt
-            updatedAt
-          }
-        }
-      }
-    }
-    usersCount
-    featured(first: $pageSizeMedium) {
-      edges {
-        node {
-          id
           piece {
             id
             CID
             name
-            category {
-              id
-              name
-            }
             details {
               tags
               type
@@ -269,18 +68,191 @@ export const WebsiteData = gql`
               initialReleaseYear
               releaseDescription
             }
-            approved
-            rejected
-            rejectionReason
-            ownerID
-            owner {
-              address
-              ensName
-            }
             metadata {
               createdAt
               updatedAt
             }
+          }
+          approved
+          rejected
+          rejectionReason
+          deleted
+          likesCount
+          dislikesCount
+        }
+      }
+    }
+    pinsCount
+    subscriptions(first: $pageSizeMedium) {
+      edges {
+        node {
+          id
+          subscribedID
+          subscribedWebsite {
+            id
+            websiteName
+            description
+            image
+            pins(first: $pageSizeMedium) {
+              edges {
+                node {
+                  id
+                  website {
+                    id
+                  }
+                  owner {
+                    id
+                    address
+                  }
+                  category {
+                    id
+                    name
+                  }
+                  piece {
+                    id
+                    CID
+                    name
+                    details {
+                      tags
+                      type
+                      media
+                      IMDBID
+                      TMDBID
+                      format
+                      poster
+                      bitrate
+                      albumTitle
+                      artistNames
+                      releaseType
+                      musicBrainzID
+                      imageThumbnailCID
+                      initialReleaseYear
+                      releaseDescription
+                    }
+                    metadata {
+                      createdAt
+                      updatedAt
+                    }
+                  }
+                  approved
+                  rejected
+                  rejectionReason
+                  deleted
+                  likesCount
+                  dislikesCount
+                }
+              }
+            }
+            pinsCount
+          }
+          inactive
+          metadata {
+            createdAt
+            updatedAt
+          }
+        }
+      }
+    }
+    subscriptionsCount
+    users(first: $pageSizeMedium) {
+      edges {
+        node {
+          id
+          address
+          ensName
+          pins(first: $pageSizeMedium) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+          pinsCount
+          pinLikes(first: $pageSizeMedium) {
+            edges {
+              node {
+                id
+                pin {
+                  id
+                }
+                owner {
+                  address
+                }
+              }
+            }
+          }
+          pinLikesCount
+          pinDislikes(first: $pageSizeMedium) {
+            edges {
+              node {
+                id
+                pin {
+                  id
+                }
+                owner {
+                  address
+                }
+              }
+            }
+          }
+          pinDislikesCount
+          metadata {
+            createdAt
+            updatedAt
+          }
+        }
+      }
+    }
+    usersCount
+    featured(first: $pageSizeMedium) {
+      edges {
+        node {
+          id
+          pin {
+            id
+            website {
+              id
+            }
+            owner {
+              id
+              address
+            }
+            category {
+              id
+              name
+            }
+            piece {
+              id
+              CID
+              name
+              details {
+                tags
+                type
+                media
+                IMDBID
+                TMDBID
+                format
+                poster
+                bitrate
+                albumTitle
+                artistNames
+                releaseType
+                musicBrainzID
+                imageThumbnailCID
+                initialReleaseYear
+                releaseDescription
+              }
+              metadata {
+                createdAt
+                updatedAt
+              }
+            }
+            approved
+            rejected
+            rejectionReason
+            deleted
+            likesCount
+            dislikesCount
           }
           startAt
           endAt
@@ -293,77 +265,57 @@ export const WebsiteData = gql`
         node {
           id
           name
-          pieces(first: $pageSizeMedium) {
+          pins(first: $pageSizeMedium) {
             edges {
               node {
                 id
-                CID
-                name
+                website {
+                  id
+                }
+                owner {
+                  id
+                  address
+                }
                 category {
                   id
                   name
                 }
-                details {
-                  tags
-                  type
-                  media
-                  IMDBID
-                  TMDBID
-                  format
-                  poster
-                  bitrate
-                  albumTitle
-                  artistNames
-                  releaseType
-                  musicBrainzID
-                  imageThumbnailCID
-                  initialReleaseYear
-                  releaseDescription
+                piece {
+                  id
+                  CID
+                  name
+                  details {
+                    tags
+                    type
+                    media
+                    IMDBID
+                    TMDBID
+                    format
+                    poster
+                    bitrate
+                    albumTitle
+                    artistNames
+                    releaseType
+                    musicBrainzID
+                    imageThumbnailCID
+                    initialReleaseYear
+                    releaseDescription
+                  }
+                  metadata {
+                    createdAt
+                    updatedAt
+                  }
                 }
                 approved
                 rejected
                 rejectionReason
-                likes(first: $pageSizeMax) {
-                  edges {
-                    node {
-                      id
-                      owner {
-                        address
-                      }
-                      piece {
-                        id
-                      }
-                    }
-                  }
-                }
+                deleted
                 likesCount
-                dislikes(first: $pageSizeMax) {
-                  edges {
-                    node {
-                      id
-                      owner {
-                        address
-                      }
-                      piece {
-                        id
-                      }
-                    }
-                  }
-                }
                 dislikesCount
-                ownerID
-                owner {
-                  address
-                  ensName
-                }
-                metadata {
-                  createdAt
-                  updatedAt
-                }
               }
             }
           }
-          piecesCount
+          pinsCount
           likesCount
           dislikesCount
         }
@@ -395,19 +347,19 @@ export const UserFragment = gql`
     id
     address
     ensName
-    pieces(first: $pageSizeMedium) {
+    pins(first: $pageSizeMedium) {
       edges {
         node {
           id
         }
       }
     }
-    piecesCount
-    pieceLikes(first: $pageSizeMedium) {
+    pinsCount
+    pinLikes(first: $pageSizeMedium) {
       edges {
         node {
           id
-          piece {
+          pin {
             id
           }
           owner {
@@ -416,12 +368,12 @@ export const UserFragment = gql`
         }
       }
     }
-    pieceLikesCount
-    pieceDislikes(first: $pageSizeMedium) {
+    pinLikesCount
+    pinDislikes(first: $pageSizeMedium) {
       edges {
         node {
           id
-          piece {
+          pin {
             id
           }
           owner {
@@ -430,17 +382,18 @@ export const UserFragment = gql`
         }
       }
     }
-    pieceDislikesCount
+    pinDislikesCount
     metadata {
       createdAt
       updatedAt
     }
   }
 `
-export const PieceLikeFragment = gql`
-  fragment PieceLike on PieceLike {
+
+export const PinLikeFragment = gql`
+  fragment PinLike on PinLike {
     id
-    piece {
+    pin {
       id
     }
     owner {
@@ -448,10 +401,11 @@ export const PieceLikeFragment = gql`
     }
   }
 `
-export const PieceDislikeFragment = gql`
-  fragment PieceDislike on PieceDislike {
+
+export const PinDislikeFragment = gql`
+  fragment PinDislike on PinDislike {
     id
-    piece {
+    pin {
       id
     }
     owner {
@@ -459,10 +413,60 @@ export const PieceDislikeFragment = gql`
     }
   }
 `
+
 export const CategoryFragment = gql`
   fragment Category on Category {
     id
     name
+  }
+`
+
+export const PinFragment = gql`
+  fragment Pin on Pin {
+    id
+    website {
+      id
+    }
+    owner {
+      id
+      address
+    }
+    category {
+      id
+      name
+    }
+    piece {
+      id
+      CID
+      name
+      details {
+        tags
+        type
+        media
+        IMDBID
+        TMDBID
+        format
+        poster
+        bitrate
+        albumTitle
+        artistNames
+        releaseType
+        musicBrainzID
+        imageThumbnailCID
+        initialReleaseYear
+        releaseDescription
+      }
+      metadata {
+        createdAt
+        updatedAt
+      }
+    }
+    approved
+    rejected
+    rejectionReason
+    deleted
+    likesCount
+    dislikesCount
   }
 `
 export const PieceFragment = gql`
@@ -470,10 +474,6 @@ export const PieceFragment = gql`
     id
     CID
     name
-    category {
-      id
-      name
-    }
     details {
       tags
       type
@@ -490,42 +490,6 @@ export const PieceFragment = gql`
       imageThumbnailCID
       initialReleaseYear
       releaseDescription
-    }
-    approved
-    rejected
-    rejectionReason
-    likes(first: $pageSizeMax) {
-      edges {
-        node {
-          id
-          owner {
-            address
-          }
-          piece {
-            id
-          }
-        }
-      }
-    }
-    likesCount
-    dislikes(first: $pageSizeMax) {
-      edges {
-        node {
-          id
-          owner {
-            address
-          }
-          piece {
-            id
-          }
-        }
-      }
-    }
-    dislikesCount
-    ownerID
-    owner {
-      address
-      ensName
     }
     metadata {
       createdAt
@@ -547,7 +511,7 @@ export const GET_WEBSITE = graphql(`
 `)
 
 export const GET_WEBSITE_DATA = graphql(`
-  query WebsiteData($id: ID!, $pageSizeMedium: Int!, $pageSizeMax: Int!) {
+  query WebsiteData($id: ID!, $pageSizeMedium: Int!) {
     node(id: $id) {
       ... on Website {
         id
@@ -570,225 +534,25 @@ export const GET_WEBSITE_DATA = graphql(`
           }
         }
         adminsCount
-        pieces(first: $pageSizeMedium) {
+        pins(first: $pageSizeMedium) {
           edges {
             node {
               id
-              CID
-              name
+              website {
+                id
+              }
+              owner {
+                id
+                address
+              }
               category {
                 id
                 name
               }
-              details {
-                tags
-                type
-                media
-                IMDBID
-                TMDBID
-                format
-                poster
-                bitrate
-                albumTitle
-                artistNames
-                releaseType
-                musicBrainzID
-                imageThumbnailCID
-                initialReleaseYear
-                releaseDescription
-              }
-              approved
-              rejected
-              rejectionReason
-              likes(first: $pageSizeMax) {
-                edges {
-                  node {
-                    id
-                    owner {
-                      address
-                    }
-                    piece {
-                      id
-                    }
-                  }
-                }
-              }
-              likesCount
-              dislikes(first: $pageSizeMax) {
-                edges {
-                  node {
-                    id
-                    owner {
-                      address
-                    }
-                    piece {
-                      id
-                    }
-                  }
-                }
-              }
-              dislikesCount
-              ownerID
-              owner {
-                address
-                ensName
-              }
-              metadata {
-                createdAt
-                updatedAt
-              }
-            }
-          }
-        }
-        piecesCount
-        subscriptions(first: $pageSizeMedium) {
-          edges {
-            node {
-              id
-              subscribedID
-              subscribedWebsite {
-                id
-                websiteName
-                description
-                image
-                pieces(first: $pageSizeMedium) {
-                  edges {
-                    node {
-                      id
-                      CID
-                      name
-                      category {
-                        id
-                        name
-                      }
-                      details {
-                        tags
-                        type
-                        media
-                        IMDBID
-                        TMDBID
-                        format
-                        poster
-                        bitrate
-                        albumTitle
-                        artistNames
-                        releaseType
-                        musicBrainzID
-                        imageThumbnailCID
-                        initialReleaseYear
-                        releaseDescription
-                      }
-                      approved
-                      rejected
-                      rejectionReason
-                      likes(first: $pageSizeMax) {
-                        edges {
-                          node {
-                            id
-                            owner {
-                              address
-                            }
-                            piece {
-                              id
-                            }
-                          }
-                        }
-                      }
-                      likesCount
-                      dislikes(first: $pageSizeMax) {
-                        edges {
-                          node {
-                            id
-                            owner {
-                              address
-                            }
-                            piece {
-                              id
-                            }
-                          }
-                        }
-                      }
-                      dislikesCount
-                      metadata {
-                        createdAt
-                        updatedAt
-                      }
-                    }
-                  }
-                }
-                piecesCount
-              }
-              inactive
-              metadata {
-                createdAt
-                updatedAt
-              }
-            }
-          }
-        }
-        subscriptionsCount
-        users(first: $pageSizeMedium) {
-          edges {
-            node {
-              id
-              address
-              ensName
-              pieces(first: $pageSizeMedium) {
-                edges {
-                  node {
-                    id
-                  }
-                }
-              }
-              piecesCount
-              pieceLikes(first: $pageSizeMedium) {
-                edges {
-                  node {
-                    id
-                    piece {
-                      id
-                    }
-                    owner {
-                      address
-                    }
-                  }
-                }
-              }
-              pieceLikesCount
-              pieceDislikes(first: $pageSizeMedium) {
-                edges {
-                  node {
-                    id
-                    piece {
-                      id
-                    }
-                    owner {
-                      address
-                    }
-                  }
-                }
-              }
-              pieceDislikesCount
-              metadata {
-                createdAt
-                updatedAt
-              }
-            }
-          }
-        }
-        usersCount
-        featured(first: $pageSizeMedium) {
-          edges {
-            node {
-              id
               piece {
                 id
                 CID
                 name
-                category {
-                  id
-                  name
-                }
                 details {
                   tags
                   type
@@ -806,18 +570,191 @@ export const GET_WEBSITE_DATA = graphql(`
                   initialReleaseYear
                   releaseDescription
                 }
-                approved
-                rejected
-                rejectionReason
-                ownerID
-                owner {
-                  address
-                  ensName
-                }
                 metadata {
                   createdAt
                   updatedAt
                 }
+              }
+              approved
+              rejected
+              rejectionReason
+              deleted
+              likesCount
+              dislikesCount
+            }
+          }
+        }
+        pinsCount
+        subscriptions(first: $pageSizeMedium) {
+          edges {
+            node {
+              id
+              subscribedID
+              subscribedWebsite {
+                id
+                websiteName
+                description
+                image
+                pins(first: $pageSizeMedium) {
+                  edges {
+                    node {
+                      id
+                      website {
+                        id
+                      }
+                      owner {
+                        id
+                        address
+                      }
+                      category {
+                        id
+                        name
+                      }
+                      piece {
+                        id
+                        CID
+                        name
+                        details {
+                          tags
+                          type
+                          media
+                          IMDBID
+                          TMDBID
+                          format
+                          poster
+                          bitrate
+                          albumTitle
+                          artistNames
+                          releaseType
+                          musicBrainzID
+                          imageThumbnailCID
+                          initialReleaseYear
+                          releaseDescription
+                        }
+                        metadata {
+                          createdAt
+                          updatedAt
+                        }
+                      }
+                      approved
+                      rejected
+                      rejectionReason
+                      deleted
+                      likesCount
+                      dislikesCount
+                    }
+                  }
+                }
+                pinsCount
+              }
+              inactive
+              metadata {
+                createdAt
+                updatedAt
+              }
+            }
+          }
+        }
+        subscriptionsCount
+        users(first: $pageSizeMedium) {
+          edges {
+            node {
+              id
+              address
+              ensName
+              pins(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                  }
+                }
+              }
+              pinsCount
+              pinLikes(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                    pin {
+                      id
+                    }
+                    owner {
+                      address
+                    }
+                  }
+                }
+              }
+              pinLikesCount
+              pinDislikes(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                    pin {
+                      id
+                    }
+                    owner {
+                      address
+                    }
+                  }
+                }
+              }
+              pinDislikesCount
+              metadata {
+                createdAt
+                updatedAt
+              }
+            }
+          }
+        }
+        usersCount
+        featured(first: $pageSizeMedium) {
+          edges {
+            node {
+              id
+              pin {
+                id
+                website {
+                  id
+                }
+                owner {
+                  id
+                  address
+                }
+                category {
+                  id
+                  name
+                }
+                piece {
+                  id
+                  CID
+                  name
+                  details {
+                    tags
+                    type
+                    media
+                    IMDBID
+                    TMDBID
+                    format
+                    poster
+                    bitrate
+                    albumTitle
+                    artistNames
+                    releaseType
+                    musicBrainzID
+                    imageThumbnailCID
+                    initialReleaseYear
+                    releaseDescription
+                  }
+                  metadata {
+                    createdAt
+                    updatedAt
+                  }
+                }
+                approved
+                rejected
+                rejectionReason
+                deleted
+                likesCount
+                dislikesCount
               }
               startAt
               endAt
@@ -830,77 +767,57 @@ export const GET_WEBSITE_DATA = graphql(`
             node {
               id
               name
-              pieces(first: $pageSizeMedium) {
+              pins(first: $pageSizeMedium) {
                 edges {
                   node {
                     id
-                    CID
-                    name
+                    website {
+                      id
+                    }
+                    owner {
+                      id
+                      address
+                    }
                     category {
                       id
                       name
                     }
-                    details {
-                      tags
-                      type
-                      media
-                      IMDBID
-                      TMDBID
-                      format
-                      poster
-                      bitrate
-                      albumTitle
-                      artistNames
-                      releaseType
-                      musicBrainzID
-                      imageThumbnailCID
-                      initialReleaseYear
-                      releaseDescription
+                    piece {
+                      id
+                      CID
+                      name
+                      details {
+                        tags
+                        type
+                        media
+                        IMDBID
+                        TMDBID
+                        format
+                        poster
+                        bitrate
+                        albumTitle
+                        artistNames
+                        releaseType
+                        musicBrainzID
+                        imageThumbnailCID
+                        initialReleaseYear
+                        releaseDescription
+                      }
+                      metadata {
+                        createdAt
+                        updatedAt
+                      }
                     }
                     approved
                     rejected
                     rejectionReason
-                    likes(first: $pageSizeMax) {
-                      edges {
-                        node {
-                          id
-                          owner {
-                            address
-                          }
-                          piece {
-                            id
-                          }
-                        }
-                      }
-                    }
+                    deleted
                     likesCount
-                    dislikes(first: $pageSizeMax) {
-                      edges {
-                        node {
-                          id
-                          owner {
-                            address
-                          }
-                          piece {
-                            id
-                          }
-                        }
-                      }
-                    }
                     dislikesCount
-                    ownerID
-                    owner {
-                      address
-                      ensName
-                    }
-                    metadata {
-                      createdAt
-                      updatedAt
-                    }
                   }
                 }
               }
-              piecesCount
+              pinsCount
               likesCount
               dislikesCount
             }
@@ -923,19 +840,19 @@ export const GET_WEBSITE_USERS = graphql(`
               id
               address
               ensName
-              pieces(first: $pageSizeMedium) {
+              pins(first: $pageSizeMedium) {
                 edges {
                   node {
                     id
                   }
                 }
               }
-              piecesCount
-              pieceLikes(first: $pageSizeMedium) {
+              pinsCount
+              pinLikes(first: $pageSizeMedium) {
                 edges {
                   node {
                     id
-                    piece {
+                    pin {
                       id
                     }
                     owner {
@@ -944,12 +861,12 @@ export const GET_WEBSITE_USERS = graphql(`
                   }
                 }
               }
-              pieceLikesCount
-              pieceDislikes(first: $pageSizeMedium) {
+              pinLikesCount
+              pinDislikes(first: $pageSizeMedium) {
                 edges {
                   node {
                     id
-                    piece {
+                    pin {
                       id
                     }
                     owner {
@@ -958,7 +875,7 @@ export const GET_WEBSITE_USERS = graphql(`
                   }
                 }
               }
-              pieceDislikesCount
+              pinDislikesCount
               metadata {
                 createdAt
                 updatedAt
@@ -972,82 +889,62 @@ export const GET_WEBSITE_USERS = graphql(`
   }
 `)
 
-export const GET_WEBSITE_PIECES = graphql(`
-  query WebsitePieces($id: ID!, $piecesPageSize: Int!, $pageSizeMax: Int!) {
+export const GET_WEBSITE_PINS = graphql(`
+  query WebsitePieces($id: ID!, $pageSizeMedium: Int!) {
     node(id: $id) {
       ... on Website {
         id
-        pieces(first: $piecesPageSize) {
+        pins(first: $pageSizeMedium) {
           edges {
             node {
               id
-              CID
-              name
+              website {
+                id
+              }
+              owner {
+                id
+                address
+              }
               category {
                 id
                 name
               }
-              details {
-                tags
-                type
-                media
-                IMDBID
-                TMDBID
-                format
-                poster
-                bitrate
-                albumTitle
-                artistNames
-                releaseType
-                musicBrainzID
-                imageThumbnailCID
-                initialReleaseYear
-                releaseDescription
+              piece {
+                id
+                CID
+                name
+                details {
+                  tags
+                  type
+                  media
+                  IMDBID
+                  TMDBID
+                  format
+                  poster
+                  bitrate
+                  albumTitle
+                  artistNames
+                  releaseType
+                  musicBrainzID
+                  imageThumbnailCID
+                  initialReleaseYear
+                  releaseDescription
+                }
+                metadata {
+                  createdAt
+                  updatedAt
+                }
               }
               approved
               rejected
               rejectionReason
-              likes(first: $pageSizeMax) {
-                edges {
-                  node {
-                    id
-                    owner {
-                      address
-                    }
-                    piece {
-                      id
-                    }
-                  }
-                }
-              }
+              deleted
               likesCount
-              dislikes(first: $pageSizeMax) {
-                edges {
-                  node {
-                    id
-                    owner {
-                      address
-                    }
-                    piece {
-                      id
-                    }
-                  }
-                }
-              }
               dislikesCount
-              ownerID
-              owner {
-                address
-                ensName
-              }
-              metadata {
-                createdAt
-                updatedAt
-              }
             }
           }
         }
-        piecesCount
+        pinsCount
       }
     }
   }
@@ -1060,19 +957,19 @@ export const GET_ETH_ACCOUNT = graphql(`
         id
         address
         ensName
-        pieces(first: $pageSizeMedium) {
+        pins(first: $pageSizeMedium) {
           edges {
             node {
               id
             }
           }
         }
-        piecesCount
-        pieceLikes(first: $pageSizeMedium) {
+        pinsCount
+        pinLikes(first: $pageSizeMedium) {
           edges {
             node {
               id
-              piece {
+              pin {
                 id
               }
               owner {
@@ -1081,12 +978,12 @@ export const GET_ETH_ACCOUNT = graphql(`
             }
           }
         }
-        pieceLikesCount
-        pieceDislikes(first: $pageSizeMedium) {
+        pinLikesCount
+        pinDislikes(first: $pageSizeMedium) {
           edges {
             node {
               id
-              piece {
+              pin {
                 id
               }
               owner {
@@ -1095,7 +992,7 @@ export const GET_ETH_ACCOUNT = graphql(`
             }
           }
         }
-        pieceDislikesCount
+        pinDislikesCount
         metadata {
           createdAt
           updatedAt
@@ -1106,12 +1003,48 @@ export const GET_ETH_ACCOUNT = graphql(`
 `)
 
 export const CREATE_ETH_ACCOUNT = graphql(`
-  mutation CreateEthAccount($input: CreateEthAccountInput!) {
+  mutation CreateEthAccount($input: CreateEthAccountInput!, $pageSizeMedium: Int!) {
     createEthAccount(input: $input) {
       document {
         id
         address
         ensName
+        pins(first: $pageSizeMedium) {
+          edges {
+            node {
+              id
+            }
+          }
+        }
+        pinsCount
+        pinLikes(first: $pageSizeMedium) {
+          edges {
+            node {
+              id
+              pin {
+                id
+              }
+              owner {
+                address
+              }
+            }
+          }
+        }
+        pinLikesCount
+        pinDislikes(first: $pageSizeMedium) {
+          edges {
+            node {
+              id
+              pin {
+                id
+              }
+              owner {
+                address
+              }
+            }
+          }
+        }
+        pinDislikesCount
         metadata {
           createdAt
           updatedAt
@@ -1121,74 +1054,54 @@ export const CREATE_ETH_ACCOUNT = graphql(`
   }
 `)
 
-export const GET_PIECE = graphql(`
-  query Piece($id: ID!, $pageSizeMax: Int!) {
+export const GET_PIN = graphql(`
+  query Pin($id: ID!) {
     node(id: $id) {
-      ... on Piece {
+      ... on Pin {
         id
-        CID
-        name
+        website {
+          id
+        }
+        owner {
+          id
+          address
+        }
         category {
           id
           name
         }
-        details {
-          tags
-          type
-          media
-          IMDBID
-          TMDBID
-          format
-          poster
-          bitrate
-          albumTitle
-          artistNames
-          releaseType
-          musicBrainzID
-          imageThumbnailCID
-          initialReleaseYear
-          releaseDescription
+        piece {
+          id
+          CID
+          name
+          details {
+            tags
+            type
+            media
+            IMDBID
+            TMDBID
+            format
+            poster
+            bitrate
+            albumTitle
+            artistNames
+            releaseType
+            musicBrainzID
+            imageThumbnailCID
+            initialReleaseYear
+            releaseDescription
+          }
+          metadata {
+            createdAt
+            updatedAt
+          }
         }
         approved
         rejected
         rejectionReason
-        ownerID
-        owner {
-          address
-          ensName
-        }
-        likes(first: $pageSizeMax) {
-          edges {
-            node {
-              id
-              piece {
-                id
-              }
-              owner {
-                address
-              }
-            }
-          }
-        }
+        deleted
         likesCount
-        dislikes(first: $pageSizeMax) {
-          edges {
-            node {
-              id
-              piece {
-                id
-              }
-              owner {
-                address
-              }
-            }
-          }
-        }
         dislikesCount
-        metadata {
-          createdAt
-          updatedAt
-        }
       }
     }
   }
@@ -1201,10 +1114,6 @@ export const CREATE_PIECE = graphql(`
         id
         CID
         name
-        category {
-          id
-          name
-        }
         details {
           tags
           type
@@ -1222,14 +1131,6 @@ export const CREATE_PIECE = graphql(`
           initialReleaseYear
           releaseDescription
         }
-        approved
-        rejected
-        rejectionReason
-        ownerID
-        owner {
-          address
-          ensName
-        }
         metadata {
           createdAt
           updatedAt
@@ -1239,57 +1140,65 @@ export const CREATE_PIECE = graphql(`
   }
 `)
 
-export const UPDATE_PIECE = graphql(`
-  mutation UpdatePiece($input: UpdatePieceInput!) {
-    updatePiece(input: $input) {
+export const UPDATE_PIN = graphql(`
+  mutation UpdatePin($input: UpdatePinInput!) {
+    updatePin(input: $input) {
       document {
         id
-        CID
-        name
+        website {
+          id
+        }
+        owner {
+          id
+          address
+        }
         category {
           id
           name
         }
-        details {
-          tags
-          type
-          media
-          IMDBID
-          TMDBID
-          format
-          poster
-          bitrate
-          albumTitle
-          artistNames
-          releaseType
-          musicBrainzID
-          imageThumbnailCID
-          initialReleaseYear
-          releaseDescription
+        piece {
+          id
+          CID
+          name
+          details {
+            tags
+            type
+            media
+            IMDBID
+            TMDBID
+            format
+            poster
+            bitrate
+            albumTitle
+            artistNames
+            releaseType
+            musicBrainzID
+            imageThumbnailCID
+            initialReleaseYear
+            releaseDescription
+          }
+          metadata {
+            createdAt
+            updatedAt
+          }
         }
         approved
         rejected
         rejectionReason
-        ownerID
-        owner {
-          address
-          ensName
-        }
-        metadata {
-          createdAt
-          updatedAt
-        }
+        deleted
+        likesCount
+        dislikesCount
       }
     }
   }
 `)
 
-export const CREATE_PIECE_LIKE = graphql(`
-  mutation CreatePieceLike($input: CreatePieceLikeInput!) {
-    createPieceLike(input: $input) {
+export const CREATE_PIN_LIKE = graphql(`
+  mutation CreatePinLike($input: CreatePinLikeInput!) {
+    createPinLike(input: $input) {
       document {
         id
-        piece {
+        pin {
           id
         }
         owner {
@@ -1300,44 +1209,16 @@ export const CREATE_PIECE_LIKE = graphql(`
   }
 `)
 
-export const CREATE_CATEGORY_LIKE = graphql(`
-  mutation CreateCategoryLike($input: CreateCategoryLikeInput!) {
-    createCategoryLike(input: $input) {
+export const CREATE_PIN_DISLIKE = graphql(`
+  mutation CreatePinDislike($input: CreatePinDislikeInput!) {
+    createPinDislike(input: $input) {
       document {
         id
-        category {
-          id
-          name
-        }
-      }
-    }
-  }
-`)
-
-export const CREATE_PIECE_DISLIKE = graphql(`
-  mutation CreatePieceDislike($input: CreatePieceDislikeInput!) {
-    createPieceDislike(input: $input) {
-      document {
-        id
-        piece {
+        pin {
           id
         }
         owner {
           address
-        }
-      }
-    }
-  }
-`)
-
-export const CREATE_CATEGORY_DISLIKE = graphql(`
-  mutation CreateCategoryDislike($input: CreateCategoryDislikeInput!) {
-    createCategoryDislike(input: $input) {
-      document {
-        id
-        category {
-          id
-          name
         }
       }
     }
@@ -1523,7 +1404,7 @@ export const GET_WEBSITE_INDEX = graphql(`
   }
 `)
 
-export const pieceCategories = [
+export const pinCategories = [
   'TV Shows',
   'Movies',
   'Audiobooks',

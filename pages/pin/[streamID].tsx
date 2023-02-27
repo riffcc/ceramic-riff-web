@@ -3,18 +3,16 @@ import React, { useCallback, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useFragment_experimental as useFragment, useMutation, useQuery } from '@apollo/client';
 import {
-  CREATE_PIECE_DISLIKE,
-  CREATE_PIECE_LIKE,
-  GET_PIECE,
+  CREATE_PIN_DISLIKE,
+  CREATE_PIN_LIKE,
+  GET_PIN,
   pageSizeMax,
   pageSizeMedium,
   UserFragment,
-  CREATE_CATEGORY_DISLIKE,
-  CREATE_CATEGORY_LIKE,
   CategoryFragment,
-  PieceFragment,
-  PieceDislikeFragment,
-  PieceLikeFragment,
+  PinDislikeFragment,
+  PinLikeFragment,
+  PinFragment,
 } from '../../utils/constants'
 import Image from 'next/image'
 import Link from 'next/link';
@@ -23,9 +21,9 @@ import { HiThumbDown, HiThumbUp } from 'react-icons/hi';
 import { useAccount } from 'wagmi';
 import {
   CategoryFragment as CategoryFragmentType,
-  PieceFragment as PieceFragmentType,
-  PieceLikeFragment as PieceLikeFragmentType,
-  PieceDislikeFragment as PieceLDislikeFragmentType,
+  PinFragment as PinFragmentType,
+  PinLikeFragment as PinLikeFragmentType,
+  PinDislikeFragment as PinLDislikeFragmentType,
   WebsiteUserFragment
 } from '../../utils/__generated__/graphql';
 
@@ -33,26 +31,23 @@ const PiecePage: NextPage = () => {
   const router = useRouter()
   const { address, isConnected } = useAccount()
   const { query } = router
-  const { data: pinData, loading, error } = useQuery(GET_PIECE, {
+  const { data: pinData, loading, error } = useQuery(GET_PIN, {
     variables: {
       id: query.streamID as string,
       pageSizeMax
     }
   })
-  const piece = useMemo(() => {
-    if (!pinData || pinData.node?.__typename !== 'Piece') {
+  const pin = useMemo(() => {
+    if (!pinData || pinData.node?.__typename !== 'Pin') {
       return undefined;
     }
     return pinData.node
   }, [pinData])
 
-  const [likePin] = useMutation(CREATE_PIECE_LIKE)
-  const [dislikePin] = useMutation(CREATE_PIECE_DISLIKE)
-  const [likeCategory] = useMutation(CREATE_CATEGORY_LIKE)
-  const [dislikeCategory] = useMutation(CREATE_CATEGORY_DISLIKE)
+  const [likePin] = useMutation(CREATE_PIN_LIKE)
+  const [dislikePin] = useMutation(CREATE_PIN_DISLIKE)
 
-
-  const { complete: isUser, data: userData } = useFragment<PieceFragmentType, any>({
+  const { complete: isUser, data: userData } = useFragment<PinFragmentType, any>({
     from: {
       __typename: "EthAccount",
       address: address ? address : null
@@ -62,31 +57,31 @@ const PiecePage: NextPage = () => {
       pageSizeMedium
     }
   })
-  console.log('userData', userData)
-  const { data: likedData } = useFragment<PieceLikeFragmentType, any>({
+
+  const { data: likedData } = useFragment<PinLikeFragmentType, any>({
     from: {
       __typename: "PieceLike",
       owner: { address: address ? address : null },
-      piece: { id: piece ? piece.id : null }
+      piece: { id: pin ? pin.id : null }
     },
-    fragment: PieceLikeFragment,
+    fragment: PinLikeFragment,
   })
   const alreadyLiked = useMemo(() => !!likedData?.__typename, [likedData])
 
-  const { data: dislikedData } = useFragment<PieceLDislikeFragmentType, any>({
+  const { data: dislikedData } = useFragment<PinLDislikeFragmentType, any>({
     from: {
       __typename: "PieceDislike",
       owner: { address: address ? address : null },
-      piece: { id: piece ? piece.id : null }
+      piece: { id: pin ? pin.id : null }
     },
-    fragment: PieceDislikeFragment,
+    fragment: PinDislikeFragment,
   })
   const alreadyDisliked = useMemo(() => !!dislikedData?.__typename, [dislikedData])
 
   const { data: categoryData } = useFragment<CategoryFragmentType, any>({
     from: {
       __typename: "Category",
-      name: pinData?.node?.__typename === 'Piece' && pinData?.node?.category ? pinData.node.category.name : null
+      name: pinData?.node?.__typename === 'Pin' && pinData?.node?.category ? pinData.node.category.name : null
     },
     fragment: CategoryFragment,
     variables: {
@@ -100,14 +95,15 @@ const PiecePage: NextPage = () => {
         input: {
           content: {
             ownerID: userData?.id,
-            pieceID: piece?.id
+            pinID: pin?.id,
+            categoryID: categoryData?.id
           }
         }
       },
       update: (cache, result) => {
         cache.updateFragment({
-          id: cache.identify({ __typename: "Piece", id: piece?.id }),
-          fragment: PieceFragment,
+          id: cache.identify({ __typename: "Pin", id: pin?.id }),
+          fragment: PinFragment,
           variables: {
             pageSizeMax
           }
@@ -116,23 +112,14 @@ const PiecePage: NextPage = () => {
           likesCount: data.likesCount + 1,
           likes: {
             edges: [[...data.likes.edges, {
-              __typename: "PieceLikeEdge",
-              node: result.data?.createPieceLike?.document
+              __typename: "PinLikeEdge",
+              node: result.data?.createPinLike?.document
             }]]
           }
         }))
       }
     })
-    likeCategory({
-      variables: {
-        input: {
-          content: {
-            categoryID: categoryData?.id
-          }
-        }
-      }
-    })
-  }, [userData, piece, categoryData])
+  }, [userData, pin, categoryData])
 
   const handleOnDisike = useCallback(() => {
     dislikePin({
@@ -140,14 +127,15 @@ const PiecePage: NextPage = () => {
         input: {
           content: {
             ownerID: userData?.id,
-            pieceID: piece?.id
+            pinID: pin?.id,
+            categoryID: categoryData?.id
           }
         }
       },
       update: (cache, result) => {
         cache.updateFragment({
-          id: cache.identify({ __typename: "Piece", id: piece?.id }),
-          fragment: PieceFragment,
+          id: cache.identify({ __typename: "Pin", id: pin?.id }),
+          fragment: PinFragment,
           variables: {
             pageSizeMax
           }
@@ -156,23 +144,14 @@ const PiecePage: NextPage = () => {
           dislikesCount: data.dislikesCount + 1,
           dislikes: {
             edges: [[...data.likes.edges, {
-              __typename: "PieceDislikeEdge",
-              node: result.data?.createPieceDislike?.document
+              __typename: "PinDislikeEdge",
+              node: result.data?.createPinDislike?.document
             }]]
           }
         }))
       }
     })
-    dislikeCategory({
-      variables: {
-        input: {
-          content: {
-            categoryID: categoryData?.id
-          }
-        }
-      }
-    })
-  }, [userData, piece, categoryData])
+  }, [userData, pin, categoryData])
 
   return (
     <div className='flex flex-col gap-3'>
@@ -188,7 +167,7 @@ const PiecePage: NextPage = () => {
                   </p>
                 </Link>
               </div>
-              {!piece || !piece.approved && (
+              {!pin || !pin.approved && (
                 <div className='w-full flex py-4'>
                   <p className='m-auto'>Pin not found.</p>
                 </div>
@@ -203,13 +182,13 @@ const PiecePage: NextPage = () => {
                   <Spinner className='m-auto h-8 w-8 animate-spin' />
                 </div>
               )}
-              {piece && piece.approved && (
+              {pin && pin.approved && (
                 <div className='flex gap-1 w-3/4 bg-slate-800 mx-auto'>
-                  <a href={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${piece.CID}`} target='_blank'>
+                  <a href={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${pin.piece?.CID}`} target='_blank'>
                     <div className="rounded-xl p-4 h-36 w-36 relative mx-auto bg-gradient-to-b from-slate-700 to-slate-600">
                       <Image
                         alt=""
-                        src={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${piece.CID}`}
+                        src={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${pin.piece?.CID}`}
                         fill
                         priority
                       />
@@ -226,7 +205,7 @@ const PiecePage: NextPage = () => {
                             className={alreadyLiked ? 'h-5 w-5 shadow-sm shadow-slate-900 text-slate-400' : 'h-5 w-5'}
                           />
                         </button>
-                        <p className='text-sm'>{piece.likesCount}</p>
+                        <p className='text-sm'>{pin.likesCount}</p>
                       </div>
                       <div className='flex gap-2 items-center'>
                         <button
@@ -237,13 +216,13 @@ const PiecePage: NextPage = () => {
                             className={alreadyDisliked ? 'h-5 w-5 shadow-sm shadow-slate-900 text-slate-400' : 'h-5 w-5'}
                           />
                         </button>
-                        <p className='text-sm'>{piece.dislikesCount}</p>
+                        <p className='text-sm'>{pin.dislikesCount}</p>
                       </div>
                     </div>
-                    <p className="font-bold text-lg truncate text-ellipsis ml-2">{piece.name}</p>
-                    <p className="font-medium truncate text-ellipsis ml-2">{piece.category?.name}</p>
-                    <p className="font-medium truncate text-ellipsis ml-2">{piece.details?.artistNames}</p>
-                    <p className="font-medium truncate text-ellipsis ml-2">{piece.details?.initialReleaseYear}</p>
+                    <p className="font-bold text-lg truncate text-ellipsis ml-2">{pin.piece?.name}</p>
+                    <p className="font-medium truncate text-ellipsis ml-2">{pin.category?.name}</p>
+                    <p className="font-medium truncate text-ellipsis ml-2">{pin.piece?.details?.artistNames}</p>
+                    <p className="font-medium truncate text-ellipsis ml-2">{pin.piece?.details?.initialReleaseYear}</p>
                   </div>
                 </div>
               )}

@@ -1,4 +1,4 @@
-import { gql, useApolloClient, useMutation, useFragment_experimental as useFragment } from "@apollo/client"
+import { gql, useApolloClient, useMutation, useFragment_experimental as useFragment, useLazyQuery } from "@apollo/client"
 import { NextPage } from "next/types"
 import { useState, useMemo } from "react"
 import { HiOutlineQuestionMarkCircle } from "react-icons/hi"
@@ -7,10 +7,11 @@ import Connect from "../components/Layout/Connect"
 import Spinner from "../components/Layout/Spinner"
 import Tooltip from "../components/Layout/Tooltip"
 import useFormState from "../hooks/useFormState"
-import { CategoryFragment, CREATE_PIECE, formatOptions, mediaOptions, movieTypeOptions, pageSizeMedium, pieceCategories, releaseTypesOptions, WebsiteData, websiteDataQueryParams } from "../utils/constants"
+import { CategoryFragment, CREATE_PIECE, formatOptions, GET_PIN, mediaOptions, movieTypeOptions, pageSizeMedium, pinCategories, releaseTypesOptions, WebsiteData, websiteDataQueryParams } from "../utils/constants"
 import { getDate } from "../utils/getDate"
 import checkCID from "../utils/checkCID"
 import { CategoryFragment as CategoryFragmentType, PieceFragment as PieceFragmentType } from '../utils/__generated__/graphql';
+import useMutatePin from "../hooks/useMutatePin"
 
 const UploadPage: NextPage = () => {
 
@@ -20,35 +21,10 @@ const UploadPage: NextPage = () => {
   const [showAdvancedForm, setShowAdvancedForm] = useState(false)
   const { store, dispatch } = useFormState()
 
-  const [createPiece, { loading: loadingMutation }] = useMutation(CREATE_PIECE, {
-    update: (cache, result) => {
-      cache.updateFragment({
-        id: `Website:${websiteID}`,
-        fragment: WebsiteData,
-        fragmentName: 'WebsiteData',
-        variables: {
-          ...websiteDataQueryParams
-        }
-      }, (data) => {
-        if (data?.pieces.edges && data?.subscriptions.edges) {
-          return {
-            ...data,
-            pieces: {
-              ...data.pieces,
-              edges: [
-                ...data.pieces.edges,
-                { __typename: 'PieceEgde', node: result.data?.createPiece?.document }
-              ]
-            },
-            piecesCount: data.piecesCount + 1
-          }
-        } else {
-        }
-        return data
-      })
-    }
-  })
+  const [createPiece, { loading: loadingMutation }] = useMutation(CREATE_PIECE)
 
+  const [getPin, { loading, data }] = useLazyQuery(GET_PIN);
+  const { mutate: mutatePin, isLoading } = useMutatePin(getPin)
   const handleOnClickAdvanced = () => {
     setShowAdvancedForm(prev => !prev)
   }
@@ -76,20 +52,31 @@ const UploadPage: NextPage = () => {
       variables: {
         input: {
           content: {
-            websiteID,
-            ownerID: userEthAccount.id,
             name: store.name,
             CID: store.CID,
-            categoryID: categoryData?.id,
             details: store.details,
-            approved: false,
-            rejected: false,
             metadata: {
               createdAt: getDate() as string,
               updatedAt: getDate() as string
             }
           }
         }
+      }
+    }).then((result) => {
+      console.log('piece created!')
+      if (result.data?.createPiece?.document) {
+        const pieceID = result.data.createPiece.document.id
+        mutatePin({
+          action: 'create',
+          data: {
+            categoryID: categoryData?.id!,
+            ownerID: userEthAccount.id,
+            websiteID: websiteID!,
+            pieceID,
+            approved: false,
+            rejected: false,
+          }
+        })
       }
     })
   }
@@ -134,7 +121,7 @@ const UploadPage: NextPage = () => {
           >
             <option disabled hidden value='default'>Select a category</option>
             {
-              pieceCategories.map((category) => (
+              pinCategories.map((category) => (
                 <option key={category} value={category}>{category}</option>
               ))
             }

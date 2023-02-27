@@ -35,22 +35,20 @@ const IndexPage: NextPage = () => {
     }
   }, [websiteData])
 
-  console.log(featuredList)
-
-  const piecesList = useMemo(() => {
-    const websitePieceEdges = websiteData?.pieces?.edges
+  const pinList = useMemo(() => {
+    const websitePieceEdges = websiteData?.pins?.edges
     const subscriptionsPieceEdges = websiteData?.subscriptions?.edges && websiteData.subscriptions.edges
       .map((subscriptionEdge: any) => subscriptionEdge &&
         subscriptionEdge.node &&
         subscriptionEdge.node.subscribedWebsite &&
-        subscriptionEdge.node.subscribedWebsite.pieces.edges
+        subscriptionEdge.node.subscribedWebsite.pins.edges
       )
 
     // Merge all contents
 
     const subscriptionsPieceEdgesFlat = Array.prototype.concat.apply([], subscriptionsPieceEdges ? subscriptionsPieceEdges : [])
     const mergedList = websitePieceEdges ? websitePieceEdges.concat.apply(websitePieceEdges, subscriptionsPieceEdgesFlat) : subscriptionsPieceEdgesFlat
-    return mergedList.filter((piece: any) => piece?.node?.approved)
+    return mergedList.filter((pin: any) => pin?.node?.approved)
   }, [websiteData])
 
   return (
@@ -65,7 +63,7 @@ const IndexPage: NextPage = () => {
             </div>
           }
           <h1 className='font-bold text-xl border-b border-slate-500 flex-none pb-2'>Content</h1>
-          {piecesList.length > 0 ? <PieceList list={piecesList} /> : <p className='m-auto'>No content found.</p>}
+          {pinList.length > 0 ? <PieceList list={pinList} /> : <p className='m-auto'>No content found.</p>}
         </div>
       </div>
     </div>

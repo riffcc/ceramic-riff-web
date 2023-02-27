@@ -2,10 +2,11 @@ import { useFragment_experimental as useFragment } from '@apollo/client';
 import type { NextPage } from 'next'
 import { useMemo } from 'react';
 import { useAccount } from 'wagmi';
-import { pageSizeMax, pageSizeMedium, UserFragment, WebsiteData, websiteDataQueryParams,  } from '../utils/constants'
+import { pageSizeMedium, UserFragment, WebsiteData, websiteDataQueryParams } from '../utils/constants'
 import Connect from '../components/Layout/Connect'
 import React from 'react';
 import PieceList from '../components/PieceList';
+import { PinEdge } from '../utils/__generated__/graphql';
 
 const ProfilePage: NextPage = () => {
   const { address, isConnected } = useAccount()
@@ -35,11 +36,11 @@ const ProfilePage: NextPage = () => {
   }
 
   const pieces = useMemo(() => {
-    const list = websiteData?.pieces.edges && websiteData.pieces.edges
-      .filter((piece: any) => (piece?.node.name && piece.node.CID && piece?.node.owner.address === address))
-    const approvedPieces = list && list.filter((piece: any) => (piece?.node.approved))
-    const pendingPieces = list && list.filter((piece: any) => (!piece?.node.approved && !piece?.node.rejected))
-    const rejectedPieces = list && list.filter((piece: any) => (piece?.node.rejected))
+    const list = websiteData?.pins.edges && websiteData.pins.edges
+      .filter((pin: any) => (pin?.node && pin.node.owner?.address === address && pin.node.piece?.name && pin.node.piece?.CID))
+    const approvedPieces = list && list.filter((pin: PinEdge) => (!pin?.node?.deleted && pin?.node?.approved && !pin?.node?.rejected))
+    const pendingPieces = list && list.filter((pin: PinEdge) => (!pin?.node?.deleted && !pin?.node?.approved && !pin?.node?.rejected))
+    const rejectedPieces = list && list.filter((pin: PinEdge) => (!pin?.node?.deleted && !pin?.node?.approved && pin?.node?.rejected))
     return {
       approvedPieces,
       pendingPieces,

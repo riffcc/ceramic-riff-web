@@ -12,10 +12,13 @@ import PieceList from '../components/PieceList';
 // import SubscriberList from '../components/SubscriberList';
 import SubscriptionList from '../components/SubscriptionList';
 import SubscriptionSearch from '../components/SubscriptionSearch';
+import { useCeramic } from '../context/Ceramic';
 import { AdminFragment, GET_SUBSCRIPTION_INDEX, GET_WEBSITE_INDEX, WebsiteData, websiteDataQueryParams } from '../utils/constants';
+import { PinEdge } from '../utils/__generated__/graphql';
 
 const AdminPage: NextPage = () => {
   const { address, isConnected } = useAccount()
+  const { isAuthenticated } = useCeramic()
   const router = useRouter()
   const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
 
@@ -53,18 +56,17 @@ const AdminPage: NextPage = () => {
   if (isConnected && !isAdminUser) router.push('/')
 
   const pieces = useMemo(() => {
-    const list = websiteData?.pieces.edges && websiteData.pieces.edges
-      .filter((piece: any) => (piece?.node.name && piece.node.CID))
-    const approvedPieces = list && list.filter((piece: any) => (piece?.node.approved))
-    const pendingPieces = list && list.filter((piece: any) => (!piece?.node.approved && !piece?.node.rejected))
-    const rejectedPieces = list && list.filter((piece: any) => (piece?.node.rejected))
+    const list = websiteData?.pins.edges && websiteData.pins.edges
+      .filter((pin: any) => (pin?.node && pin.node.piece?.name && pin.node.piece?.CID))
+    const approvedPieces = list && list.filter((pin: PinEdge) => (!pin?.node?.deleted && pin?.node?.approved && !pin?.node?.rejected))
+    const pendingPieces = list && list.filter((pin: PinEdge) => (!pin?.node?.deleted && !pin?.node?.approved && !pin?.node?.rejected))
+    const rejectedPieces = list && list.filter((pin: PinEdge) => (!pin?.node?.deleted && !pin?.node?.approved && pin?.node?.rejected))
     return {
       approvedPieces,
       pendingPieces,
       rejectedPieces
     }
   }, [websiteData, address])
-
   const subscriptionList = useMemo(() => {
     const list = websiteData?.subscriptions.edges
     return list ? list : []
@@ -84,7 +86,7 @@ const AdminPage: NextPage = () => {
   return (
     <div className='flex flex-col px-4 py-10 gap-3'>
       {
-        !isConnected ?
+        !isConnected || !isAuthenticated  ?
           <Connect className='h-10 w-40 m-auto px-4 rounded-lg bg-cyan-600 hover:bg-cyan-500 hover:cursor-pointer disabled:cursor-default hover:disabled:bg-cyan-600' />
           : isAdminUser && !adminData.inactive ?
             <div className=' rounded-xl mx-auto w-5/6 p-6 min-h-screen flex flex-col'>
