@@ -1,25 +1,47 @@
-import { useApolloClient, useFragment_experimental as useFragment, useMutation } from "@apollo/client";
-import { Maybe } from "graphql/jsutils/Maybe";
-import { ChangeEvent, useMemo, useState } from "react";
-import { HiOutlineTrash, HiOutlinePencilAlt, HiOutlineCheckCircle, HiOutlineXCircle, HiOutlineX, HiOutlineExternalLink, HiOutlineEye, HiOutlineClock, HiQuestionMarkCircle, HiOutlineQuestionMarkCircle } from "react-icons/hi";
+import { useFragment_experimental as useFragment, useLazyQuery, useMutation } from "@apollo/client";
+import { useCallback, useMemo, useState } from "react";
+import { 
+  HiOutlineTrash, 
+  HiOutlinePencilAlt, 
+  HiOutlineCheckCircle, 
+  HiOutlineXCircle, 
+  HiOutlineX, 
+  HiOutlineExternalLink, HiOutlineEye, 
+  HiOutlineClock, 
+  HiOutlineQuestionMarkCircle 
+} from "react-icons/hi";
 import { useAccount } from "wagmi";
 import useFormState from "../hooks/useFormState";
-import { AdminFragment, CategoryFragment, formatOptions, mediaOptions, movieTypeOptions, pageSizeMedium, pieceCategories, releaseTypesOptions, UPDATE_PIECE, UserFragment } from "../utils/constants"
+import { 
+  AdminFragment, 
+  CategoryFragment, 
+  CREATE_PIECE, 
+  formatOptions, 
+  GET_PIN, 
+  GET_WEBSITE_DATA, 
+  mediaOptions, 
+  movieTypeOptions, 
+  pageSizeMedium, 
+  pinCategories, 
+  releaseTypesOptions, 
+  websiteDataQueryParams 
+} from "../utils/constants"
 import { getDate } from "../utils/getDate";
-import { Piece } from "../utils/__generated__/graphql";
 import Spinner from "./Layout/Spinner";
 import Tooltip from "./Layout/Tooltip";
-import { CID } from 'multiformats'
 import checkCID from "../utils/checkCID";
-import { CategoryFragment as CategoryFragmentType, PieceFragment as PieceFragmentType } from '../utils/__generated__/graphql';
+import { CategoryFragment as CategoryFragmentType, Pin, WebsiteAdminFragment } from '../utils/__generated__/graphql';
+import useMutatePin from "../hooks/useMutatePin";
 
 interface Props {
-  piece: Maybe<Piece>;
+  pin: Pin;
 }
 
-export default function PieceActions({ piece }: Props) {
+export default function PinActions({ pin }: Props) {
+  const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
+
   const { address } = useAccount()
-  const { complete: isAdminUser } = useFragment({
+  const { complete: isAdminUser, data: adminData } = useFragment<WebsiteAdminFragment, any>({
     from: {
       __typename: "Admin",
       admin: {
@@ -28,30 +50,41 @@ export default function PieceActions({ piece }: Props) {
     },
     fragment: AdminFragment
   })
-  const [updatePiece, { loading: loadingUpdatePiece }] = useMutation(UPDATE_PIECE)
   const [openEditModal, setOpenEditModal] = useState(false)
   const [openRejectModal, setOpenRejectModal] = useState(false)
-
   const [rejectionReason, setRejectionReason] = useState('')
-
   const [showAdvancedForm, setShowAdvancedForm] = useState(false)
-  const { data: categoryData } = useFragment<CategoryFragmentType, any>({
+
+  const { store, dispatch } = useFormState({
+    name: pin?.piece?.name as string,
+    category: pin?.category?.name as string,
+    CID: pin?.piece?.CID as string,
+    ...pin?.piece?.details
+  })
+
+  const { complete: isCategory, data: categoryData } = useFragment<CategoryFragmentType, any>({
     from: {
       __typename: "Category",
-      name: piece?.category?.name ? piece.category.name : null
+      name: store.category ? store.category : null
     },
     fragment: CategoryFragment,
     variables: {
       pageSizeMedium
     }
   })
-  const { store, dispatch } = useFormState({
-    name: piece?.name as string,
-    category: piece?.category?.name as string,
-    CID: piece?.CID as string,
-    ...piece?.details
-  })
 
+  const [createPiece, { loading: loadingCreatePiece }] = useMutation(CREATE_PIECE)
+  const [getPin, { loading: loadingGetPin, data }] = useLazyQuery(GET_PIN, {
+    fetchPolicy: "network-only"
+  });
+  const [refechPins] = useLazyQuery(GET_WEBSITE_DATA, {
+    variables: {
+      id: websiteID!,
+      ...websiteDataQueryParams
+    },
+    fetchPolicy: "network-only"
+  });
+  const { mutateAsync: mutatePin, isLoading: loadingMutatePin } = useMutatePin(getPin)
   const handleOnClickAdvanced = () => {
     setShowAdvancedForm(prev => !prev)
   }
@@ -61,118 +94,92 @@ export default function PieceActions({ piece }: Props) {
   const showRejectModal = () => setOpenRejectModal(true)
   const hideRejectModal = () => setOpenRejectModal(false)
 
-  const apolloClient = useApolloClient()
-
-
-  const handleEditPiece = async () => {
-    await updatePiece({
+  const handleEditPin = useCallback(() => {
+    createPiece({
       variables: {
         input: {
-          id: piece?.id!,
           content: {
             name: store.name,
             CID: store.CID,
-            categoryID: categoryData?.id,
             details: store.details,
             metadata: {
-              createdAt: piece?.metadata.createdAt!,
+              createdAt: getDate() as string,
               updatedAt: getDate() as string
             }
           }
         }
       }
-    })
-    hideEditModal()
-  }
+    }).then(async (result) => {
+      if (result.data?.createPiece?.document) {
+        const pieceID = result.data.createPiece.document.id
+        console.log('piece created! pieceID:', pieceID)
+        await mutatePin({
+          action: 'edit',
+          pinID: pin.id,
+          data: {
+            ownerID: pin.owner?.id!,
+            websiteID: pin.website?.id,
+            approved: pin.approved ? pin.approved : undefined,
+            rejected: pin.rejected ? pin.rejected : undefined,
+            rejectionReason: pin.rejectionReason ? pin.rejectionReason : undefined,
+            categoryID: categoryData?.id,
+            pieceID,
+          }
+        })
+        refechPins()
+        hideEditModal()
 
-  const handleDeletePiece = () => {
-
-    const zeroAddressEthAccount = apolloClient.cache.readFragment<any>({
-      id: apolloClient.cache.identify({
-        __typename: 'EthAccount',
-        address: "0x0000000000000000000000000000000000000000"
-      }),
-      fragment: UserFragment,
-      variables: {
-        pageSizeMedium
       }
     })
+  }, [store, categoryData])
 
-    updatePiece({
-      variables: {
-        input: {
-          id: piece?.id!,
-          content: {
-            websiteID: process.env.NEXT_PUBLIC_WEBSITE_ID,
-            ownerID: zeroAddressEthAccount?.id,
-            metadata: {
-              createdAt: piece?.metadata.createdAt!,
-              updatedAt: getDate() as string
-            }
-          },
-          options: {
-            replace: true
-          }
-        }
-      }
-    })
-  }
-
-  const handleApprovePiece = () => {
-    updatePiece({
-      variables: {
-        input: {
-          id: piece?.id!,
-          content: {
-            approved: true,
-            rejected: false,
-            metadata: {
-              createdAt: piece?.metadata.createdAt!,
-              updatedAt: getDate() as string
-            }
-          }
-        }
+  const handleDeletePin = () => {
+    if (!isAdminUser || !adminData?.id) return;
+    mutatePin({
+      action: 'delete',
+      pinID: pin.id,
+      adminID: adminData.id,
+      data: {
+        ownerID: pin.owner?.id!,
+        websiteID: pin.website?.id!,
+        categoryID: pin.category?.id!,
+        pieceID: pin.piece?.id!,
       }
     })
   }
 
-  const handleRejectPiece = async () => {
-    await updatePiece({
-      variables: {
-        input: {
-          id: piece?.id!,
-          content: {
-            approved: false,
-            rejected: true,
-            rejectionReason,
-            metadata: {
-              createdAt: piece?.metadata.createdAt!,
-              updatedAt: getDate() as string
-            }
-          }
-        }
+  const handleApprovePin = () => {
+    if (!isAdminUser || !adminData?.id) return;
+    console.log(adminData.id)
+    mutatePin({
+      action: 'approve',
+      adminID: adminData.id,
+      pinID: pin.id,
+      data: {}
+    })
+  }
+
+  const handleRejectPin = async () => {
+    if (!isAdminUser || !adminData?.id) return;
+    mutatePin({
+      action: 'reject',
+      adminID: adminData.id,
+      pinID: pin.id,
+      data: {
+        rejectionReason: rejectionReason,
       }
     })
     setRejectionReason('')
     hideRejectModal()
   }
 
-  const handleUnrejectPiece = async () => {
-    await updatePiece({
-      variables: {
-        input: {
-          id: piece?.id!,
-          content: {
-            approved: false,
-            rejected: false,
-            rejectionReason: '',
-            metadata: {
-              createdAt: piece?.metadata.createdAt!,
-              updatedAt: getDate() as string
-            }
-          }
-        }
-      }
+  const handleUnrejectPin = async () => {
+    if (!isAdminUser || !adminData?.id) return;
+    mutatePin({
+      action: 'unreject',
+      adminID: adminData.id,
+      pinID: pin.id,
+      data: {}
     })
   }
 
@@ -183,16 +190,16 @@ export default function PieceActions({ piece }: Props) {
   return (
     <div className="flex gap-2 items-center justify-center w-full">
       {
-        piece?.rejected &&
+        pin?.rejected &&
         <Tooltip
           key="rejection-reason"
           containerClassname="w-30 bg-slate-800 rounded-md"
           container={<HiOutlineEye className="h-4 w-4 text-slate-50 hover:cursor-pointer" />}
-          content={`Rejection reason: ${piece?.rejectionReason}`}
+          content={`Rejection reason: ${pin?.rejectionReason}`}
         />
       }
       {
-        (!isAdminUser && !piece?.approved && !piece?.rejected) &&
+        (!isAdminUser && !pin?.approved && !pin?.rejected) &&
         <Tooltip
           key="user-edit"
           containerClassname="w-20 bg-slate-800 rounded-md"
@@ -202,18 +209,18 @@ export default function PieceActions({ piece }: Props) {
         />
       }
       {
-        isAdminUser && !piece?.approved &&
+        isAdminUser && !pin?.approved &&
         <Tooltip
           key="approve"
           containerClassname="w-20 bg-slate-800 rounded-md"
           container={<HiOutlineCheckCircle className="h-4 w-4 text-green-400 hover:cursor-pointer" />}
-          onClickContainer={handleApprovePiece}
+          onClickContainer={handleApprovePin}
           content="Approve"
         />
 
       }
       {
-        isAdminUser && !piece?.rejected &&
+        isAdminUser && !pin?.rejected &&
         <Tooltip
           key="reject"
           containerClassname="w-20 bg-slate-800 rounded-md"
@@ -223,7 +230,7 @@ export default function PieceActions({ piece }: Props) {
         />
       }
       {
-        (!isAdminUser && piece?.approved) &&
+        (!isAdminUser && pin?.approved) &&
         <Tooltip
           key="share"
           containerClassname="w-20 bg-slate-800 rounded-md"
@@ -233,12 +240,12 @@ export default function PieceActions({ piece }: Props) {
         />
       }
       {
-        (isAdminUser && piece?.rejected) &&
+        (isAdminUser && pin?.rejected) &&
         <Tooltip
           key="unreject"
           containerClassname="w-30 bg-slate-800 rounded-md"
           container={<HiOutlineClock className="h-4 w-4 text-blue-400 hover:cursor-pointer" />}
-          onClickContainer={handleUnrejectPiece}
+          onClickContainer={handleUnrejectPin}
           content="Unreject"
         />
       }
@@ -258,7 +265,7 @@ export default function PieceActions({ piece }: Props) {
           key='remove'
           containerClassname="w-20 bg-slate-800 rounded-md"
           container={<HiOutlineTrash className="h-4 w-4 text-red-400 hover:cursor-pointer" />}
-          onClickContainer={handleDeletePiece}
+          onClickContainer={handleDeletePin}
           content="Remove"
         />
       }
@@ -267,7 +274,7 @@ export default function PieceActions({ piece }: Props) {
           <div className="h-[30rem] w-[25rem] bg-slate-900 rounded-xl shadow-lg border overflow-y-auto border-slate-500 fixed inset-0 m-auto z-30 p-4">
             <div className="grid p-4">
               <HiOutlineX className="h-5 w-5 text-slate-200 justify-self-end" onClick={hideEditModal} />
-              <h1 className="text-lg font-semibold text-center">Edit Piece</h1>
+              <h1 className="text-lg font-semibold text-center">Edit Pin</h1>
               <div className='grid'>
                 <p className="text-sm mb-1 ml-1">Name:</p>
                 <input
@@ -298,7 +305,7 @@ export default function PieceActions({ piece }: Props) {
                 >
                   <option disabled hidden value='default'>Select a category</option>
                   {
-                    pieceCategories.map((category) => (
+                    pinCategories.map((category) => (
                       <option key={category} value={category}>{category}</option>
                     ))
                   }
@@ -539,11 +546,11 @@ export default function PieceActions({ piece }: Props) {
               </div>
               <button
                 className="h-10 py-1 px-2 mt-2 bg-cyan-600 disabled:hover:bg-cyan-900 disabled:bg-cyan-900 disabled:text-slate-400 hover:cursor-pointer disabled:cursor-default hover:disabled:coursor-default uppercase font-medium rounded"
-                onClick={handleEditPiece}
-                disabled={loadingUpdatePiece || store.name === '' || store.CID === '' || store.category === 'default' || !isValidCID}
+                onClick={handleEditPin}
+                disabled={loadingMutatePin || loadingGetPin || loadingCreatePiece || store.name === '' || store.CID === '' || store.category === 'default' || !isValidCID}
               >
                 {
-                  loadingUpdatePiece ?
+                  loadingMutatePin || loadingGetPin || loadingCreatePiece ?
                     <Spinner className="h-5 w-5 animate-spin mx-auto text-slate-200" /> :
                     <p>Save</p>
                 }
@@ -558,7 +565,7 @@ export default function PieceActions({ piece }: Props) {
           <div className="h-60 w-96 bg-slate-900 rounded-xl shadow-lg border border-slate-500 fixed inset-0 m-auto z-30 p-4">
             <div className="grid justify-items-stretch">
               <HiOutlineX className="h-5 w-5 text-slate-200 justify-self-end" onClick={hideRejectModal} />
-              <h1 className="text-lg font-semibold text-center">Reject Piece</h1>
+              <h1 className="text-lg font-semibold text-center">Reject Pin</h1>
               <div className="p-4 w-full">
                 <p className="text-sm mb-1 ml-1">Reason:</p>
                 <input
@@ -570,7 +577,7 @@ export default function PieceActions({ piece }: Props) {
               </div>
               <button
                 className="h-10 w-20 py-1 px-2 mt-1 bg-cyan-600 hover:cursor-pointer disabled:hover:bg-cyan-900 disabled:bg-cyan-900 disabled:text-slate-400 disabled:cursor-default hover:disabled:coursor-default mx-auto rounded"
-                onClick={handleRejectPiece}
+                onClick={handleRejectPin}
               >
                 <p>Reject</p>
               </button>

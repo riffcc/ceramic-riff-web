@@ -4,22 +4,22 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { PieceEdge } from '../utils/__generated__/graphql'
+import { Pin, PinEdge } from '../utils/__generated__/graphql'
 import Image from 'next/image'
-import PieceActions from './PieceActions'
+import PinActions from './PinActions'
 
-const columnHelper = createColumnHelper<PieceEdge>()
+const columnHelper = createColumnHelper<PinEdge>()
 
 const columns = [
   columnHelper.accessor('node', {
     id: 'thumbnail',
     cell: props => <div className='h-16 w-16 mx-auto relative my-1'>
-      <Image src={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${props.getValue()?.CID}`} fill alt='' />
+      <Image src={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${props.getValue()?.piece?.CID}`} fill alt='' />
     </div>
   }),
   columnHelper.accessor('node', {
     id: 'name',
-    cell: props => <p className='text-center'>{props.getValue()?.name}</p>
+    cell: props => <p className='text-center'>{props.getValue()?.piece?.name}</p>
   }),
   columnHelper.accessor('node', {
     id: 'category',
@@ -30,26 +30,32 @@ const columns = [
   columnHelper.accessor('node', {
     id: 'cid',
     cell: props =>
-      <a href={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${props.getValue()?.CID}`} target='_blank'>
-        <p className='text-center hover:text-cyan-200'>
-          {`${props.getValue()?.CID?.substring(0, 5)}...${props.getValue()?.CID?.substring(props.getValue()?.CID?.length! - 5)}`}
-        </p>
-      </a>
+      <div>
+        <a href={`https://${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${props.getValue()?.piece?.CID}`} target='_blank'>
+          <p className='text-center hover:text-cyan-200'>
+            {`${props.getValue()?.piece?.CID?.substring(0, 5)}...${props.getValue()?.piece?.CID?.substring(props.getValue()?.piece?.CID?.length! - 5)}`}
+          </p>
+        </a>
+        {}
+      </div>
   }),
-  columnHelper.accessor('node', {
+  columnHelper.display({
     id: 'actions',
-    cell: props => <PieceActions piece={props.getValue()} />
+    cell: props => {
+      const pin = props.row.original.node
+      return pin ? <PinActions pin={pin as Pin} /> : null
+    }
   })
 ]
 
 interface Props {
-  pieces: Array<PieceEdge>,
+  pins: Array<PinEdge>,
 }
 
-export default function PieceTable({ pieces }: Props) {
+export default function PieceTable({ pins }: Props) {
 
   const table = useReactTable({
-    data: pieces,
+    data: pins,
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
@@ -58,7 +64,7 @@ export default function PieceTable({ pieces }: Props) {
     <table className='table-auto w-full mx-auto'>
       <tbody>
         {table.getRowModel().rows.map(row => (
-          <tr key={row.id}>
+          <tr key={row.original.node?.id}>
             {row.getVisibleCells().map(cell => (
               <td key={cell.id} className='px-8'>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}

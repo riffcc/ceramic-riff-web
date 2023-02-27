@@ -1,10 +1,10 @@
 import { getDate } from "../utils/getDate";
-import { Featured, FeaturedEdge, Piece, PieceEdge } from "../utils/__generated__/graphql";
+import { Featured, FeaturedEdge, Piece, PieceEdge, PinEdge } from "../utils/__generated__/graphql";
 import PieceItem from "./PieceItem";
 import PieceTable from "./PieceTable";
 
 type Props = {
-  list: PieceEdge[] | FeaturedEdge[];
+  list: PinEdge[] | FeaturedEdge[];
   table?: boolean
 }
 
@@ -18,31 +18,33 @@ export default function PieceList({ list, table = false }: Props) {
     <div className="flex-1 flex flex-wrap justify-center py-8 gap-2 content-evenly">
       {
         table ?
-          <PieceTable pieces={list as PieceEdge[]} /> :
+          <PieceTable pins={list as PinEdge[]} /> :
           list.map((edge) => {
             if (
+              edge &&
+              edge.__typename === 'PinEdge' &&
               edge.node &&
-              edge.__typename === 'PieceEdge' &&
-              edge.node.name &&
-              edge.node.CID
+              edge.node.piece?.name &&
+              edge.node.piece?.CID
             ) {
               return <PieceItem
-                key={edge.node.id}
-                piece={edge.node}
+                key={edge.node.piece.id}
+                piece={edge.node.piece}
               />
             }
             if (
               edge &&
-              edge.node &&
               edge.__typename === 'FeaturedEdge' &&
+              edge.node &&
               runFeaturedTime(edge.node) &&
-              edge.node.piece &&
-              edge.node.piece.name &&
-              edge.node.piece.CID
+              edge.node.pin &&
+              edge.node.pin.piece &&
+              edge.node.pin.piece.name &&
+              edge.node.pin.piece.CID
               ) {
               return <PieceItem
-                key={edge.node.piece.id}
-                piece={edge.node.piece}
+                key={edge.node.pin.piece.id}
+                piece={edge.node.pin.piece}
               />
             }
 
