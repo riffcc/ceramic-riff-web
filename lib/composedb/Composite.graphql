@@ -20,7 +20,7 @@ type Query {
     """Returns the last n items from the list."""
     last: Int
   ): AdminConnection
-  pieceLikeIndex(
+  pieceIndex(
     """Returns the items in the list that come after the specified cursor."""
     after: String
 
@@ -32,7 +32,59 @@ type Query {
 
     """Returns the last n items from the list."""
     last: Int
-  ): PieceLikeConnection
+  ): PieceConnection
+  pinLikeIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): PinLikeConnection
+  pinDislikeIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): PinDislikeConnection
+  pinIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): PinConnection
+  categoryIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): CategoryConnection
   subscriptionIndex(
     """Returns the items in the list that come after the specified cursor."""
     after: String
@@ -59,19 +111,6 @@ type Query {
     """Returns the last n items from the list."""
     last: Int
   ): FeaturedConnection
-  categoryIndex(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String
-
-    """Returns the first n items from the list."""
-    first: Int
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String
-
-    """Returns the last n items from the list."""
-    last: Int
-  ): CategoryConnection
   ethAccountIndex(
     """Returns the items in the list that come after the specified cursor."""
     after: String
@@ -85,45 +124,6 @@ type Query {
     """Returns the last n items from the list."""
     last: Int
   ): EthAccountConnection
-  categoryDislikeIndex(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String
-
-    """Returns the first n items from the list."""
-    first: Int
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String
-
-    """Returns the last n items from the list."""
-    last: Int
-  ): CategoryDislikeConnection
-  categoryLikeIndex(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String
-
-    """Returns the first n items from the list."""
-    first: Int
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String
-
-    """Returns the last n items from the list."""
-    last: Int
-  ): CategoryLikeConnection
-  pieceDislikeIndex(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String
-
-    """Returns the first n items from the list."""
-    first: Int
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String
-
-    """Returns the last n items from the list."""
-    last: Int
-  ): PieceDislikeConnection
   websiteIndex(
     """Returns the items in the list that come after the specified cursor."""
     after: String
@@ -137,19 +137,6 @@ type Query {
     """Returns the last n items from the list."""
     last: Int
   ): WebsiteConnection
-  pieceIndex(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String
-
-    """Returns the first n items from the list."""
-    first: Int
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String
-
-    """Returns the last n items from the list."""
-    last: Int
-  ): PieceConnection
 }
 
 """An object with an ID"""
@@ -179,7 +166,7 @@ type CeramicAccount implements Node {
     """Returns the last n items from the list."""
     last: Int
   ): AdminConnection
-  pieceLikeList(
+  pieceList(
     """Returns the items in the list that come after the specified cursor."""
     after: String
 
@@ -191,7 +178,59 @@ type CeramicAccount implements Node {
 
     """Returns the last n items from the list."""
     last: Int
-  ): PieceLikeConnection
+  ): PieceConnection
+  pinLikeList(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): PinLikeConnection
+  pinDislikeList(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): PinDislikeConnection
+  pinList(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): PinConnection
+  categoryList(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): CategoryConnection
   subscriptionList(
     """Returns the items in the list that come after the specified cursor."""
     after: String
@@ -218,19 +257,6 @@ type CeramicAccount implements Node {
     """Returns the last n items from the list."""
     last: Int
   ): FeaturedConnection
-  categoryList(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String
-
-    """Returns the first n items from the list."""
-    first: Int
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String
-
-    """Returns the last n items from the list."""
-    last: Int
-  ): CategoryConnection
   ethAccountList(
     """Returns the items in the list that come after the specified cursor."""
     after: String
@@ -244,45 +270,6 @@ type CeramicAccount implements Node {
     """Returns the last n items from the list."""
     last: Int
   ): EthAccountConnection
-  categoryDislikeList(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String
-
-    """Returns the first n items from the list."""
-    first: Int
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String
-
-    """Returns the last n items from the list."""
-    last: Int
-  ): CategoryDislikeConnection
-  categoryLikeList(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String
-
-    """Returns the first n items from the list."""
-    first: Int
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String
-
-    """Returns the last n items from the list."""
-    last: Int
-  ): CategoryLikeConnection
-  pieceDislikeList(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String
-
-    """Returns the first n items from the list."""
-    first: Int
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String
-
-    """Returns the last n items from the list."""
-    last: Int
-  ): PieceDislikeConnection
   websiteList(
     """Returns the items in the list that come after the specified cursor."""
     after: String
@@ -296,19 +283,6 @@ type CeramicAccount implements Node {
     """Returns the last n items from the list."""
     last: Int
   ): WebsiteConnection
-  pieceList(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String
-
-    """Returns the first n items from the list."""
-    first: Int
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String
-
-    """Returns the last n items from the list."""
-    last: Int
-  ): PieceConnection
 }
 
 """A connection to a list of items."""
@@ -356,7 +330,7 @@ type Admin implements Node {
 }
 
 """A Ceramic Stream ID"""
-scalar CeramicStreamID
+scalar CeramicStreamID @specifiedBy(url: "https://github.com/ceramicnetwork/CIP/blob/main/CIPs/CIP-59/CIP-59.md#streamid")
 
 type AdminMetadata {
   createdAt: String!
@@ -369,7 +343,7 @@ type EthAccount implements Node {
   ensName: String
   metadata: EthAccountMetadata!
   websiteID: CeramicStreamID!
-  pieces(
+  pins(
     """Returns the items in the list that come after the specified cursor."""
     after: String
 
@@ -384,8 +358,8 @@ type EthAccount implements Node {
 
     """Returns only documents created by the provided account"""
     account: ID
-  ): PieceConnection!
-  piecesCount(
+  ): PinConnection!
+  pinsCount(
     """Counts only documents created by the provided account"""
     account: ID
   ): Int!
@@ -409,7 +383,7 @@ type EthAccount implements Node {
     """Counts only documents created by the provided account"""
     account: ID
   ): Int!
-  pieceLikes(
+  pinLikes(
     """Returns the items in the list that come after the specified cursor."""
     after: String
 
@@ -424,12 +398,12 @@ type EthAccount implements Node {
 
     """Returns only documents created by the provided account"""
     account: ID
-  ): PieceLikeConnection!
-  pieceLikesCount(
+  ): PinLikeConnection!
+  pinLikesCount(
     """Counts only documents created by the provided account"""
     account: ID
   ): Int!
-  pieceDislikes(
+  pinDislikes(
     """Returns the items in the list that come after the specified cursor."""
     after: String
 
@@ -444,8 +418,8 @@ type EthAccount implements Node {
 
     """Returns only documents created by the provided account"""
     account: ID
-  ): PieceDislikeConnection!
-  pieceDislikesCount(
+  ): PinDislikeConnection!
+  pinDislikesCount(
     """Counts only documents created by the provided account"""
     account: ID
   ): Int!
@@ -457,36 +431,35 @@ type EthAccountMetadata {
 }
 
 """A connection to a list of items."""
-type PieceConnection {
+type PinConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [PieceEdge]
+  edges: [PinEdge]
 }
 
 """An edge in a connection."""
-type PieceEdge {
+type PinEdge {
   """The item at the end of the edge"""
-  node: Piece
+  node: Pin
 
   """A cursor for use in pagination"""
   cursor: String!
 }
 
-type Piece implements Node {
+type Pin implements Node {
   id: ID!
-  CID: String
-  name: String
-  details: PieceDetails
+  deleted: Boolean
   ownerID: CeramicStreamID!
+  pieceID: CeramicStreamID!
   approved: Boolean
-  metadata: PieceMetadata!
   rejected: Boolean
   websiteID: CeramicStreamID!
   categoryID: CeramicStreamID!
   rejectionReason: String
   owner: EthAccount
+  piece: Piece
   website: Website
   category: Category
   likes(
@@ -504,7 +477,7 @@ type Piece implements Node {
 
     """Returns only documents created by the provided account"""
     account: ID
-  ): PieceLikeConnection!
+  ): PinLikeConnection!
   likesCount(
     """Counts only documents created by the provided account"""
     account: ID
@@ -524,11 +497,19 @@ type Piece implements Node {
 
     """Returns only documents created by the provided account"""
     account: ID
-  ): PieceDislikeConnection!
+  ): PinDislikeConnection!
   dislikesCount(
     """Counts only documents created by the provided account"""
     account: ID
   ): Int!
+}
+
+type Piece implements Node {
+  id: ID!
+  CID: String
+  name: String
+  details: PieceDetails
+  metadata: PieceMetadata!
 }
 
 type PieceDetails {
@@ -580,7 +561,7 @@ type Website implements Node {
     """Counts only documents created by the provided account"""
     account: ID
   ): Int!
-  pieces(
+  pins(
     """Returns the items in the list that come after the specified cursor."""
     after: String
 
@@ -595,8 +576,8 @@ type Website implements Node {
 
     """Returns only documents created by the provided account"""
     account: ID
-  ): PieceConnection!
-  piecesCount(
+  ): PinConnection!
+  pinsCount(
     """Counts only documents created by the provided account"""
     account: ID
   ): Int!
@@ -710,7 +691,7 @@ type Category implements Node {
   name: String!
   websiteID: CeramicStreamID!
   website: Website
-  pieces(
+  pins(
     """Returns the items in the list that come after the specified cursor."""
     after: String
 
@@ -725,8 +706,8 @@ type Category implements Node {
 
     """Returns only documents created by the provided account"""
     account: ID
-  ): PieceConnection!
-  piecesCount(
+  ): PinConnection!
+  pinsCount(
     """Counts only documents created by the provided account"""
     account: ID
   ): Int!
@@ -745,7 +726,7 @@ type Category implements Node {
 
     """Returns only documents created by the provided account"""
     account: ID
-  ): CategoryLikeConnection!
+  ): PinLikeConnection!
   likesCount(
     """Counts only documents created by the provided account"""
     account: ID
@@ -765,7 +746,7 @@ type Category implements Node {
 
     """Returns only documents created by the provided account"""
     account: ID
-  ): CategoryDislikeConnection!
+  ): PinDislikeConnection!
   dislikesCount(
     """Counts only documents created by the provided account"""
     account: ID
@@ -773,50 +754,58 @@ type Category implements Node {
 }
 
 """A connection to a list of items."""
-type CategoryLikeConnection {
+type PinLikeConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [CategoryLikeEdge]
+  edges: [PinLikeEdge]
 }
 
 """An edge in a connection."""
-type CategoryLikeEdge {
+type PinLikeEdge {
   """The item at the end of the edge"""
-  node: CategoryLike
+  node: PinLike
 
   """A cursor for use in pagination"""
   cursor: String!
 }
 
-type CategoryLike implements Node {
+type PinLike implements Node {
   id: ID!
+  pinID: CeramicStreamID!
+  ownerID: CeramicStreamID!
   categoryID: CeramicStreamID!
+  pin: Pin
+  owner: EthAccount
   category: Category
 }
 
 """A connection to a list of items."""
-type CategoryDislikeConnection {
+type PinDislikeConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [CategoryDislikeEdge]
+  edges: [PinDislikeEdge]
 }
 
 """An edge in a connection."""
-type CategoryDislikeEdge {
+type PinDislikeEdge {
   """The item at the end of the edge"""
-  node: CategoryDislike
+  node: PinDislike
 
   """A cursor for use in pagination"""
   cursor: String!
 }
 
-type CategoryDislike implements Node {
+type PinDislike implements Node {
   id: ID!
+  pinID: CeramicStreamID!
+  ownerID: CeramicStreamID!
   categoryID: CeramicStreamID!
+  pin: Pin
+  owner: EthAccount
   category: Category
 }
 
@@ -841,10 +830,10 @@ type FeaturedEdge {
 type Featured implements Node {
   id: ID!
   endAt: String!
-  pieceID: CeramicStreamID!
+  pinID: CeramicStreamID!
   startAt: String!
   websiteID: CeramicStreamID!
-  piece: Piece
+  pin: Pin
   website: Website
 }
 
@@ -900,55 +889,21 @@ type EthAccountEdge {
 }
 
 """A connection to a list of items."""
-type PieceLikeConnection {
+type PieceConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [PieceLikeEdge]
+  edges: [PieceEdge]
 }
 
 """An edge in a connection."""
-type PieceLikeEdge {
+type PieceEdge {
   """The item at the end of the edge"""
-  node: PieceLike
+  node: Piece
 
   """A cursor for use in pagination"""
   cursor: String!
-}
-
-type PieceLike implements Node {
-  id: ID!
-  ownerID: CeramicStreamID!
-  pieceID: CeramicStreamID!
-  owner: EthAccount
-  piece: Piece
-}
-
-"""A connection to a list of items."""
-type PieceDislikeConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [PieceDislikeEdge]
-}
-
-"""An edge in a connection."""
-type PieceDislikeEdge {
-  """The item at the end of the edge"""
-  node: PieceDislike
-
-  """A cursor for use in pagination"""
-  cursor: String!
-}
-
-type PieceDislike implements Node {
-  id: ID!
-  ownerID: CeramicStreamID!
-  pieceID: CeramicStreamID!
-  owner: EthAccount
-  piece: Piece
 }
 
 """A connection to a list of items."""
@@ -972,26 +927,24 @@ type WebsiteEdge {
 type Mutation {
   createAdmin(input: CreateAdminInput!): CreateAdminPayload
   updateAdmin(input: UpdateAdminInput!): UpdateAdminPayload
-  createPieceLike(input: CreatePieceLikeInput!): CreatePieceLikePayload
-  updatePieceLike(input: UpdatePieceLikeInput!): UpdatePieceLikePayload
+  createPiece(input: CreatePieceInput!): CreatePiecePayload
+  updatePiece(input: UpdatePieceInput!): UpdatePiecePayload
+  createPinLike(input: CreatePinLikeInput!): CreatePinLikePayload
+  updatePinLike(input: UpdatePinLikeInput!): UpdatePinLikePayload
+  createPinDislike(input: CreatePinDislikeInput!): CreatePinDislikePayload
+  updatePinDislike(input: UpdatePinDislikeInput!): UpdatePinDislikePayload
+  createPin(input: CreatePinInput!): CreatePinPayload
+  updatePin(input: UpdatePinInput!): UpdatePinPayload
+  createCategory(input: CreateCategoryInput!): CreateCategoryPayload
+  updateCategory(input: UpdateCategoryInput!): UpdateCategoryPayload
   createSubscription(input: CreateSubscriptionInput!): CreateSubscriptionPayload
   updateSubscription(input: UpdateSubscriptionInput!): UpdateSubscriptionPayload
   createFeatured(input: CreateFeaturedInput!): CreateFeaturedPayload
   updateFeatured(input: UpdateFeaturedInput!): UpdateFeaturedPayload
-  createCategory(input: CreateCategoryInput!): CreateCategoryPayload
-  updateCategory(input: UpdateCategoryInput!): UpdateCategoryPayload
   createEthAccount(input: CreateEthAccountInput!): CreateEthAccountPayload
   updateEthAccount(input: UpdateEthAccountInput!): UpdateEthAccountPayload
-  createCategoryDislike(input: CreateCategoryDislikeInput!): CreateCategoryDislikePayload
-  updateCategoryDislike(input: UpdateCategoryDislikeInput!): UpdateCategoryDislikePayload
-  createCategoryLike(input: CreateCategoryLikeInput!): CreateCategoryLikePayload
-  updateCategoryLike(input: UpdateCategoryLikeInput!): UpdateCategoryLikePayload
-  createPieceDislike(input: CreatePieceDislikeInput!): CreatePieceDislikePayload
-  updatePieceDislike(input: UpdatePieceDislikeInput!): UpdatePieceDislikePayload
   createWebsite(input: CreateWebsiteInput!): CreateWebsitePayload
   updateWebsite(input: UpdateWebsiteInput!): UpdateWebsitePayload
-  createPiece(input: CreatePieceInput!): CreatePiecePayload
-  updatePiece(input: UpdatePieceInput!): UpdatePiecePayload
 }
 
 type CreateAdminPayload {
@@ -1064,9 +1017,9 @@ input UpdateOptionsInput {
 }
 
 """A Ceramic Commit ID"""
-scalar CeramicCommitID
+scalar CeramicCommitID @specifiedBy(url: "https://github.com/ceramicnetwork/CIP/blob/main/CIPs/CIP-59/CIP-59.md#commitid")
 
-type CreatePieceLikePayload {
+type CreatePiecePayload {
   """Fetches an object given its ID"""
   node(
     """The ID of an object"""
@@ -1075,21 +1028,46 @@ type CreatePieceLikePayload {
 
   """Account currently authenticated on the Ceramic instance, if set"""
   viewer: CeramicAccount
-  document: PieceLike!
+  document: Piece!
   clientMutationId: String
 }
 
-input CreatePieceLikeInput {
-  content: PieceLikeInput!
+input CreatePieceInput {
+  content: PieceInput!
   clientMutationId: String
 }
 
-input PieceLikeInput {
-  ownerID: CeramicStreamID!
-  pieceID: CeramicStreamID!
+input PieceInput {
+  CID: String
+  name: String
+  details: PieceDetailsInput
+  metadata: PieceMetadataInput!
 }
 
-type UpdatePieceLikePayload {
+input PieceDetailsInput {
+  tags: String
+  type: String
+  media: String
+  IMDBID: String
+  TMDBID: String
+  format: String
+  poster: String
+  bitrate: String
+  albumTitle: String
+  artistNames: String
+  releaseType: String
+  musicBrainzID: String
+  imageThumbnailCID: String
+  initialReleaseYear: String
+  releaseDescription: String
+}
+
+input PieceMetadataInput {
+  createdAt: String!
+  updatedAt: String!
+}
+
+type UpdatePiecePayload {
   """Fetches an object given its ID"""
   node(
     """The ID of an object"""
@@ -1098,20 +1076,230 @@ type UpdatePieceLikePayload {
 
   """Account currently authenticated on the Ceramic instance, if set"""
   viewer: CeramicAccount
-  document: PieceLike!
+  document: Piece!
   clientMutationId: String
 }
 
-input UpdatePieceLikeInput {
+input UpdatePieceInput {
   id: ID!
-  content: PartialPieceLikeInput!
+  content: PartialPieceInput!
   options: UpdateOptionsInput
   clientMutationId: String
 }
 
-input PartialPieceLikeInput {
+input PartialPieceInput {
+  CID: String
+  name: String
+  details: PieceDetailsInput
+  metadata: PieceMetadataInput
+}
+
+type CreatePinLikePayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: PinLike!
+  clientMutationId: String
+}
+
+input CreatePinLikeInput {
+  content: PinLikeInput!
+  clientMutationId: String
+}
+
+input PinLikeInput {
+  pinID: CeramicStreamID!
+  ownerID: CeramicStreamID!
+  categoryID: CeramicStreamID!
+}
+
+type UpdatePinLikePayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: PinLike!
+  clientMutationId: String
+}
+
+input UpdatePinLikeInput {
+  id: ID!
+  content: PartialPinLikeInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input PartialPinLikeInput {
+  pinID: CeramicStreamID
+  ownerID: CeramicStreamID
+  categoryID: CeramicStreamID
+}
+
+type CreatePinDislikePayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: PinDislike!
+  clientMutationId: String
+}
+
+input CreatePinDislikeInput {
+  content: PinDislikeInput!
+  clientMutationId: String
+}
+
+input PinDislikeInput {
+  pinID: CeramicStreamID!
+  ownerID: CeramicStreamID!
+  categoryID: CeramicStreamID!
+}
+
+type UpdatePinDislikePayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: PinDislike!
+  clientMutationId: String
+}
+
+input UpdatePinDislikeInput {
+  id: ID!
+  content: PartialPinDislikeInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input PartialPinDislikeInput {
+  pinID: CeramicStreamID
+  ownerID: CeramicStreamID
+  categoryID: CeramicStreamID
+}
+
+type CreatePinPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: Pin!
+  clientMutationId: String
+}
+
+input CreatePinInput {
+  content: PinInput!
+  clientMutationId: String
+}
+
+input PinInput {
+  deleted: Boolean
+  ownerID: CeramicStreamID!
+  pieceID: CeramicStreamID!
+  approved: Boolean
+  rejected: Boolean
+  websiteID: CeramicStreamID!
+  categoryID: CeramicStreamID!
+  rejectionReason: String
+}
+
+type UpdatePinPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: Pin!
+  clientMutationId: String
+}
+
+input UpdatePinInput {
+  id: ID!
+  content: PartialPinInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input PartialPinInput {
+  deleted: Boolean
   ownerID: CeramicStreamID
   pieceID: CeramicStreamID
+  approved: Boolean
+  rejected: Boolean
+  websiteID: CeramicStreamID
+  categoryID: CeramicStreamID
+  rejectionReason: String
+}
+
+type CreateCategoryPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: Category!
+  clientMutationId: String
+}
+
+input CreateCategoryInput {
+  content: CategoryInput!
+  clientMutationId: String
+}
+
+input CategoryInput {
+  name: String!
+  websiteID: CeramicStreamID!
+}
+
+type UpdateCategoryPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: Category!
+  clientMutationId: String
+}
+
+input UpdateCategoryInput {
+  id: ID!
+  content: PartialCategoryInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input PartialCategoryInput {
+  name: String
+  websiteID: CeramicStreamID
 }
 
 type CreateSubscriptionPayload {
@@ -1191,7 +1379,7 @@ input CreateFeaturedInput {
 
 input FeaturedInput {
   endAt: String!
-  pieceID: CeramicStreamID!
+  pinID: CeramicStreamID!
   startAt: String!
   websiteID: CeramicStreamID!
 }
@@ -1218,56 +1406,8 @@ input UpdateFeaturedInput {
 
 input PartialFeaturedInput {
   endAt: String
-  pieceID: CeramicStreamID
+  pinID: CeramicStreamID
   startAt: String
-  websiteID: CeramicStreamID
-}
-
-type CreateCategoryPayload {
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-
-  """Account currently authenticated on the Ceramic instance, if set"""
-  viewer: CeramicAccount
-  document: Category!
-  clientMutationId: String
-}
-
-input CreateCategoryInput {
-  content: CategoryInput!
-  clientMutationId: String
-}
-
-input CategoryInput {
-  name: String!
-  websiteID: CeramicStreamID!
-}
-
-type UpdateCategoryPayload {
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-
-  """Account currently authenticated on the Ceramic instance, if set"""
-  viewer: CeramicAccount
-  document: Category!
-  clientMutationId: String
-}
-
-input UpdateCategoryInput {
-  id: ID!
-  content: PartialCategoryInput!
-  options: UpdateOptionsInput
-  clientMutationId: String
-}
-
-input PartialCategoryInput {
-  name: String
   websiteID: CeramicStreamID
 }
 
@@ -1328,146 +1468,6 @@ input PartialEthAccountInput {
   websiteID: CeramicStreamID
 }
 
-type CreateCategoryDislikePayload {
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-
-  """Account currently authenticated on the Ceramic instance, if set"""
-  viewer: CeramicAccount
-  document: CategoryDislike!
-  clientMutationId: String
-}
-
-input CreateCategoryDislikeInput {
-  content: CategoryDislikeInput!
-  clientMutationId: String
-}
-
-input CategoryDislikeInput {
-  categoryID: CeramicStreamID!
-}
-
-type UpdateCategoryDislikePayload {
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-
-  """Account currently authenticated on the Ceramic instance, if set"""
-  viewer: CeramicAccount
-  document: CategoryDislike!
-  clientMutationId: String
-}
-
-input UpdateCategoryDislikeInput {
-  id: ID!
-  content: PartialCategoryDislikeInput!
-  options: UpdateOptionsInput
-  clientMutationId: String
-}
-
-input PartialCategoryDislikeInput {
-  categoryID: CeramicStreamID
-}
-
-type CreateCategoryLikePayload {
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-
-  """Account currently authenticated on the Ceramic instance, if set"""
-  viewer: CeramicAccount
-  document: CategoryLike!
-  clientMutationId: String
-}
-
-input CreateCategoryLikeInput {
-  content: CategoryLikeInput!
-  clientMutationId: String
-}
-
-input CategoryLikeInput {
-  categoryID: CeramicStreamID!
-}
-
-type UpdateCategoryLikePayload {
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-
-  """Account currently authenticated on the Ceramic instance, if set"""
-  viewer: CeramicAccount
-  document: CategoryLike!
-  clientMutationId: String
-}
-
-input UpdateCategoryLikeInput {
-  id: ID!
-  content: PartialCategoryLikeInput!
-  options: UpdateOptionsInput
-  clientMutationId: String
-}
-
-input PartialCategoryLikeInput {
-  categoryID: CeramicStreamID
-}
-
-type CreatePieceDislikePayload {
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-
-  """Account currently authenticated on the Ceramic instance, if set"""
-  viewer: CeramicAccount
-  document: PieceDislike!
-  clientMutationId: String
-}
-
-input CreatePieceDislikeInput {
-  content: PieceDislikeInput!
-  clientMutationId: String
-}
-
-input PieceDislikeInput {
-  ownerID: CeramicStreamID!
-  pieceID: CeramicStreamID!
-}
-
-type UpdatePieceDislikePayload {
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-
-  """Account currently authenticated on the Ceramic instance, if set"""
-  viewer: CeramicAccount
-  document: PieceDislike!
-  clientMutationId: String
-}
-
-input UpdatePieceDislikeInput {
-  id: ID!
-  content: PartialPieceDislikeInput!
-  options: UpdateOptionsInput
-  clientMutationId: String
-}
-
-input PartialPieceDislikeInput {
-  ownerID: CeramicStreamID
-  pieceID: CeramicStreamID
-}
-
 type CreateWebsitePayload {
   """Fetches an object given its ID"""
   node(
@@ -1523,91 +1523,4 @@ input PartialWebsiteInput {
   metadata: WebsiteMetadataInput
   description: String
   websiteName: String
-}
-
-type CreatePiecePayload {
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-
-  """Account currently authenticated on the Ceramic instance, if set"""
-  viewer: CeramicAccount
-  document: Piece!
-  clientMutationId: String
-}
-
-input CreatePieceInput {
-  content: PieceInput!
-  clientMutationId: String
-}
-
-input PieceInput {
-  CID: String
-  name: String
-  details: PieceDetailsInput
-  ownerID: CeramicStreamID!
-  approved: Boolean
-  metadata: PieceMetadataInput!
-  rejected: Boolean
-  websiteID: CeramicStreamID!
-  categoryID: CeramicStreamID!
-  rejectionReason: String
-}
-
-input PieceDetailsInput {
-  tags: String
-  type: String
-  media: String
-  IMDBID: String
-  TMDBID: String
-  format: String
-  poster: String
-  bitrate: String
-  albumTitle: String
-  artistNames: String
-  releaseType: String
-  musicBrainzID: String
-  imageThumbnailCID: String
-  initialReleaseYear: String
-  releaseDescription: String
-}
-
-input PieceMetadataInput {
-  createdAt: String!
-  updatedAt: String!
-}
-
-type UpdatePiecePayload {
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-
-  """Account currently authenticated on the Ceramic instance, if set"""
-  viewer: CeramicAccount
-  document: Piece!
-  clientMutationId: String
-}
-
-input UpdatePieceInput {
-  id: ID!
-  content: PartialPieceInput!
-  options: UpdateOptionsInput
-  clientMutationId: String
-}
-
-input PartialPieceInput {
-  CID: String
-  name: String
-  details: PieceDetailsInput
-  ownerID: CeramicStreamID
-  approved: Boolean
-  metadata: PieceMetadataInput
-  rejected: Boolean
-  websiteID: CeramicStreamID
-  categoryID: CeramicStreamID
-  rejectionReason: String
 }

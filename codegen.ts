@@ -1,7 +1,7 @@
 import { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
-  schema: './lib/Composite.graphql',
+  schema: './lib/composedb/Composite.graphql',
   documents: './utils/constants.ts',
   generates: {
     './utils/__generated__/': {
