@@ -34,7 +34,7 @@ const PiecePage: NextPage = () => {
   const { data: pinData, loading, error } = useQuery(GET_PIN, {
     variables: {
       id: query.streamID as string,
-      pageSizeMax
+      pageSizeMedium
     }
   })
   const pin = useMemo(() => {
@@ -60,9 +60,9 @@ const PiecePage: NextPage = () => {
 
   const { data: likedData } = useFragment<PinLikeFragmentType, any>({
     from: {
-      __typename: "PieceLike",
+      __typename: "PinLike",
       owner: { address: address ? address : null },
-      piece: { id: pin ? pin.id : null }
+      pin: { id: pin ? pin.id : null }
     },
     fragment: PinLikeFragment,
   })
@@ -70,9 +70,9 @@ const PiecePage: NextPage = () => {
 
   const { data: dislikedData } = useFragment<PinLDislikeFragmentType, any>({
     from: {
-      __typename: "PieceDislike",
+      __typename: "PinDislike",
       owner: { address: address ? address : null },
-      piece: { id: pin ? pin.id : null }
+      pin: { id: pin ? pin.id : null }
     },
     fragment: PinDislikeFragment,
   })
@@ -105,7 +105,7 @@ const PiecePage: NextPage = () => {
           id: cache.identify({ __typename: "Pin", id: pin?.id }),
           fragment: PinFragment,
           variables: {
-            pageSizeMax
+            pageSizeMedium
           }
         }, (data) => ({
           ...data,
@@ -137,7 +137,7 @@ const PiecePage: NextPage = () => {
           id: cache.identify({ __typename: "Pin", id: pin?.id }),
           fragment: PinFragment,
           variables: {
-            pageSizeMax
+            pageSizeMedium
           }
         }, (data) => ({
           ...data,

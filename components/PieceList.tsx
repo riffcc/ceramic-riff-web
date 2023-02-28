@@ -28,8 +28,8 @@ export default function PieceList({ list, table = false }: Props) {
               edge.node.piece?.CID
             ) {
               return <PieceItem
-                key={edge.node.piece.id}
-                piece={edge.node.piece}
+                key={edge.node.id}
+                pin={edge.node}
               />
             }
             if (
@@ -43,8 +43,8 @@ export default function PieceList({ list, table = false }: Props) {
               edge.node.pin.piece.CID
               ) {
               return <PieceItem
-                key={edge.node.pin.piece.id}
-                piece={edge.node.pin.piece}
+                key={edge.node.pin.id}
+                pin={edge.node.pin}
               />
             }
 
