@@ -19,7 +19,7 @@ const useMutatePin = (getPin: (options: any) => void) => {
   const apiUrl = process.env.NEXT_PUBLIC_ADMIN_SERVER!
   return useMutation(
     (params: PinProps) =>
-      fetch(`${apiUrl}/pin`, {
+      fetch(apiUrl, {
         method: 'POST',
         body: JSON.stringify(params),
         headers: {
