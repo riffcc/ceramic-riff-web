@@ -78,7 +78,33 @@ export const WebsiteData = gql`
           rejectionReason
           deleted
           likesCount
+          likes(first: $pageSizeMedium) {
+            edges {
+              node {
+                id
+                pin {
+                  id
+                }
+                owner {
+                  address
+                }
+              }
+            }
+          }
           dislikesCount
+          dislikes(first: $pageSizeMedium) {
+            edges {
+              node {
+                id
+                pin {
+                  id
+                }
+                owner {
+                  address
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -139,7 +165,33 @@ export const WebsiteData = gql`
                   rejectionReason
                   deleted
                   likesCount
+                  likes(first: $pageSizeMedium) {
+                    edges {
+                      node {
+                        id
+                        pin {
+                          id
+                        }
+                        owner {
+                          address
+                        }
+                      }
+                    }
+                  }
                   dislikesCount
+                  dislikes(first: $pageSizeMedium) {
+                    edges {
+                      node {
+                        id
+                        pin {
+                          id
+                        }
+                        owner {
+                          address
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -252,7 +304,33 @@ export const WebsiteData = gql`
             rejectionReason
             deleted
             likesCount
+            likes(first: $pageSizeMedium) {
+              edges {
+                node {
+                  id
+                  pin {
+                    id
+                  }
+                  owner {
+                    address
+                  }
+                }
+              }
+            }
             dislikesCount
+            dislikes(first: $pageSizeMedium) {
+              edges {
+                node {
+                  id
+                  pin {
+                    id
+                  }
+                  owner {
+                    address
+                  }
+                }
+              }
+            }
           }
           startAt
           endAt
@@ -311,13 +389,65 @@ export const WebsiteData = gql`
                 rejectionReason
                 deleted
                 likesCount
+                likes(first: $pageSizeMedium) {
+                  edges {
+                    node {
+                      id
+                      pin {
+                        id
+                      }
+                      owner {
+                        address
+                      }
+                    }
+                  }
+                }
                 dislikesCount
+                dislikes(first: $pageSizeMedium) {
+                  edges {
+                    node {
+                      id
+                      pin {
+                        id
+                      }
+                      owner {
+                        address
+                      }
+                    }
+                  }
+                }
               }
             }
           }
           pinsCount
           likesCount
+          likes(first: $pageSizeMedium) {
+            edges {
+              node {
+                id
+                pin {
+                  id
+                }
+                owner {
+                  address
+                }
+              }
+            }
+          }
           dislikesCount
+          dislikes(first: $pageSizeMedium) {
+            edges {
+              node {
+                id
+                pin {
+                  id
+                }
+                owner {
+                  address
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -466,7 +596,34 @@ export const PinFragment = gql`
     rejectionReason
     deleted
     likesCount
+    likesCount
+    likes(first: $pageSizeMedium) {
+      edges {
+        node {
+          id
+          pin {
+            id
+          }
+          owner {
+            address
+          }
+        }
+      }
+    }
     dislikesCount
+    dislikes(first: $pageSizeMedium) {
+      edges {
+        node {
+          id
+          pin {
+            id
+          }
+          owner {
+            address
+          }
+        }
+      }
+    }
   }
 `
 export const PieceFragment = gql`
@@ -580,7 +737,33 @@ export const GET_WEBSITE_DATA = graphql(`
               rejectionReason
               deleted
               likesCount
+              likes(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                    pin {
+                      id
+                    }
+                    owner {
+                      address
+                    }
+                  }
+                }
+              }
               dislikesCount
+              dislikes(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                    pin {
+                      id
+                    }
+                    owner {
+                      address
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -641,7 +824,33 @@ export const GET_WEBSITE_DATA = graphql(`
                       rejectionReason
                       deleted
                       likesCount
+                      likes(first: $pageSizeMedium) {
+                        edges {
+                          node {
+                            id
+                            pin {
+                              id
+                            }
+                            owner {
+                              address
+                            }
+                          }
+                        }
+                      }
                       dislikesCount
+                      dislikes(first: $pageSizeMedium) {
+                        edges {
+                          node {
+                            id
+                            pin {
+                              id
+                            }
+                            owner {
+                              address
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 }
@@ -754,7 +963,33 @@ export const GET_WEBSITE_DATA = graphql(`
                 rejectionReason
                 deleted
                 likesCount
+                likes(first: $pageSizeMedium) {
+                  edges {
+                    node {
+                      id
+                      pin {
+                        id
+                      }
+                      owner {
+                        address
+                      }
+                    }
+                  }
+                }
                 dislikesCount
+                dislikes(first: $pageSizeMedium) {
+                  edges {
+                    node {
+                      id
+                      pin {
+                        id
+                      }
+                      owner {
+                        address
+                      }
+                    }
+                  }
+                }
               }
               startAt
               endAt
@@ -813,13 +1048,65 @@ export const GET_WEBSITE_DATA = graphql(`
                     rejectionReason
                     deleted
                     likesCount
+                    likes(first: $pageSizeMedium) {
+                      edges {
+                        node {
+                          id
+                          pin {
+                            id
+                          }
+                          owner {
+                            address
+                          }
+                        }
+                      }
+                    }
                     dislikesCount
+                    dislikes(first: $pageSizeMedium) {
+                      edges {
+                        node {
+                          id
+                          pin {
+                            id
+                          }
+                          owner {
+                            address
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
               pinsCount
               likesCount
+              likes(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                    pin {
+                      id
+                    }
+                    owner {
+                      address
+                    }
+                  }
+                }
+              }
               dislikesCount
+              dislikes(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                    pin {
+                      id
+                    }
+                    owner {
+                      address
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -940,7 +1227,33 @@ export const GET_WEBSITE_PINS = graphql(`
               rejectionReason
               deleted
               likesCount
+              likes(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                    pin {
+                      id
+                    }
+                    owner {
+                      address
+                    }
+                  }
+                }
+              }
               dislikesCount
+              dislikes(first: $pageSizeMedium) {
+                edges {
+                  node {
+                    id
+                    pin {
+                      id
+                    }
+                    owner {
+                      address
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -1055,7 +1368,7 @@ export const CREATE_ETH_ACCOUNT = graphql(`
 `)
 
 export const GET_PIN = graphql(`
-  query Pin($id: ID!) {
+  query Pin($id: ID!, $pageSizeMedium: Int!) {
     node(id: $id) {
       ... on Pin {
         id
@@ -1101,7 +1414,33 @@ export const GET_PIN = graphql(`
         rejectionReason
         deleted
         likesCount
+        likes(first: $pageSizeMedium) {
+          edges {
+            node {
+              id
+              pin {
+                id
+              }
+              owner {
+                address
+              }
+            }
+          }
+        }
         dislikesCount
+        dislikes(first: $pageSizeMedium) {
+          edges {
+            node {
+              id
+              pin {
+                id
+              }
+              owner {
+                address
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -1187,7 +1526,6 @@ export const UPDATE_PIN = graphql(`
         rejectionReason
         deleted
         likesCount
-        dislikesCount
       }
     }
   }
