@@ -68,11 +68,11 @@ async function createApolloClient(ceramic: CeramicClient) {
         Subscription: {
           keyFields: ['subscribedID'],
         },
-        PieceLike: {
-          keyFields: ['owner', ['address'], 'piece', ['id']],
+        PinLike: {
+          keyFields: ['owner', ['address'], 'pin', ['id']],
         },
-        PieceDislike: {
-          keyFields: ['owner', ['address'], 'piece', ['id']],
+        PinDislike: {
+          keyFields: ['owner', ['address'], 'pin', ['id']],
         },
         // Website: {
         //   fields: {
