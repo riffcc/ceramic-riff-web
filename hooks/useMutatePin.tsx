@@ -1,4 +1,5 @@
 import { useMutation } from 'react-query';
+import { pageSizeMedium } from '../utils/constants';
 
 type PinProps = {
   data: {
@@ -31,7 +32,7 @@ const useMutatePin = (getPin: (options: any) => void) => {
     {
       onSuccess: (data) => {
         console.log('data from onSuccess in useMutatePin', data)
-        getPin({ variables: { id: data.pinID } });
+        getPin({ variables: { id: data.pinID, pageSizeMedium } });
       },
     }
   );
