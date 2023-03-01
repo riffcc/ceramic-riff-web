@@ -26,10 +26,12 @@ import {
   PinDislikeFragment as PinLDislikeFragmentType,
   WebsiteUserFragment
 } from '../../utils/__generated__/graphql';
+import { useCeramic } from '../../context/Ceramic';
 
 const PiecePage: NextPage = () => {
   const router = useRouter()
   const { address, isConnected } = useAccount()
+  const { isAuthenticated } = useCeramic()
   const { query } = router
   const { data: pinData, loading, error } = useQuery(GET_PIN, {
     variables: {
@@ -199,7 +201,7 @@ const PiecePage: NextPage = () => {
                       <div className='flex gap-2 items-center'>
                         <button
                           onClick={handleOnLike}
-                          disabled={alreadyLiked || !isConnected || !isUser}
+                          disabled={alreadyLiked || !isConnected || !isUser || !isAuthenticated}
                         >
                           <HiThumbUp
                             className={alreadyLiked ? 'h-5 w-5 shadow-sm shadow-slate-900 text-slate-400' : 'h-5 w-5'}
@@ -210,7 +212,7 @@ const PiecePage: NextPage = () => {
                       <div className='flex gap-2 items-center'>
                         <button
                           onClick={handleOnDisike}
-                          disabled={alreadyDisliked || !isConnected || !isUser}
+                          disabled={alreadyDisliked || !isConnected || !isUser || !isAuthenticated}
                         >
                           <HiThumbDown
                             className={alreadyDisliked ? 'h-5 w-5 shadow-sm shadow-slate-900 text-slate-400' : 'h-5 w-5'}

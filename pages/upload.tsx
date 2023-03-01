@@ -12,11 +12,13 @@ import { getDate } from "../utils/getDate"
 import checkCID from "../utils/checkCID"
 import { CategoryFragment as CategoryFragmentType, PieceFragment as PieceFragmentType } from '../utils/__generated__/graphql';
 import useMutatePin from "../hooks/useMutatePin"
+import { useCeramic } from "../context/Ceramic"
 
 const UploadPage: NextPage = () => {
 
   const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
   const { address, isConnected } = useAccount()
+  const { isAuthenticated } = useCeramic()
   const apolloClient = useApolloClient()
   const [showAdvancedForm, setShowAdvancedForm] = useState(false)
   const { store, dispatch } = useFormState()
@@ -363,7 +365,7 @@ const UploadPage: NextPage = () => {
             isConnected ? (
               <button
                 className="py-2 px-4 h-10 mt-4 rounded-lg bg-cyan-500 disabled:hover:bg-cyan-900 disabled:bg-cyan-900 disabled:text-slate-400 hover:cursor-point disabled:hover:cursor-default delay-100 hover:bg-cyan-600"
-                disabled={loadingMutation || !store.name || !store.CID || store.category === 'default'}
+                disabled={loadingMutation || !store.name || !store.CID || store.category === 'default' || !isAuthenticated}
                 onClick={handleSubmit}
               >
                 {loadingMutation ? <Spinner className="h-5 w-5 text-white animate-spin mx-auto" /> : <p>Submit</p>}

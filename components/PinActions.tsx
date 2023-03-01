@@ -32,6 +32,7 @@ import Tooltip from "./Layout/Tooltip";
 import checkCID from "../utils/checkCID";
 import { CategoryFragment as CategoryFragmentType, Pin, WebsiteAdminFragment } from '../utils/__generated__/graphql';
 import useMutatePin from "../hooks/useMutatePin";
+import { useCeramic } from "../context/Ceramic";
 
 interface Props {
   pin: Pin;
@@ -41,6 +42,8 @@ export default function PinActions({ pin }: Props) {
   const websiteID = process.env.NEXT_PUBLIC_WEBSITE_ID
 
   const { address } = useAccount()
+  const { isAuthenticated } = useCeramic()
+
   const { complete: isAdminUser, data: adminData } = useFragment<WebsiteAdminFragment, any>({
     from: {
       __typename: "Admin",
@@ -205,6 +208,7 @@ export default function PinActions({ pin }: Props) {
           containerClassname="w-20 bg-slate-800 rounded-md"
           container={<HiOutlinePencilAlt className="h-4 w-4 text-slate-50 hover:cursor-pointer" />}
           onClickContainer={showEditModal}
+          disabledButton={!isAuthenticated}
           content="Edit"
         />
       }
@@ -215,6 +219,7 @@ export default function PinActions({ pin }: Props) {
           containerClassname="w-20 bg-slate-800 rounded-md"
           container={<HiOutlineCheckCircle className="h-4 w-4 text-green-400 hover:cursor-pointer" />}
           onClickContainer={handleApprovePin}
+          disabledButton={!isAuthenticated}
           content="Approve"
         />
 
@@ -226,6 +231,7 @@ export default function PinActions({ pin }: Props) {
           containerClassname="w-20 bg-slate-800 rounded-md"
           container={<HiOutlineXCircle className="h-4 w-4 text-red-400 hover:cursor-pointer" />}
           onClickContainer={showRejectModal}
+          disabledButton={!isAuthenticated}
           content="Reject"
         />
       }
@@ -246,6 +252,7 @@ export default function PinActions({ pin }: Props) {
           containerClassname="w-30 bg-slate-800 rounded-md"
           container={<HiOutlineClock className="h-4 w-4 text-blue-400 hover:cursor-pointer" />}
           onClickContainer={handleUnrejectPin}
+          disabledButton={!isAuthenticated}
           content="Unreject"
         />
       }
@@ -256,6 +263,7 @@ export default function PinActions({ pin }: Props) {
           containerClassname="w-20 bg-slate-800 rounded-md"
           container={<HiOutlinePencilAlt className="h-4 w-4 text-slate-50 hover:cursor-pointer" />}
           onClickContainer={showEditModal}
+          disabledButton={!isAuthenticated}
           content="Edit"
         />
       }
@@ -266,6 +274,7 @@ export default function PinActions({ pin }: Props) {
           containerClassname="w-20 bg-slate-800 rounded-md"
           container={<HiOutlineTrash className="h-4 w-4 text-red-400 hover:cursor-pointer" />}
           onClickContainer={handleDeletePin}
+          disabledButton={!isAuthenticated}
           content="Remove"
         />
       }

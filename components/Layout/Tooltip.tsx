@@ -4,6 +4,7 @@ import { Float } from '@headlessui-float/react'
 type Props = {
   container: ReactElement;
   onClickContainer?: () => void;
+  disabledButton?: boolean;
   containerClassname: string;
   content: string;
 }
@@ -11,6 +12,7 @@ type Props = {
 export default function Tooltip({ container,
   containerClassname,
   onClickContainer,
+  disabledButton = false,
   content,
 
 }: Props) {
@@ -41,7 +43,9 @@ export default function Tooltip({ container,
       <button
         onMouseEnter={open}
         onMouseLeave={delayClose}
-        onClick={onClickContainer}>
+        onClick={onClickContainer}
+        disabled={disabledButton}
+        >
         {container}
       </button>
       <div
