@@ -41,7 +41,7 @@ export default function CeramicProvider({ children }: Props) {
     };
     setIsLoading(true)
     auth3IDConnect(address, ceramicClient.current)
-      .then(({ceramic, iframe}) => {
+      .then(({ceramic}) => {
         if (ceramic.did?.authenticated) {
           setIsAuthenticated(true)
         }
