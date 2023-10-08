@@ -18,7 +18,7 @@ You must make sure the `git` command is installed. If not, run the following com
 # apt install git
 ```
 
-Additionally, CeramicRiff utilizes **Node.JS** and **yarn** to set up and install the platform, and as such it's required to install them as well. We suggest using the NodeSource installation guide (https://github.com/nodesource/distributions#installation-instructions), with $NODE_MAJOR set to 20:
+Additionally, CeramicRiff utilizes **Node.JS** and **yarn** to set up and install the platform, and as such it's required to install them as well. We suggest using the [NodeSource installation guide](https://github.com/nodesource/distributions#installation-instructions), with $NODE_MAJOR set to 20:
 
 1. Download and import the Nodesource GPG key
 
@@ -48,7 +48,7 @@ sudo apt-get install nodejs -y
 npm install -g yarn
 ```
 
-5. Setup and configure [ceramic-node](https://github.com/riffcc/ceramic-node).
+5. Set up and configure [ceramic-node](https://github.com/riffcc/ceramic-node). CeramicRiff requires it to be configured and running in order to function - Ceramic-Node's location is not important, as it runs as a service on the local machine, which CeramicRiff communicates with.
 
 ### Installation
 
@@ -72,7 +72,9 @@ NEXT_PUBLIC_WEBSITE_ID=<TEST_WEBSITE_ID> # Generated in riffcc/ceramic-node repo
 NEXT_PUBLIC_IPFS_GATEWAY=<YOUR_INFURA_IPFS_GATEWAY> # Ex. my-gateway.infura-ipfs.io
 ```
 
-4. Run the application in development mode (with hot reloading):
+4. Run [ceramic-node](https://github.com/riffcc/ceramic-node) so CeramicRiff can properly communicate with it.
+
+5. Run the application in development mode (with hot reloading):
 ```bash
 yarn dev
 ```
