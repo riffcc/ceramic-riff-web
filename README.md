@@ -1,8 +1,10 @@
 [![Contributors](https://img.shields.io/opencollective/all/riffcc?style=flat-square)](https://opencollective.com/riffcc)
 
+**NOTE:** This repository is outdated. Please visit [the newer, up-to-date version](https://github.com/riffcc/riff.cc-vue) instead.
+
 # Riff.CC on Ceramic (ComposeDB)
 
-Welcome! Riff.CC on Ceramic (also referred to as CeramicRiff) is a proof-of-concept version of Riff.CC, implemented using Ceramic and ComposeDB. It is one of the two current platforms for hosting Riff.CC instances, the other being [Orbiter](https://github.com/riffcc/orbiter). This repository contains instructions on how to set up and install a Riff.CC instance through CeramicRiff, as well as the necessary code to do so. For more information about CeramicRiff, as well as the Riff.CC project itself, [see the project's main page](https://riff.cc/riff-docs/).
+Riff.CC on Ceramic (also referred to as CeramicRiff) is a proof-of-concept version of Riff.CC, implemented using Ceramic and ComposeDB. It is one of the two current platforms for hosting Riff.CC instances, the other being [Orbiter](https://github.com/riffcc/orbiter). This repository contains instructions on how to set up and install a Riff.CC instance through CeramicRiff, as well as the necessary code to do so. For more information about CeramicRiff, as well as the Riff.CC project itself, [see the project's main page](https://riff.cc/riff-docs/).
 
 Funding provided via [OpenCollective](https://opencollective.com/riffcc).
 
